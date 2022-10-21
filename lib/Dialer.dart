@@ -144,6 +144,12 @@ class _DialPadNumberState extends State<DialPadNumbers>{
   String addNumber(String numero, String full){
     return full += numero;
   }
+
+  String removeCharacter(String numero){
+    var str = "";
+    str = numero.substring(0, numero.length - 1);
+    return str ;
+  }
   @override
   String number = "";
 
@@ -182,13 +188,13 @@ class _DialPadNumberState extends State<DialPadNumbers>{
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              const SizedBox(width: 45,),
+              const SizedBox(width: 35,),
               SizedBox(
-                height: 80.0,
-                width: 80.0,
+                height: 95.0,
+                width: 95.0,
                 child: FittedBox(
                   child: FloatingActionButton(
-                    backgroundColor: Colors.blue,
+                    backgroundColor: Colors.purple,
                     child: Text("1"),
                     onPressed: () {
                       setState(() {
@@ -199,11 +205,11 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                 ),
               ), const SizedBox(width: 30,),
               SizedBox(
-                height: 80.0,
-                width: 80.0,
+                height: 95.0,
+                width: 95.0,
                 child: FittedBox(
                   child: FloatingActionButton(
-                    backgroundColor: Colors.blue,
+                    backgroundColor: Colors.purple,
                     child: Text("2"),
                     onPressed: () {
                       setState(() {
@@ -214,11 +220,11 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                 ),
               ), const SizedBox(width: 30,),
               SizedBox(
-                height: 80.0,
-                width: 80.0,
+                height: 95.0,
+                width: 95.0,
                 child: FittedBox(
                   child: FloatingActionButton(
-                    backgroundColor: Colors.blue,
+                    backgroundColor: Colors.purple,
                     child: Text("3"),
                     onPressed: () {
                       setState(() {
@@ -244,13 +250,13 @@ class _DialPadNumberState extends State<DialPadNumbers>{
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              const SizedBox(width: 45,),
+              const SizedBox(width: 35,),
               SizedBox(
-                height: 80.0,
-                width: 80.0,
+                height: 95.0,
+                width: 95.0,
                 child: FittedBox(
                   child: FloatingActionButton(
-                    backgroundColor: Colors.blue,
+                    backgroundColor: Colors.purple,
                     child: Text("4"),
                     onPressed: () {
                       setState(() {
@@ -261,11 +267,11 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                 ),
               ), const SizedBox(width: 30,),
               SizedBox(
-                height: 80.0,
-                width: 80.0,
+                height: 95.0,
+                width: 95.0,
                 child: FittedBox(
                   child: FloatingActionButton(
-                    backgroundColor: Colors.blue,
+                    backgroundColor: Colors.purple,
                     child: Text("5"),
                     onPressed: () {
                       setState(() {
@@ -276,11 +282,11 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                 ),
               ), const SizedBox(width: 30,),
               SizedBox(
-                height: 80.0,
-                width: 80.0,
+                height: 95.0,
+                width: 95.0,
                 child: FittedBox(
                   child: FloatingActionButton(
-                    backgroundColor: Colors.blue,
+                    backgroundColor: Colors.purple,
                     child: Text("6"),
                     onPressed: () {
                       setState(() {
@@ -306,13 +312,13 @@ class _DialPadNumberState extends State<DialPadNumbers>{
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              const SizedBox(width: 45,),
+              const SizedBox(width: 35,),
               SizedBox(
-                height: 80.0,
-                width: 80.0,
+                height: 95.0,
+                width: 95.0,
                 child: FittedBox(
                   child: FloatingActionButton(
-                    backgroundColor: Colors.blue,
+                    backgroundColor: Colors.purple,
                     child: Text("7"),
                     onPressed: () {
                       setState(() {
@@ -323,11 +329,11 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                 ),
               ), const SizedBox(width: 30,),
               SizedBox(
-                height: 80.0,
-                width: 80.0,
+                height: 95.0,
+                width: 95.0,
                 child: FittedBox(
                   child: FloatingActionButton(
-                    backgroundColor: Colors.blue,
+                    backgroundColor: Colors.purple,
                     child: Text("8"),
                     onPressed: () {
                       setState(() {
@@ -338,11 +344,11 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                 ),
               ), const SizedBox(width: 30,),
               SizedBox(
-                height: 80.0,
-                width: 80.0,
+                height: 95.0,
+                width: 95.0,
                 child: FittedBox(
                   child: FloatingActionButton(
-                    backgroundColor: Colors.blue,
+                    backgroundColor: Colors.purple,
                     child: Text("9"),
                     onPressed: () {
                       setState(() {
@@ -368,28 +374,28 @@ class _DialPadNumberState extends State<DialPadNumbers>{
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              const SizedBox(width: 45,),
+              const SizedBox(width: 35,),
               SizedBox(
-                height: 80.0,
-                width: 80.0,
+                height: 95.0,
+                width: 95.0,
                 child: FittedBox(
                   child: FloatingActionButton(
-                    backgroundColor: Colors.blue,
-                    child: Text("*"),
+                    backgroundColor: Colors.purple,
+                    child: Text("#"),
                     onPressed: () {
                       setState(() {
-                        number = addNumber("*", number);
+                        number = addNumber("#", number);
                       });
                     },
                   ),
                 ),
               ), const SizedBox(width: 30,),
               SizedBox(
-                height: 80.0,
-                width: 80.0,
+                height: 95.0,
+                width: 95.0,
                 child: FittedBox(
                   child: FloatingActionButton(
-                    backgroundColor: Colors.blue,
+                    backgroundColor: Colors.purple,
                     child: Text("0"),
                     onPressed: () {
                       setState(() {
@@ -400,15 +406,15 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                 ),
               ), const SizedBox(width: 30,),
               SizedBox(
-                height: 80.0,
-                width: 80.0,
+                height: 95.0,
+                width: 95.0,
                 child: FittedBox(
                   child: FloatingActionButton(
-                    backgroundColor: Colors.blue,
-                    child: Text("#"),
+                    backgroundColor: Colors.purple,
+                    child: Icon(Icons.backspace_outlined, color: Colors.white,),
                     onPressed: () {
                       setState(() {
-                        number = addNumber("#", number);
+                        number = removeCharacter(number);
                       });
                     },
                   ),
@@ -441,7 +447,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
             ),
             style: TextButton.styleFrom(
               textStyle: TextStyle(color: Colors.black),
-              backgroundColor: Colors.green,fixedSize: const Size(300, 53),
+              backgroundColor: Colors.green,fixedSize: const Size(160, 53),
               shape:RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(24.0),
               ),
@@ -451,6 +457,23 @@ class _DialPadNumberState extends State<DialPadNumbers>{
             number = "";
             })},
             icon: Icon(Icons.call, color: Colors.black,),
+          ), const SizedBox(width: 20,),
+          TextButton.icon(
+            label: const Text(
+              "New Contact",
+              style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black),
+            ),
+            style: TextButton.styleFrom(
+              textStyle: TextStyle(color: Colors.black),
+              backgroundColor: Colors.orange,fixedSize: const Size(160, 53),
+              shape:RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(24.0),
+              ),
+            ),
+            onPressed: () => {null},
+            icon: Icon(Icons.face_rounded, color: Colors.black,),
           ),
     ]))]);
   }
