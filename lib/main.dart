@@ -11,7 +11,7 @@ class MyFlutterApp extends StatelessWidget{
   Widget build(BuildContext context){
     return MaterialApp(
       title: title,
-      theme: ThemeData(primarySwatch: Colors.blue),
+      theme: new ThemeData(scaffoldBackgroundColor: const Color(0xFFEFEFEF)),
       home: Dialer(),
     );
   }

@@ -28,12 +28,13 @@ class Dialer extends StatelessWidget{
   @override
   Widget build(BuildContext context){
     return Scaffold(
+      backgroundColor: Colors.black,
         floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.person_rounded, color: Colors.white),
           tooltip: 'Navigation menu',
-            onPressed: () => {_navigateToNextScreen(context)},
+            onPressed: () => {null},
         ),
         backgroundColor: Colors.black,
         actions: const [
@@ -45,11 +46,11 @@ class Dialer extends StatelessWidget{
         ],
       ),
       body : Center(
-        child:
-          DialPad(),
+        child: Text(" Material\n   Dialer", style: TextStyle(fontSize: 41,
+        color: Colors.white,
+            backgroundColor: Colors.black),),
 
-      ),
-
+        ),
         bottomNavigationBar: BottomNavigationBar(
           iconSize: 35,
           showSelectedLabels: true,
@@ -58,18 +59,39 @@ class Dialer extends StatelessWidget{
           unselectedItemColor: Colors.white70,
           selectedItemColor: Colors.white70,
 
-          items: const <BottomNavigationBarItem>[
+          items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: Icon(Icons.call_rounded),
-              label: 'Calls',
+                label: 'Calls',
+              icon : IconButton(
+                icon: Icon(Icons.call_rounded),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => DialPadNumbers()),
+                  );
+                },
+              ),
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.contact_page),
               label: 'Contacts',
+              icon : IconButton(
+                icon: Icon(Icons.contact_page),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Contacts()),
+                  );
+                },
+              ),
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.chat),
               label: 'Messages',
+              icon : IconButton(
+                icon: Icon(Icons.chat),
+                onPressed: () {
+                  null;
+                },
+              ),
             ),
           ],
         ),
@@ -120,13 +142,10 @@ class _DialPadNumberState extends State<DialPadNumbers>{
  // }
 
   String addNumber(String numero, String full){
-    if (full == "Enter your number"){
-      full = "   ";
-    }
     return full += numero;
   }
   @override
-  String number = "Enter your number";
+  String number = "";
 
   @override
   Widget build(BuildContext context){
@@ -140,13 +159,13 @@ class _DialPadNumberState extends State<DialPadNumbers>{
           height: MediaQuery
               .of(context)
               .size
-              .height / 5.62,
+              .height / 6,
           color: Colors.black,
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              SizedBox(width: 45,),
-              Text(number, style: TextStyle(fontSize: 38,
+              SizedBox(width: 45, height: 20,),
+              Text(number, style: TextStyle(fontSize: 35,
               color: Colors.white,
               ))],
           ),
@@ -158,15 +177,15 @@ class _DialPadNumberState extends State<DialPadNumbers>{
           height: MediaQuery
               .of(context)
               .size
-              .height / 8.6,
+              .height / 6,
           color: Colors.black,
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               const SizedBox(width: 45,),
               SizedBox(
-                height: 80.0,
-                width: 80.0,
+                height: 85.0,
+                width: 85.0,
                 child: FittedBox(
                   child: FloatingActionButton(
                     backgroundColor: Colors.blue,
@@ -180,8 +199,8 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                 ),
               ), const SizedBox(width: 30,),
               SizedBox(
-                height: 80.0,
-                width: 80.0,
+                height: 85.0,
+                width: 85.0,
                 child: FittedBox(
                   child: FloatingActionButton(
                     backgroundColor: Colors.blue,
@@ -195,8 +214,8 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                 ),
               ), const SizedBox(width: 30,),
               SizedBox(
-                height: 80.0,
-                width: 80.0,
+                height: 85.0,
+                width: 85.0,
                 child: FittedBox(
                   child: FloatingActionButton(
                     backgroundColor: Colors.blue,
@@ -220,15 +239,15 @@ class _DialPadNumberState extends State<DialPadNumbers>{
           height: MediaQuery
               .of(context)
               .size
-              .height / 8.6,
+              .height / 6,
           color: Colors.black,
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               const SizedBox(width: 45,),
               SizedBox(
-                height: 80.0,
-                width: 80.0,
+                height: 85.0,
+                width: 85.0,
                 child: FittedBox(
                   child: FloatingActionButton(
                     backgroundColor: Colors.blue,
@@ -242,8 +261,8 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                 ),
               ), const SizedBox(width: 30,),
               SizedBox(
-                height: 80.0,
-                width: 80.0,
+                height: 85.0,
+                width: 85.0,
                 child: FittedBox(
                   child: FloatingActionButton(
                     backgroundColor: Colors.blue,
@@ -257,8 +276,8 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                 ),
               ), const SizedBox(width: 30,),
               SizedBox(
-                height: 80.0,
-                width: 80.0,
+                height: 85.0,
+                width: 85.0,
                 child: FittedBox(
                   child: FloatingActionButton(
                     backgroundColor: Colors.blue,
@@ -282,15 +301,15 @@ class _DialPadNumberState extends State<DialPadNumbers>{
           height: MediaQuery
               .of(context)
               .size
-              .height / 8.6,
+              .height / 6,
           color: Colors.black,
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               const SizedBox(width: 45,),
               SizedBox(
-                height: 80.0,
-                width: 80.0,
+                height: 85.0,
+                width: 85.0,
                 child: FittedBox(
                   child: FloatingActionButton(
                     backgroundColor: Colors.blue,
@@ -304,8 +323,8 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                 ),
               ), const SizedBox(width: 30,),
               SizedBox(
-                height: 80.0,
-                width: 80.0,
+                height: 85.0,
+                width: 85.0,
                 child: FittedBox(
                   child: FloatingActionButton(
                     backgroundColor: Colors.blue,
@@ -319,8 +338,8 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                 ),
               ), const SizedBox(width: 30,),
               SizedBox(
-                height: 80.0,
-                width: 80.0,
+                height: 85.0,
+                width: 85.0,
                 child: FittedBox(
                   child: FloatingActionButton(
                     backgroundColor: Colors.blue,
@@ -344,15 +363,15 @@ class _DialPadNumberState extends State<DialPadNumbers>{
           height: MediaQuery
               .of(context)
               .size
-              .height / 8.6,
+              .height / 6,
           color: Colors.black,
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               const SizedBox(width: 45,),
               SizedBox(
-                height: 80.0,
-                width: 80.0,
+                height: 85.0,
+                width: 85.0,
                 child: FittedBox(
                   child: FloatingActionButton(
                     backgroundColor: Colors.blue,
@@ -366,8 +385,8 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                 ),
               ), const SizedBox(width: 30,),
               SizedBox(
-                height: 80.0,
-                width: 80.0,
+                height: 85.0,
+                width: 85.0,
                 child: FittedBox(
                   child: FloatingActionButton(
                     backgroundColor: Colors.blue,
@@ -381,8 +400,8 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                 ),
               ), const SizedBox(width: 30,),
               SizedBox(
-                height: 80.0,
-                width: 80.0,
+                height: 85.0,
+                width: 85.0,
                 child: FittedBox(
                   child: FloatingActionButton(
                     backgroundColor: Colors.blue,
@@ -407,7 +426,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
       height: MediaQuery
           .of(context)
           .size
-          .height / 10.3,
+          .height / 6,
       color: Colors.black,
     child: Row(
     mainAxisSize: MainAxisSize.min,
