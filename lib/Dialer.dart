@@ -7,6 +7,10 @@ import 'Contacts.dart';
 
 class Dialer extends StatelessWidget{
 
+  void _navigateToNextScreen(BuildContext context) {
+  Navigator.of(context).push(MaterialPageRoute(builder: (context) => Contacts()));
+   }
+
   static const List<Widget> _pages = <Widget>[
     Icon(
       Icons.call_rounded,
@@ -26,10 +30,10 @@ class Dialer extends StatelessWidget{
     return Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
       appBar: AppBar(
-        leading: const IconButton(
+        leading: IconButton(
           icon: Icon(Icons.person_rounded, color: Colors.white),
           tooltip: 'Navigation menu',
-          onPressed: null,
+            onPressed: () => {_navigateToNextScreen(context)},
         ),
         backgroundColor: Colors.black,
         actions: const [
@@ -117,7 +121,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
 
   String addNumber(String numero, String full){
     if (full == "Enter your number"){
-      full = "";
+      full = "   ";
     }
     return full += numero;
   }
@@ -165,6 +169,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                 width: 80.0,
                 child: FittedBox(
                   child: FloatingActionButton(
+                    backgroundColor: Colors.blue,
                     child: Text("1"),
                     onPressed: () {
                       setState(() {
@@ -179,6 +184,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                 width: 80.0,
                 child: FittedBox(
                   child: FloatingActionButton(
+                    backgroundColor: Colors.blue,
                     child: Text("2"),
                     onPressed: () {
                       setState(() {
@@ -193,6 +199,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                 width: 80.0,
                 child: FittedBox(
                   child: FloatingActionButton(
+                    backgroundColor: Colors.blue,
                     child: Text("3"),
                     onPressed: () {
                       setState(() {
@@ -224,6 +231,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                 width: 80.0,
                 child: FittedBox(
                   child: FloatingActionButton(
+                    backgroundColor: Colors.blue,
                     child: Text("4"),
                     onPressed: () {
                       setState(() {
@@ -238,6 +246,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                 width: 80.0,
                 child: FittedBox(
                   child: FloatingActionButton(
+                    backgroundColor: Colors.blue,
                     child: Text("5"),
                     onPressed: () {
                       setState(() {
@@ -252,6 +261,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                 width: 80.0,
                 child: FittedBox(
                   child: FloatingActionButton(
+                    backgroundColor: Colors.blue,
                     child: Text("6"),
                     onPressed: () {
                       setState(() {
@@ -283,6 +293,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                 width: 80.0,
                 child: FittedBox(
                   child: FloatingActionButton(
+                    backgroundColor: Colors.blue,
                     child: Text("7"),
                     onPressed: () {
                       setState(() {
@@ -297,6 +308,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                 width: 80.0,
                 child: FittedBox(
                   child: FloatingActionButton(
+                    backgroundColor: Colors.blue,
                     child: Text("8"),
                     onPressed: () {
                       setState(() {
@@ -311,6 +323,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                 width: 80.0,
                 child: FittedBox(
                   child: FloatingActionButton(
+                    backgroundColor: Colors.blue,
                     child: Text("9"),
                     onPressed: () {
                       setState(() {
@@ -342,6 +355,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                 width: 80.0,
                 child: FittedBox(
                   child: FloatingActionButton(
+                    backgroundColor: Colors.blue,
                     child: Text("*"),
                     onPressed: () {
                       setState(() {
@@ -356,6 +370,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                 width: 80.0,
                 child: FittedBox(
                   child: FloatingActionButton(
+                    backgroundColor: Colors.blue,
                     child: Text("0"),
                     onPressed: () {
                       setState(() {
@@ -370,6 +385,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                 width: 80.0,
                 child: FittedBox(
                   child: FloatingActionButton(
+                    backgroundColor: Colors.blue,
                     child: Text("#"),
                     onPressed: () {
                       setState(() {
