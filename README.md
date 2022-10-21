@@ -1,11 +1,13 @@
- 
+
 <img src="assets/icon/icon.png">
 
  # Material Dialer
  W.I.P Dialer app made with Flutter(Dart)
 
  # Screens
- <img src="screens/screen_1.png">
+<img src="screens/screen_1.png">
+<img src="screens/screen_2.png">
+
 
  # Get the source
  ```
