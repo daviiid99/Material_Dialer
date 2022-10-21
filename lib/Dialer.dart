@@ -448,7 +448,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
             ),
             onPressed: () => {llamar(number) ,
             setState(() {
-            number = "Enter your number";
+            number = "";
             })},
             icon: Icon(Icons.call, color: Colors.black,),
           ),
