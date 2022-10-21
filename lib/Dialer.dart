@@ -184,8 +184,8 @@ class _DialPadNumberState extends State<DialPadNumbers>{
             children: <Widget>[
               const SizedBox(width: 45,),
               SizedBox(
-                height: 85.0,
-                width: 85.0,
+                height: 80.0,
+                width: 80.0,
                 child: FittedBox(
                   child: FloatingActionButton(
                     backgroundColor: Colors.blue,
@@ -199,8 +199,8 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                 ),
               ), const SizedBox(width: 30,),
               SizedBox(
-                height: 85.0,
-                width: 85.0,
+                height: 80.0,
+                width: 80.0,
                 child: FittedBox(
                   child: FloatingActionButton(
                     backgroundColor: Colors.blue,
@@ -214,8 +214,8 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                 ),
               ), const SizedBox(width: 30,),
               SizedBox(
-                height: 85.0,
-                width: 85.0,
+                height: 80.0,
+                width: 80.0,
                 child: FittedBox(
                   child: FloatingActionButton(
                     backgroundColor: Colors.blue,
@@ -246,8 +246,8 @@ class _DialPadNumberState extends State<DialPadNumbers>{
             children: <Widget>[
               const SizedBox(width: 45,),
               SizedBox(
-                height: 85.0,
-                width: 85.0,
+                height: 80.0,
+                width: 80.0,
                 child: FittedBox(
                   child: FloatingActionButton(
                     backgroundColor: Colors.blue,
@@ -261,8 +261,8 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                 ),
               ), const SizedBox(width: 30,),
               SizedBox(
-                height: 85.0,
-                width: 85.0,
+                height: 80.0,
+                width: 80.0,
                 child: FittedBox(
                   child: FloatingActionButton(
                     backgroundColor: Colors.blue,
@@ -276,8 +276,8 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                 ),
               ), const SizedBox(width: 30,),
               SizedBox(
-                height: 85.0,
-                width: 85.0,
+                height: 80.0,
+                width: 80.0,
                 child: FittedBox(
                   child: FloatingActionButton(
                     backgroundColor: Colors.blue,
@@ -308,8 +308,8 @@ class _DialPadNumberState extends State<DialPadNumbers>{
             children: <Widget>[
               const SizedBox(width: 45,),
               SizedBox(
-                height: 85.0,
-                width: 85.0,
+                height: 80.0,
+                width: 80.0,
                 child: FittedBox(
                   child: FloatingActionButton(
                     backgroundColor: Colors.blue,
@@ -323,8 +323,8 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                 ),
               ), const SizedBox(width: 30,),
               SizedBox(
-                height: 85.0,
-                width: 85.0,
+                height: 80.0,
+                width: 80.0,
                 child: FittedBox(
                   child: FloatingActionButton(
                     backgroundColor: Colors.blue,
@@ -338,8 +338,8 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                 ),
               ), const SizedBox(width: 30,),
               SizedBox(
-                height: 85.0,
-                width: 85.0,
+                height: 80.0,
+                width: 80.0,
                 child: FittedBox(
                   child: FloatingActionButton(
                     backgroundColor: Colors.blue,
@@ -370,8 +370,8 @@ class _DialPadNumberState extends State<DialPadNumbers>{
             children: <Widget>[
               const SizedBox(width: 45,),
               SizedBox(
-                height: 85.0,
-                width: 85.0,
+                height: 80.0,
+                width: 80.0,
                 child: FittedBox(
                   child: FloatingActionButton(
                     backgroundColor: Colors.blue,
@@ -385,8 +385,8 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                 ),
               ), const SizedBox(width: 30,),
               SizedBox(
-                height: 85.0,
-                width: 85.0,
+                height: 80.0,
+                width: 80.0,
                 child: FittedBox(
                   child: FloatingActionButton(
                     backgroundColor: Colors.blue,
@@ -400,8 +400,8 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                 ),
               ), const SizedBox(width: 30,),
               SizedBox(
-                height: 85.0,
-                width: 85.0,
+                height: 80.0,
+                width: 80.0,
                 child: FittedBox(
                   child: FloatingActionButton(
                     backgroundColor: Colors.blue,
