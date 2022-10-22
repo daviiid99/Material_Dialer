@@ -5,6 +5,9 @@ import 'Contacts.dart';
 import 'dart:convert';
 import 'dart:io';
 import 'Settings.dart';
+import 'Contacts.dart';
+import 'package:path_provider/path_provider.dart';
+
 
 class Dialer extends StatefulWidget{
   @override
@@ -138,8 +141,55 @@ class _DialPadNumberState extends State<DialPadNumbers>{
   List<Color> colors = _DialerState.colors;
   List<Color> fonts  = _DialerState.fonts;
 
+  bool _fileExists = false;
+  late File _filePath;
+
+  // First initialization of _json (if there is no json in the file)
+  Map<dynamic, dynamic> mapa = {};
+  late String _jsonString;
+  String data = "";
+
   void llamar(String telefono) async{
     await FlutterPhoneDirectCaller.callNumber("+34$telefono");
+  }
+
+  // Get app local path for App data
+  Future<String> get _localPath async {
+    final directory = await getApplicationDocumentsDirectory();
+    return directory.path;
+  }
+
+  // Get file object with full path
+  Future<File> get _localFile async {
+    final path = await _localPath;
+    return File('$path/contacts.json');
+  }
+
+  // Write latest key and value to json
+  void _writeJson(String key, dynamic value) async {
+    final filePath = await _localFile;
+    Map<String, dynamic> _newJson = {key: value};
+    mapa.addAll(_newJson);
+    _jsonString = jsonEncode(mapa);
+    filePath.writeAsString(_jsonString);
+  }
+
+  void saveContact(String telefono) async {
+    _writeJson(telefono, "myContact");
+}
+
+  void _readJson() async {
+    _filePath = await _localFile;
+    _fileExists = await _filePath.exists();
+
+    if (_fileExists) {
+      try {
+        _jsonString = await _filePath.readAsString();
+        mapa = jsonDecode(_jsonString);
+      } catch (e) {
+
+      }
+    }
   }
 
   // TO-DO
@@ -158,6 +208,12 @@ class _DialPadNumberState extends State<DialPadNumbers>{
   }
   @override
   String number = "";
+
+  @override
+  void initState(){
+    _readJson();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context){
@@ -443,7 +499,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
     child: Row(
     mainAxisSize: MainAxisSize.min,
     children: <Widget>[
-    const SizedBox(width: 23.5,),
+    const SizedBox(width: 23,),
           TextButton.icon(
             label: const Text(
               "Call",
@@ -463,7 +519,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
             number = "";
             })},
             icon: Icon(Icons.call, color: Colors.black,),
-          ), const SizedBox(width: 23.5,),
+          ), const SizedBox(width: 23,),
           TextButton.icon(
             label: const Text(
               "New Contact",
@@ -478,7 +534,12 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                 borderRadius: BorderRadius.circular(24.0),
               ),
             ),
-            onPressed: () => {null},
+            onPressed: () => {
+              setState(() {
+            _readJson();
+            saveContact(number);
+              }),
+            },
             icon: Icon(Icons.face_rounded, color: Colors.black,),
           ),
     ]))]);

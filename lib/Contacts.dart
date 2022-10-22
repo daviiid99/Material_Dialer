@@ -29,21 +29,6 @@ class _ContactState extends State<Contacts>{
   late String _jsonString;
   String data = "";
 
-  loadJson() async {
-    data = await rootBundle.loadString('assets/contacts.json');
-    mapa = json.decode(data);
-    setState(() {
-      contactos = addContactsToList(mapa, contactos, telefonos);
-      telefonos = addPhonesToList(mapa, contactos, telefonos);
-
-    });
-  }
-
-  updateJson(Map<dynamic, dynamic> mapa) async {
-    json.encode(mapa);
-
-  }
-
   // Get app local path for App data
   Future<String> get _localPath async {
     final directory = await getApplicationDocumentsDirectory();
