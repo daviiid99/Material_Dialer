@@ -69,7 +69,7 @@ class _DialerState extends State<Dialer>{
         ],
       ),
       body : Center(
-            child: Text(" Material\n   Dialer", style: TextStyle(fontSize: 41,
+            child: Text("Material\n  Dialer", style: TextStyle(fontSize: 41,
                 color: fonts[mode_counter],
                 backgroundColor: colors[mode_counter]),),
     ),
@@ -194,7 +194,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              const SizedBox(width: 25,),
+              const SizedBox(width: 20,),
               SizedBox(
                 height: 95.0,
                 width: 95.0,
@@ -209,7 +209,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                     },
                   ),
                 ),
-              ), const SizedBox(width: 25,),
+              ), const SizedBox(width: 20,),
               SizedBox(
                 height: 95.0,
                 width: 95.0,
@@ -224,7 +224,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                     },
                   ),
                 ),
-              ), const SizedBox(width: 25,),
+              ), const SizedBox(width: 20,),
               SizedBox(
                 height: 95.0,
                 width: 95.0,
@@ -240,7 +240,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                   ),
                 ),
               ),
-              const SizedBox(width: 25,),
+              const SizedBox(width: 20,),
             ],
           ),
         ), Container(
@@ -256,7 +256,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              const SizedBox(width: 25,),
+              const SizedBox(width: 20,),
               SizedBox(
                 height: 95.0,
                 width: 95.0,
@@ -271,7 +271,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                     },
                   ),
                 ),
-              ), const SizedBox(width: 25,),
+              ), const SizedBox(width: 20,),
               SizedBox(
                 height: 95.0,
                 width: 95.0,
@@ -286,7 +286,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                     },
                   ),
                 ),
-              ), const SizedBox(width: 25,),
+              ), const SizedBox(width: 20,),
               SizedBox(
                 height: 95.0,
                 width: 95.0,
@@ -302,7 +302,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                   ),
                 ),
               ),
-              const SizedBox(width: 25,),
+              const SizedBox(width: 20,),
             ],
           ),
         ), Container(
@@ -318,7 +318,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              const SizedBox(width: 25,),
+              const SizedBox(width: 20,),
               SizedBox(
                 height: 95.0,
                 width: 95.0,
@@ -333,7 +333,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                     },
                   ),
                 ),
-              ), const SizedBox(width: 25,),
+              ), const SizedBox(width: 20,),
               SizedBox(
                 height: 95.0,
                 width: 95.0,
@@ -348,7 +348,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                     },
                   ),
                 ),
-              ), const SizedBox(width: 25,),
+              ), const SizedBox(width: 20,),
               SizedBox(
                 height: 95.0,
                 width: 95.0,
@@ -364,7 +364,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                   ),
                 ),
               ),
-              const SizedBox(width: 25,),
+              const SizedBox(width: 20,),
             ],
           ),
         ), Container(
@@ -380,7 +380,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              const SizedBox(width: 25,),
+              const SizedBox(width: 20,),
               SizedBox(
                 height: 95.0,
                 width: 95.0,
@@ -395,7 +395,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                     },
                   ),
                 ),
-              ), const SizedBox(width: 25,),
+              ), const SizedBox(width: 20,),
               SizedBox(
                 height: 95.0,
                 width: 95.0,
@@ -410,7 +410,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                     },
                   ),
                 ),
-              ), const SizedBox(width: 25,),
+              ), const SizedBox(width: 20,),
               SizedBox(
                 height: 95.0,
                 width: 95.0,
@@ -426,7 +426,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                   ),
                 ),
               ),
-              const SizedBox(width: 25,),
+              const SizedBox(width: 20,),
             ],
           ),
         ),
@@ -443,7 +443,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
     child: Row(
     mainAxisSize: MainAxisSize.min,
     children: <Widget>[
-    const SizedBox(width: 25,),
+    const SizedBox(width: 20,),
           TextButton.icon(
             label: const Text(
               "Call",
