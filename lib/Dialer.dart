@@ -173,11 +173,11 @@ class _DialPadNumberState extends State<DialPadNumbers>{
               .size
               .height / 6,
           color: colors[mode],
-          child: Row(
+          child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              SizedBox(width: 45, height: 20,),
-              Text(number, style: TextStyle(fontSize: 35,
+              SizedBox(width: 45, height: 50,),
+              Text(number, style: TextStyle(fontSize: 55,
               color: fonts[mode],
               ))],
           ),
