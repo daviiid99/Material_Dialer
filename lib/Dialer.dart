@@ -1,11 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
-import 'custom_button.dart';
 import 'Contacts.dart';
+import 'dart:convert';
+import 'dart:io';
+import 'Settings.dart';
 
+class Dialer extends StatefulWidget{
+  @override
+  _DialerState createState() => _DialerState();
+}
 
-class Dialer extends StatelessWidget{
+class _DialerState extends State<Dialer>{
+  static int mode_counter = 1;
+ static List<IconData> modes = [Icons.light_mode, Icons.dark_mode];
+ static List<Color> colors = [Colors.white, Colors.black];
+ static List<Color> fonts = [Colors.black, Colors.white];
 
   void _navigateToNextScreen(BuildContext context) {
   Navigator.of(context).push(MaterialPageRoute(builder: (context) => Contacts()));
@@ -28,36 +38,49 @@ class Dialer extends StatelessWidget{
   @override
   Widget build(BuildContext context){
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: colors[mode_counter],
         floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.person_rounded, color: Colors.white),
+          icon: Icon(modes[mode_counter], color: fonts[mode_counter]),
           tooltip: 'Navigation menu',
-            onPressed: () => {null},
+            onPressed: () => {
+            setState((){
+            if(mode_counter == 1){
+            mode_counter = 0;
+            } else {
+            mode_counter = 1;
+            }
+            },
+            )}
         ),
-        backgroundColor: Colors.black,
-        actions: const [
+        backgroundColor: colors[mode_counter],
+        actions:  [
           IconButton(
-              icon: Icon(Icons.menu,color: Colors.white),
-              onPressed: null,
+              icon: Icon(Icons.settings,color: fonts[mode_counter]),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Settings()),
+              );
+            },
 
           ),
         ],
       ),
       body : Center(
-        child: Text(" Material\n   Dialer", style: TextStyle(fontSize: 41,
-        color: Colors.white,
-            backgroundColor: Colors.black),),
+            child: Text(" Material\n   Dialer", style: TextStyle(fontSize: 41,
+                color: fonts[mode_counter],
+                backgroundColor: colors[mode_counter]),),
+    ),
 
-        ),
         bottomNavigationBar: BottomNavigationBar(
           iconSize: 35,
           showSelectedLabels: true,
           showUnselectedLabels: true,
-          backgroundColor: Colors.black,
-          unselectedItemColor: Colors.white70,
-          selectedItemColor: Colors.white70,
+          backgroundColor: colors[mode_counter],
+          unselectedItemColor: fonts[mode_counter],
+          selectedItemColor: fonts[mode_counter],
 
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
@@ -89,7 +112,10 @@ class Dialer extends StatelessWidget{
               icon : IconButton(
                 icon: Icon(Icons.chat),
                 onPressed: () {
-                  null;
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Settings()),
+                  );
                 },
               ),
             ),
@@ -99,38 +125,18 @@ class Dialer extends StatelessWidget{
   }
 }
 
-class DialPad extends StatelessWidget{
-  @override
-  Widget build(BuildContext context){
-    return Column(
-      children: [
-        Container(
-          width: MediaQuery
-              .of(context)
-              .size
-              .width,
-          height: MediaQuery
-              .of(context)
-              .size
-              .height / 14.9,
-          color: Colors.black,
-          child: const Center(child: Text("Dialer", style: TextStyle(fontSize: 41,
-              color: Colors.white,
-              backgroundColor: Colors.black),),),
-
-        ),
-        DialPadNumbers()],
-
-    );
-  }
-}
-
 class DialPadNumbers extends StatefulWidget {
   @override
   _DialPadNumberState createState() => _DialPadNumberState();
 }
 
 class _DialPadNumberState extends State<DialPadNumbers>{
+
+  // Recover theme styles
+  int mode = _DialerState.mode_counter;
+  List<IconData> modes = _DialerState.modes;
+  List<Color> colors = _DialerState.colors;
+  List<Color> fonts  = _DialerState.fonts;
 
   void llamar(String telefono) async{
     await FlutterPhoneDirectCaller.callNumber("+34$telefono");
@@ -166,13 +172,13 @@ class _DialPadNumberState extends State<DialPadNumbers>{
               .of(context)
               .size
               .height / 6,
-          color: Colors.black,
+          color: colors[mode],
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               SizedBox(width: 45, height: 20,),
               Text(number, style: TextStyle(fontSize: 35,
-              color: Colors.white,
+              color: fonts[mode],
               ))],
           ),
         ), Container(
@@ -184,18 +190,18 @@ class _DialPadNumberState extends State<DialPadNumbers>{
               .of(context)
               .size
               .height / 6,
-          color: Colors.black,
+          color: colors[mode],
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              const SizedBox(width: 35,),
+              const SizedBox(width: 25,),
               SizedBox(
                 height: 95.0,
                 width: 95.0,
                 child: FittedBox(
                   child: FloatingActionButton(
                     backgroundColor: Colors.purple,
-                    child: Text("1"),
+                    child: Text("1"), focusColor: fonts[mode],
                     onPressed: () {
                       setState(() {
                         number = addNumber("1", number);
@@ -203,7 +209,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                     },
                   ),
                 ),
-              ), const SizedBox(width: 30,),
+              ), const SizedBox(width: 25,),
               SizedBox(
                 height: 95.0,
                 width: 95.0,
@@ -218,7 +224,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                     },
                   ),
                 ),
-              ), const SizedBox(width: 30,),
+              ), const SizedBox(width: 25,),
               SizedBox(
                 height: 95.0,
                 width: 95.0,
@@ -234,7 +240,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                   ),
                 ),
               ),
-              const SizedBox(width: 30,),
+              const SizedBox(width: 25,),
             ],
           ),
         ), Container(
@@ -246,11 +252,11 @@ class _DialPadNumberState extends State<DialPadNumbers>{
               .of(context)
               .size
               .height / 6,
-          color: Colors.black,
+          color: colors[mode],
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              const SizedBox(width: 35,),
+              const SizedBox(width: 25,),
               SizedBox(
                 height: 95.0,
                 width: 95.0,
@@ -265,7 +271,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                     },
                   ),
                 ),
-              ), const SizedBox(width: 30,),
+              ), const SizedBox(width: 25,),
               SizedBox(
                 height: 95.0,
                 width: 95.0,
@@ -280,7 +286,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                     },
                   ),
                 ),
-              ), const SizedBox(width: 30,),
+              ), const SizedBox(width: 25,),
               SizedBox(
                 height: 95.0,
                 width: 95.0,
@@ -296,7 +302,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                   ),
                 ),
               ),
-              const SizedBox(width: 30,),
+              const SizedBox(width: 25,),
             ],
           ),
         ), Container(
@@ -308,11 +314,11 @@ class _DialPadNumberState extends State<DialPadNumbers>{
               .of(context)
               .size
               .height / 6,
-          color: Colors.black,
+          color: colors[mode],
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              const SizedBox(width: 35,),
+              const SizedBox(width: 25,),
               SizedBox(
                 height: 95.0,
                 width: 95.0,
@@ -327,7 +333,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                     },
                   ),
                 ),
-              ), const SizedBox(width: 30,),
+              ), const SizedBox(width: 25,),
               SizedBox(
                 height: 95.0,
                 width: 95.0,
@@ -342,7 +348,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                     },
                   ),
                 ),
-              ), const SizedBox(width: 30,),
+              ), const SizedBox(width: 25,),
               SizedBox(
                 height: 95.0,
                 width: 95.0,
@@ -358,7 +364,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                   ),
                 ),
               ),
-              const SizedBox(width: 30,),
+              const SizedBox(width: 25,),
             ],
           ),
         ), Container(
@@ -370,11 +376,11 @@ class _DialPadNumberState extends State<DialPadNumbers>{
               .of(context)
               .size
               .height / 6,
-          color: Colors.black,
+          color: colors[mode],
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              const SizedBox(width: 35,),
+              const SizedBox(width: 25,),
               SizedBox(
                 height: 95.0,
                 width: 95.0,
@@ -389,7 +395,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                     },
                   ),
                 ),
-              ), const SizedBox(width: 30,),
+              ), const SizedBox(width: 25,),
               SizedBox(
                 height: 95.0,
                 width: 95.0,
@@ -404,7 +410,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                     },
                   ),
                 ),
-              ), const SizedBox(width: 30,),
+              ), const SizedBox(width: 25,),
               SizedBox(
                 height: 95.0,
                 width: 95.0,
@@ -420,7 +426,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                   ),
                 ),
               ),
-              const SizedBox(width: 30,),
+              const SizedBox(width: 25,),
             ],
           ),
         ),
@@ -433,11 +439,11 @@ class _DialPadNumberState extends State<DialPadNumbers>{
           .of(context)
           .size
           .height / 6,
-      color: Colors.black,
+      color: colors[mode],
     child: Row(
     mainAxisSize: MainAxisSize.min,
     children: <Widget>[
-    const SizedBox(width: 45,),
+    const SizedBox(width: 25,),
           TextButton.icon(
             label: const Text(
               "Call",
