@@ -81,13 +81,24 @@ class _ContactState extends State<Contacts>{
     setState(() {
       contactos = addContactsToList(mapa, contactos, telefonos);
       telefonos = addPhonesToList(mapa, contactos, telefonos);
-
     });
   }
 
   void llamar(List<String> telefonos, index) async{
     String number = "tel:${telefonos[index]}";
     await FlutterPhoneDirectCaller.callNumber(number);
+  }
+
+
+  removePhone(Map<dynamic,dynamic> mapa) {
+    setState(() async {
+      final filePath = await _localFile;
+      _jsonString = jsonEncode(mapa);
+      filePath.writeAsString(_jsonString);
+      contactos = [];
+      telefonos = [];
+      _readJson();
+    });
   }
 
   // Add contacts entries to lists
@@ -166,15 +177,24 @@ class _ContactState extends State<Contacts>{
           return ListTile(
             tileColor: Colors.black ,
             textColor: Colors.white,
-            leading: Icon(Icons.supervised_user_circle, color: Colors.blueGrey,),
+            leading: IconButton(
+              icon : const Icon(Icons.remove_circle, color: Colors.redAccent,),
+              onPressed: (){
+                mapa.remove(telefonos[index]);
+                setState(() {
+                  removePhone(mapa);
+                });
+              },
+
+            ),
             title: Text(contactos[index]),
             subtitle: Text(telefonos[index]),
             trailing: IconButton(
-              icon: const Icon(Icons.call, color: Colors.blueAccent,),
-              onPressed: (){
-                llamar(telefonos, index);
-              },
-            ),
+                  icon: const Icon(Icons.call, color: Colors.blueAccent,),
+                  onPressed: (){
+                    llamar(telefonos, index);
+                  },
+                ),
           );
         },
       ),
