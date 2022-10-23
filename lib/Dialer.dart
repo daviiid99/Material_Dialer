@@ -224,9 +224,10 @@ class _DialPadNumberState extends State<DialPadNumbers>{
       font -= 5;
     } else if (numero.length > 8 && font > 45){
       font = 45;
-
-    }  else if (numero.length == 1){
+    }  else if (numero.length == 1) {
       font == 55;
+    } else if (numero.length > 12){
+      font = 25;
     }
 
     return font;
