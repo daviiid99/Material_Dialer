@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'dart:convert';
 import 'dart:io';
+import 'MaterialDIaler.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 
  class Settings extends StatefulWidget{
    @override
@@ -22,12 +25,17 @@ import 'dart:io';
    List<IconData> modes = [];
    List<Color> colores = [];
    List<Color> fonts  = [];
-   List<String> options = ["Set country prefix", "Rate Us", "About Material Dialer"];
-   List<String> description = ["Choose your default dialer prefix", "Rate this App on Google Play Store", "Check App details"];
-   List<IconData> icons = [Icons.language_rounded, Icons.star_border_rounded, Icons.info_rounded];
+   List<String> options = ["View Project Source Code", "Donate Us", "Rate Us", "About Material Dialer"];
+   List<String> description = ["Open the official GitHub page", "Buy me a coffee", "Rate this App on Google Play Store", "Check App details"];
+   List<IconData> icons = [Icons.language_rounded, Icons.coffee, Icons.star_border_rounded, Icons.info_rounded];
 
    _SettingState(this.mode_counter, this.modes, this.colores, this.fonts);
 
+   _launchURL() async {
+     const url = 'https://github.com/daviiid99/Material_Dialer';
+     final Uri _url = Uri.parse(url);
+     await launchUrl(_url,mode: LaunchMode.externalApplication);
+   }
    @override
      Widget build(BuildContext context){
      return Scaffold(
@@ -46,22 +54,27 @@ import 'dart:io';
          body: ListView.builder(
              itemCount: options.length,
              itemBuilder: (context, index) {
-               return ListTile(
+               return Card(
+                 child: ListTile(
+
                  tileColor: colores[mode_counter] ,
                  textColor: fonts[mode_counter],
-                   leading: IconButton(
-                     icon : Icon(icons[index], color: Colors.blueAccent,),
-                     onPressed: (){
-                       GestureDetector(
-                           child: Text(index.toString()),
-                           onTap: () =>
-                               ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(index.toString()))
-                               ));},
+                   title: Text(options[index]),
+                   subtitle: Text(description[index]),
+                     leading: Icon(icons[index], color: fonts[mode_counter]),
+                     onTap: () {
 
-                   ),
-                 title: Text(options[index]),
-                 subtitle: Text(description[index]),
+                       if (index == 0){
+                         _launchURL();
+                       }
+                       if(index == 3){
+                       Navigator.push(
+                       context,
+                       MaterialPageRoute(builder: (context) => MaterialDialer(mode_counter, modes, colores, fonts)),
+                       );
+                       }
 
-               );},));
+
+               } ));},));
    }
    }
