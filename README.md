@@ -18,9 +18,9 @@ dependencies :
 ```
 
  # Screens
-| Home Screen             | Call Screen                | Contacts Screen            | New Contacts Screen |
+| Home Screen             | Call Screen                | Contacts Screen            | New Contacts Screen | Settings Screen |
 | :---------------------- |:----------------------     |:----------------------|:----------------------|
-| <img src="screens/screen_1.png">                        | <img src="screens/screen_3.png">                           | <img src="screens/screen_2.png">|<img src="screens/screen_4.png">|
+| <img src="screens/screen_1.png">                        | <img src="screens/screen_3.png">                           | <img src="screens/screen_2.png">|<img src="screens/screen_4.png">|<img src="screens/screen_5.png">|
 
  # Get the source
  ```
