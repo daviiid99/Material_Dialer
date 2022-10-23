@@ -183,7 +183,7 @@ class _ContactState extends State<Contacts>{
             child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  const SizedBox(width: 35,),
+                  const SizedBox(width: 23,),
                   TextButton.icon(
                     label: const Text(
                       "Create Contact",
