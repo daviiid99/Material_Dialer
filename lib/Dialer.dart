@@ -134,6 +134,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
   List<IconData> modes = _DialerState.modes;
   List<Color> colors = _DialerState.colors;
   List<Color> fonts  = _DialerState.fonts;
+  double fontsize = 55;
 
   bool _fileExists = false;
   late File _filePath;
@@ -192,7 +193,32 @@ class _DialPadNumberState extends State<DialPadNumbers>{
  // }
 
   String addNumber(String numero, String full){
+    if(full.length == 3) {
+      full += " ";
+    }
+    else if(full.length == 6){
+      full += " ";
+    } else if (full.length == 9){
+      full += " ";
+    }
     return full += numero;
+  }
+
+  double checkFont(String numero, double font){
+
+    if(numero.length == 5){
+      font -= 5;
+    } else if (numero.length == 8) {
+      font -= 5;
+    } else if (numero.length > 8 && font > 45){
+      font = 45;
+
+    }  else if (numero.length == 1){
+      font == 55;
+    }
+
+    return font;
+
   }
 
   String removeCharacter(String numero){
@@ -227,7 +253,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               SizedBox(width: 45, height: 50,),
-              Text(number, style: TextStyle(fontSize: 55,
+              Text(number, style: TextStyle(fontSize: fontsize,
               color: fonts[mode], decorationColor: colors[mode]
               ))],
           ),
@@ -255,6 +281,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                     onPressed: () {
                       setState(() {
                         number = addNumber("1", number);
+                        fontsize = checkFont(number, fontsize);
                       });
                     },
                   ),
@@ -270,6 +297,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                     onPressed: () {
                       setState(() {
                         number = addNumber("2", number);
+                        fontsize = checkFont(number, fontsize);
                       });
                     },
                   ),
@@ -285,6 +313,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                     onPressed: () {
                       setState(() {
                         number = addNumber("3", number);
+                        fontsize = checkFont(number, fontsize);
                       });
                     },
                   ),
@@ -317,6 +346,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                     onPressed: () {
                       setState(() {
                         number = addNumber("4", number);
+                        fontsize = checkFont(number, fontsize);
                       });
                     },
                   ),
@@ -332,6 +362,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                     onPressed: () {
                       setState(() {
                         number = addNumber("5", number);
+                        fontsize = checkFont(number, fontsize);
                       });
                     },
                   ),
@@ -347,6 +378,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                     onPressed: () {
                       setState(() {
                         number = addNumber("6", number);
+                        fontsize = checkFont(number, fontsize);
                       });
                     },
                   ),
@@ -379,6 +411,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                     onPressed: () {
                       setState(() {
                         number = addNumber("7", number);
+                        fontsize = checkFont(number, fontsize);
                       });
                     },
                   ),
@@ -394,6 +427,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                     onPressed: () {
                       setState(() {
                         number = addNumber("8", number);
+                        fontsize = checkFont(number, fontsize);
                       });
                     },
                   ),
@@ -409,6 +443,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                     onPressed: () {
                       setState(() {
                         number = addNumber("9", number);
+                        fontsize = checkFont(number, fontsize);
                       });
                     },
                   ),
@@ -441,6 +476,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                     onPressed: () {
                       setState(() {
                         number = addNumber("#", number);
+                        fontsize = checkFont(number, fontsize);
                       });
                     },
                   ),
@@ -456,6 +492,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                     onPressed: () {
                       setState(() {
                         number = addNumber("0", number);
+                        fontsize = checkFont(number, fontsize);
                       });
                     },
                   ),
@@ -471,6 +508,9 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                     onPressed: () {
                       setState(() {
                         number = removeCharacter(number);
+                        if (fontsize < 55){
+                          fontsize += 3;
+                        }
                       });
                     },
                   ),
