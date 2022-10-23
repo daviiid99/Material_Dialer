@@ -83,7 +83,9 @@ class _CreateContactState extends State<CreateContact>{
                       ),
                     ),
                     onPressed: () {
-                      Navigator.pop(context);
+                      Navigator.of(context).push(
+                          MaterialPageRoute(
+                              builder: (BuildContext context)=> Dialer()));
                       setState(() {
                         mapa.writeJson(phone.text, contact.text );
                       });
