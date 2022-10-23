@@ -8,7 +8,6 @@ import 'Settings.dart';
 import 'Contacts.dart';
 import 'package:path_provider/path_provider.dart';
 
-
 class Dialer extends StatefulWidget{
   @override
   _DialerState createState() => _DialerState();
@@ -99,25 +98,20 @@ class _DialerState extends State<Dialer>{
               ),
             ),
             BottomNavigationBarItem(
+              label: '',
+              icon : IconButton(
+                icon: Icon(Icons.contact_page), color: colors[mode_counter],
+                onPressed: () {null;}
+              ),
+            ),
+            BottomNavigationBarItem(
               label: 'Contacts',
               icon : IconButton(
-                icon: Icon(Icons.contact_page),
+                icon: Icon(Icons.face_rounded),
                 onPressed: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => Contacts()),
-                  );
-                },
-              ),
-            ),
-            BottomNavigationBarItem(
-              label: 'Messages',
-              icon : IconButton(
-                icon: Icon(Icons.chat),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Settings()),
                   );
                 },
               ),
@@ -509,7 +503,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
             ),
             style: TextButton.styleFrom(
               textStyle: TextStyle(color: Colors.black),
-              backgroundColor: Colors.green,fixedSize: const Size(160, 53),
+              backgroundColor: Colors.green,fixedSize: const Size(340, 53),
               shape:RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(24.0),
               ),
@@ -519,29 +513,8 @@ class _DialPadNumberState extends State<DialPadNumbers>{
             number = "";
             })},
             icon: Icon(Icons.call, color: Colors.black,),
-          ), const SizedBox(width: 23,),
-          TextButton.icon(
-            label: const Text(
-              "New Contact",
-              style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.black),
-            ),
-            style: TextButton.styleFrom(
-              textStyle: TextStyle(color: Colors.black),
-              backgroundColor: Colors.orange,fixedSize: const Size(160, 53),
-              shape:RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(24.0),
-              ),
-            ),
-            onPressed: () => {
-              setState(() {
-            _readJson();
-            saveContact(number);
-              }),
-            },
-            icon: Icon(Icons.face_rounded, color: Colors.black,),
-          ),
+          ), const SizedBox(width: 46,),
+
     ]))]);
   }
 }

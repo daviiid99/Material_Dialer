@@ -9,10 +9,98 @@ import 'dart:convert';
 import 'dart:io';
 import 'Dialer.dart';
 import 'package:path_provider/path_provider.dart';
+import 'ManageMap.dart';
 
 class Contacts extends StatefulWidget{
    @override
    _ContactState createState() => _ContactState();
+}
+
+class CreateContact extends StatefulWidget {
+  @override
+  _CreateContactState createState() => _CreateContactState();
+}
+
+class _CreateContactState extends State<CreateContact>{
+
+  final phone = TextEditingController();
+  final contact = TextEditingController();
+  var mapa = ManageMap();
+
+  @override
+  void initState(){
+    mapa.readJson();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    phone.dispose();
+    contact.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context){
+    return Scaffold(
+      backgroundColor: Colors.greenAccent,
+      appBar: AppBar(
+        backgroundColor: Colors.green,
+        title: const Text("Create Contact"),
+      ),
+    body: Container(
+      child: Column(
+          children: <Widget>[
+            Text("\n"),
+            TextFormField(
+              controller: phone,
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              labelText: 'Phone',
+          ),
+        ),
+            Text("\n"),
+
+        TextFormField(
+          controller: contact,
+          decoration: const InputDecoration(
+          border: OutlineInputBorder(),
+          labelText: 'Name',
+          ),
+      ),
+
+            Text("\n\n\n"),
+
+            TextButton.icon(
+              label: const Text(
+                "Save Contact",
+                style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.black),
+              ),
+              style: TextButton.styleFrom(
+                textStyle: TextStyle(color: Colors.black),
+                backgroundColor: Colors.green,
+                shape:RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(24.0),
+                ),
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Dialer()),
+                );
+                setState(() {
+                  mapa.writeJson(phone.text, contact.text );
+                });
+              },
+              icon: Icon(Icons.face_rounded, color: Colors.black,),
+            )
+  ]
+    )));
+  }
 }
 
 
@@ -135,22 +223,6 @@ class _ContactState extends State<Contacts>{
 
 
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-          onPressed: () async {
-            Contact? contact = await contactPicker.selectContact();
-            if (contact !=null){
-              number = contact.phoneNumbers![0];
-              name = contact.fullName.toString();
-              setState(() {
-                mapa[number] = name;
-                contactos = addContactsToList(mapa, contactos, telefonos);
-                telefonos = addPhonesToList(mapa, contactos, telefonos);
-                _writeJson(number, name);
-              });
-            }
-          },
-          child: const Icon(Icons.add),
-      ),
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.black,
@@ -183,6 +255,74 @@ class _ContactState extends State<Contacts>{
           );
         },
       ),
-      );
+
+    bottomNavigationBar:  Container(
+        child: Container(
+            width: MediaQuery
+                .of(context)
+                .size
+                .width,
+            height: MediaQuery
+                .of(context)
+                .size
+                .height / 6,
+            color: Colors.black,
+            child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  const SizedBox(width: 35,),
+                  TextButton.icon(
+                    label: const Text(
+                      "Create Contact",
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.black),
+                    ),
+                    style: TextButton.styleFrom(
+                      textStyle: TextStyle(color: Colors.black),
+                      backgroundColor: Colors.green,
+                      shape:RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(24.0),
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => CreateContact()),
+                      );
+                    },
+                    icon: Icon(Icons.face_rounded, color: Colors.black,),
+                  ), const SizedBox(width: 23,),
+                  TextButton.icon(
+                    label: const Text(
+                      "Pick a Contact",
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.black),
+                    ),
+                    style: TextButton.styleFrom(
+                      textStyle: TextStyle(color: Colors.black),
+                      backgroundColor: Colors.orange,
+                      shape:RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(24.0),
+                      ),
+                    ),
+                    onPressed: () async {
+                      Contact? contact = await contactPicker.selectContact();
+                      if (contact !=null){
+                        number = contact.phoneNumbers![0];
+                        name = contact.fullName.toString();
+                        setState(() {
+                          mapa[number] = name;
+                          contactos = addContactsToList(mapa, contactos, telefonos);
+                          telefonos = addPhonesToList(mapa, contactos, telefonos);
+                          _writeJson(number, name);
+                        });
+                      }
+                    },
+                    icon: Icon(Icons.face_rounded, color: Colors.black,),
+                  ),
+                ]))
+    ),);
   }
 }
