@@ -10,17 +10,23 @@ import 'package:path_provider/path_provider.dart';
 
 class Dialer extends StatefulWidget{
   @override
-  _DialerState createState() => _DialerState();
+  static int mode_counter = 1;
+  static List<IconData> modes = [Icons.light_mode, Icons.dark_mode];
+  static List<Color> colors = [Colors.white, Colors.black];
+  static List<Color> fonts = [Colors.black, Colors.white];
+  _DialerState createState() => _DialerState(mode_counter, modes, colors, fonts);
 }
 
 class _DialerState extends State<Dialer>{
-  static int mode_counter = 1;
- static List<IconData> modes = [Icons.light_mode, Icons.dark_mode];
- static List<Color> colors = [Colors.white, Colors.black];
- static List<Color> fonts = [Colors.black, Colors.white];
+  int mode_counter = 1;
+  List<IconData> modes = [];
+  List<Color> colors = [];
+  List<Color> fonts  = [];
+
+  _DialerState(this.mode_counter, this.modes, this.colors, this.fonts);
 
   void _navigateToNextScreen(BuildContext context) {
-  Navigator.of(context).push(MaterialPageRoute(builder: (context) => Contacts()));
+  Navigator.of(context).push(MaterialPageRoute(builder: (context) => Contacts(mode_counter, modes, colors, fonts)));
    }
 
   static const List<Widget> _pages = <Widget>[
@@ -63,7 +69,7 @@ class _DialerState extends State<Dialer>{
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Settings()),
+                MaterialPageRoute(builder: (context) => Settings(mode_counter, modes, colors, fonts)),
               );
             },
 
@@ -92,7 +98,7 @@ class _DialerState extends State<Dialer>{
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => DialPadNumbers()),
+                    MaterialPageRoute(builder: (context) => DialPadNumbers(mode_counter, modes, colors, fonts)),
                   );
                 },
               ),
@@ -111,7 +117,7 @@ class _DialerState extends State<Dialer>{
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Contacts()),
+                    MaterialPageRoute(builder: (context) => Contacts(mode_counter, modes, colors, fonts)),
                   );
                 },
               ),
@@ -124,16 +130,22 @@ class _DialerState extends State<Dialer>{
 
 class DialPadNumbers extends StatefulWidget {
   @override
-  _DialPadNumberState createState() => _DialPadNumberState();
+  int mode_counter = 1;
+  List<IconData> modes = [];
+  List<Color> colors = [];
+  List<Color> fonts  = [];
+  DialPadNumbers(this.mode_counter, this.modes, this.colors, this.fonts);
+  _DialPadNumberState createState() => _DialPadNumberState(mode_counter, modes, colors, fonts);
 }
 
 class _DialPadNumberState extends State<DialPadNumbers>{
 
   // Recover theme styles
-  int mode = _DialerState.mode_counter;
-  List<IconData> modes = _DialerState.modes;
-  List<Color> colors = _DialerState.colors;
-  List<Color> fonts  = _DialerState.fonts;
+  int mode_counter = 1;
+  List<IconData> modes = [];
+  List<Color> colors = [];
+  List<Color> fonts  = [];
+  _DialPadNumberState(this.mode_counter, this.modes, this.colors, this.fonts);
   double fontsize = 55;
 
   bool _fileExists = false;
@@ -248,13 +260,13 @@ class _DialPadNumberState extends State<DialPadNumbers>{
               .of(context)
               .size
               .height / 6,
-          color: colors[mode],
+          color: colors[mode_counter],
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               SizedBox(width: 45, height: 50,),
               Text(number, style: TextStyle(fontSize: fontsize,
-              color: fonts[mode], decorationColor: colors[mode]
+              color: fonts[mode_counter], decorationColor: colors[mode_counter]
               ))],
           ),
         ), Container(
@@ -266,7 +278,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
               .of(context)
               .size
               .height / 6,
-          color: colors[mode],
+          color: colors[mode_counter],
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
@@ -277,7 +289,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                 child: FittedBox(
                   child: FloatingActionButton(
                     backgroundColor: Colors.purple,
-                    child: Text("1"), focusColor: fonts[mode],
+                    child: Text("1"), focusColor: fonts[mode_counter],
                     onPressed: () {
                       setState(() {
                         number = addNumber("1", number);
@@ -331,7 +343,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
               .of(context)
               .size
               .height / 6,
-          color: colors[mode],
+          color: colors[mode_counter],
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
@@ -396,7 +408,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
               .of(context)
               .size
               .height / 6,
-          color: colors[mode],
+          color: colors[mode_counter],
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
@@ -461,7 +473,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
               .of(context)
               .size
               .height / 6,
-          color: colors[mode],
+          color: colors[mode_counter],
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
@@ -529,7 +541,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
           .of(context)
           .size
           .height / 6,
-      color: colors[mode],
+      color: colors[mode_counter],
     child: Row(
     mainAxisSize: MainAxisSize.min,
     children: <Widget>[

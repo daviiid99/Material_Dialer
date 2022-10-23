@@ -13,11 +13,26 @@ import 'CreateContact.dart';
 
 class Contacts extends StatefulWidget{
    @override
-   _ContactState createState() => _ContactState();
+   // Recover theme styles
+   int mode_counter = 1;
+   List<IconData> modes = [];
+   List<Color> colores = [];
+   List<Color> fonts  = [];
+   Contacts(this.mode_counter, this.modes, this.colores, this.fonts);
+   double fontsize = 55;
+
+   _ContactState createState() => _ContactState(mode_counter, modes, colores, fonts);
 }
 
 
 class _ContactState extends State<Contacts>{
+
+  int mode_counter = 1;
+  List<IconData> modes = [];
+  List<Color> colores = [];
+  List<Color> fonts  = [];
+
+  _ContactState(this.mode_counter, this.modes, this.colores, this.fonts);
 
   var filePath = 'assets/contacts.json';
   var contactos = ["Example"];
@@ -136,17 +151,23 @@ class _ContactState extends State<Contacts>{
 
 
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: colores[mode_counter],
       appBar: AppBar(
-        backgroundColor: Colors.black,
-        title: const Text("My Contacts"),
+        backgroundColor: colores[mode_counter],
+        title: Text("My Contacts",
+          style: TextStyle(color: fonts[mode_counter]),
+
+        ),
+        iconTheme: IconThemeData(
+          color: fonts[mode_counter], //change your color here
+        ),
     ),
       body : ListView.builder(
         itemCount: contactos.length,
         itemBuilder: (context, index){
           return ListTile(
-            tileColor: Colors.black ,
-            textColor: Colors.white,
+            tileColor: colores[mode_counter] ,
+            textColor: fonts[mode_counter],
             leading: IconButton(
               icon : const Icon(Icons.remove_circle, color: Colors.redAccent,),
               onPressed: (){
@@ -179,7 +200,7 @@ class _ContactState extends State<Contacts>{
                 .of(context)
                 .size
                 .height / 6,
-            color: Colors.black,
+            color: colores[mode_counter],
             child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
