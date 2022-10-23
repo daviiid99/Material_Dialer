@@ -204,7 +204,7 @@ class _ContactState extends State<Contacts>{
             child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  const SizedBox(width: 23,),
+                  const SizedBox(width: 25,),
                   TextButton.icon(
                     label: const Text(
                       "Create Contact",
@@ -226,7 +226,7 @@ class _ContactState extends State<Contacts>{
                       );
                     },
                     icon: Icon(Icons.face_rounded, color: Colors.black,),
-                  ), const SizedBox(width: 23,),
+                  ), const SizedBox(width: 25,),
                   TextButton.icon(
                     label: const Text(
                       "Pick a Contact",
@@ -255,7 +255,7 @@ class _ContactState extends State<Contacts>{
                       }
                     },
                     icon: Icon(Icons.face_rounded, color: Colors.black,),
-                  ),
+                  ),  const SizedBox(width: 25,),
                 ]))
     ),);
   }
