@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
+import 'package:material_calculator/SetLanguage.dart';
 import 'dart:convert';
 import 'dart:io';
 import 'MaterialDIaler.dart';
@@ -25,9 +26,9 @@ import 'package:url_launcher/url_launcher.dart';
    List<IconData> modes = [];
    List<Color> colores = [];
    List<Color> fonts  = [];
-   List<String> options = ["View Project Source Code", "Donate Us", "Rate Us", "About Material Dialer"];
-   List<String> description = ["Open the official GitHub page", "Buy me a coffee", "Rate this App on Google Play Store", "Check App details"];
-   List<IconData> icons = [Icons.language_rounded, Icons.coffee, Icons.star_border_rounded, Icons.info_rounded];
+   List<String> options = ["View Project Source Code", "Set UI language", "Donate Us", "Rate Us", "About Material Dialer"];
+   List<String> description = ["Open the official GitHub page", "Choose your default language", "Buy me a coffee", "Rate this App on Google Play Store", "Check App details"];
+   List<IconData> icons = [Icons.laptop_chromebook_rounded, Icons.language_rounded, Icons.coffee, Icons.star_border_rounded, Icons.info_rounded];
 
    _SettingState(this.mode_counter, this.modes, this.colores, this.fonts);
 
@@ -67,7 +68,15 @@ import 'package:url_launcher/url_launcher.dart';
                        if (index == 0){
                          _launchURL();
                        }
-                       if(index == 3){
+
+                       else if (index == 1){
+                         Navigator.push(
+                           context,
+                           MaterialPageRoute(builder: (context) => SetLanguage(mode_counter, modes, colores, fonts)),
+                         );
+
+                       }
+                       if(index == 4){
                        Navigator.push(
                        context,
                        MaterialPageRoute(builder: (context) => MaterialDialer(mode_counter, modes, colores, fonts)),

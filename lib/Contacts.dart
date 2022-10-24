@@ -252,7 +252,10 @@ class _ContactState extends State<Contacts>{
                           telefonos = addPhonesToList(mapa, contactos, telefonos);
                           _writeJson(number, name);
                         });
-                      }
+                      };
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text("Saved your contact\n" + name + "(" + number+ ")"),
+                      ));
                     },
                     icon: Icon(Icons.face_rounded, color: Colors.black,),
                   ),  const SizedBox(width: 25,),

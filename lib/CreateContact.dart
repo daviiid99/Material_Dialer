@@ -89,6 +89,9 @@ class _CreateContactState extends State<CreateContact>{
                       setState(() {
                         mapa.writeJson(phone.text, contact.text );
                       });
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text("Saved your contact\n" + contact.text + "(" + phone.text+ ")"),
+                      ));
                     },
                     icon: Icon(Icons.face_rounded, color: Colors.black,),
                   )
