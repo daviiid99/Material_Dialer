@@ -163,8 +163,8 @@ class _DialerState extends State<Dialer>{
 
       "Contacts" : {
         "title" : "Mes Contacts",
-        "button1" : "Créer un contact",
-        "button2" : "Choisissez un contact"
+        "button1" : "Créer contact",
+        "button2" : "Choisissez contact"
       },
 
       "CreateContact" : {

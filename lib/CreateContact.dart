@@ -94,11 +94,11 @@ class _CreateContactState extends State<CreateContact>{
                     onPressed: () {
                       setState(() {
                         mapa.writeJson(phone.text, contact.text );
+                        Restart.restartApp();
                       });
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: Text(language[current_language]["CreateContact"]["toaster"]+"\n" + contact.text + "(" + phone.text+ ")"),
                       ));
-                      Restart.restartApp();
                     },
 
                     icon: Icon(Icons.face_rounded, color: Colors.black,),
