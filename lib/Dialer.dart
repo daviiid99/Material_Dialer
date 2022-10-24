@@ -7,6 +7,7 @@ import 'dart:io';
 import 'Settings.dart';
 import 'Contacts.dart';
 import 'package:path_provider/path_provider.dart';
+import 'ManageMap.dart';
 
 class Dialer extends StatefulWidget{
   @override
@@ -15,6 +16,7 @@ class Dialer extends StatefulWidget{
   static List<Color> colors = [Colors.white, Colors.black];
   static List<Color> fonts = [Colors.black, Colors.white];
   _DialerState createState() => _DialerState(mode_counter, modes, colors, fonts);
+
 }
 
 class _DialerState extends State<Dialer>{
@@ -22,11 +24,12 @@ class _DialerState extends State<Dialer>{
   List<IconData> modes = [];
   List<Color> colors = [];
   List<Color> fonts  = [];
+  var idioma = ManageMap(jsonFile: "languages.json");
 
   _DialerState(this.mode_counter, this.modes, this.colors, this.fonts);
 
   void _navigateToNextScreen(BuildContext context) {
-  Navigator.of(context).push(MaterialPageRoute(builder: (context) => Contacts(mode_counter, modes, colors, fonts)));
+  Navigator.of(context).push(MaterialPageRoute(builder: (context) => Contacts(mode_counter, modes, colors, fonts, currentLanguage, language)));
    }
 
   static const List<Widget> _pages = <Widget>[
@@ -43,6 +46,297 @@ class _DialerState extends State<Dialer>{
       size: 150,
     ),
   ];
+
+  Map<dynamic, dynamic> language = {
+    "language" : "English",
+
+    "English" : {
+      "Settings" : {
+        "title" : "My Settings",
+        "card1_title" : "View Project Source Code",
+        "card1_subtitle" : "Open the official GitHUb page",
+        "card2_title" : "Set UI Language",
+        "card2_subtitle" : "Choose your default language",
+        "card3_title" : "Donate Us",
+        "card3_subtitle" : "Buy me a coffee",
+        "card4_title" : "Rate Us",
+        "card4_subtitle" : "Rate this App on Google Play Store",
+        "card5_title" : "About Material Dialer",
+        "card5_subtitle" : "Check App details"
+      },
+
+      "About" : {
+        "card1" : "Name",
+        "card2" : "Version",
+        "card3" : "Build Number",
+        "card4" : "Package Name"
+      },
+
+      "Contacts" : {
+        "title" : "My Contacts",
+        "button1" : "Create Contact",
+        "button2" : "Pick a Contact"
+      },
+
+      "CreateContact" : {
+        "title" : "Create Contact",
+        "box1" : "Phone",
+        "box2" : "Name",
+        "button" : "Save Contact"
+      },
+
+      "Country" : {
+        "title" : "Choose Your Language",
+        "toaster" : "Default language set to :"
+      },
+
+      "Calls" : "Call"
+
+    },
+
+    "Español" : {
+      "Settings": {
+        "title": "Mis Ajustes",
+        "card1_title": "Ver código fuente del programa",
+        "card1_subtitle": "Abrir la página oficial de GitHub",
+        "card2_title": "Asignar idioma a interfaz",
+        "card2_subtitle": "Selecciona tu idioma por defecto",
+        "card3_title": "Haz una donación",
+        "card3_subtitle": "Págame un café",
+        "card4_title": "Danos una puntuación",
+        "card4_subtitle": "Puntua esta aplicación en Google Play Store",
+        "card5_title": "Sobre Material Dialer",
+        "card5_subtitle": "Ver detalles de la aplicación"
+      },
+
+      "About": {
+        "card1": "Nombre",
+        "card2": "Versión",
+        "card3": "Número de compilación",
+        "card4": "Nombre de paquete"
+      },
+
+      "Contacts": {
+        "title": "Mis Contactos",
+        "button1": "Crear Contacto",
+        "button2": "Añadir Contacto"
+      },
+
+      "CreateContact": {
+        "title": "Crear Contacto",
+        "box1": "Teléfono",
+        "box2": "Nombre",
+        "button": "Guardar Contacto",
+        "toaster" : "Guardado el contacto"
+      },
+
+      "Country" : {
+        "title" : "Elige Tu Idioma",
+        "toaster" : "Idioma por defecto cambiado a :"
+      },
+
+      "Calls": "Llamar"
+
+    },
+
+    "Français" : {
+      "Settings" : {
+        "title" : "Mes Paramètres",
+        "card1_title" : "Afficher le code source du projet",
+        "card1_subtitle" : "Ouvrez la page officielle GitHUb",
+        "card2_title" : "Définir la langue de l'interface utilisateur",
+        "card2_subtitle" : "Choisissez votre langue par défaut",
+        "card3_title" : "Faites-nous un don",
+        "card3_subtitle" : "Achetez-moi un café",
+        "card4_title" : "Évaluez nous",
+        "card4_subtitle" : "Évaluez cette application sur Google Play Store",
+        "card5_title" : "À propos du Material Dialer",
+        "card5_subtitle" : "Vérifier les détails de l'application"
+      },
+
+      "About" : {
+        "card1" : "Nom",
+        "card2" : "Version",
+        "card3" : "Numéro de construction",
+        "card4" : "Nom du paquet"
+      },
+
+      "Contacts" : {
+        "title" : "Mes Contacts",
+        "button1" : "Créer un contact",
+        "button2" : "Choisissez un contact"
+      },
+
+      "CreateContact" : {
+        "title" : "Créer un Contact",
+        "box1" : "Téléphone",
+        "box2" : "Nom",
+        "button" : "Enregistrer le Contact"
+      },
+
+      "Country" : {
+        "title" : "Choisissez votre Langue",
+        "toaster" : "Langue par défaut définie sur :"
+      },
+
+      "Calls" : "Téléphoner"
+
+    },
+
+    "Italiano" : {
+      "Settings" : {
+        "title" : "Le mie Impostazioni",
+        "card1_title" : "Visualizza il codice sorgente del progetto",
+        "card1_subtitle" : "Apri la pagina ufficiale di GitHub",
+        "card2_title" : "Imposta la lingua dell'interfaccia utente",
+        "card2_subtitle" : "Scegli la tua lingua predefinita",
+        "card3_title" : "Donaci",
+        "card3_subtitle" : "Offrimi un caffè",
+        "card4_title" : "Valutaci",
+        "card4_subtitle" : "Valuta questa app su Google Play Store",
+        "card5_title" : "Informazioni su Material Dialer",
+        "card5_subtitle" : "Controlla i dettagli dell'app"
+      },
+
+      "About" : {
+        "card1" : "Nome",
+        "card2" : "Versione",
+        "card3" : "Numero di build",
+        "card4" : "Nome del pacchetto"
+      },
+
+      "Contacts" : {
+        "title" : "I miei Contatti",
+        "button1" : "Crea Contatto",
+        "button2" : "Scegli Contatto"
+      },
+
+      "CreateContact" : {
+        "title" : "Crea Contatto",
+        "box1" : "Telefono",
+        "box2" : "Nome",
+        "button" : "Salva Contatto"
+      },
+
+      "Country" : {
+        "title" : "Scegli la tua Lingua",
+        "toaster" : "Lingua predefinita impostata su :"
+      },
+
+      "Calls" : "Chiamata"
+
+    },
+
+    "Deutsch" : {
+      "Settings" : {
+        "title" : "Meine Einstellungen",
+        "card1_title" : "Projektquellcode anzeigen",
+        "card1_subtitle" : "Öffnen Sie die offizielle GitHub-Seite",
+        "card2_title" : "Legen sie UI",
+        "card2_subtitle" : "Wählen Sie Ihre Standardsprache",
+        "card3_title" : "Spenden Sie uns",
+        "card3_subtitle" : "Kaufen Sie mir einen Kaffee",
+        "card4_title" : "Bewerten Sie uns",
+        "card4_subtitle" : "Bewerten Sie diese App im Google Play Store",
+        "card5_title" : "Über Material Dialer",
+        "card5_subtitle" : "Überprüfen Sie die App-Details"
+      },
+
+      "About" : {
+        "card1" : "Name",
+        "card2" : "Ausführung",
+        "card3" : "Build-Nummer",
+        "card4" : "Paketnamen"
+      },
+
+      "Contacts" : {
+        "title" : "Meine Kontakte",
+        "button1" : "Kontakt Erstellen",
+        "button2" : "Wählen Sie einen Kontakt aus"
+      },
+
+      "CreateContact" : {
+        "title" : "Kontakt Erstellen",
+        "box1" : "Telefon",
+        "box2" : "Name",
+        "button" : "Kontakt speichern"
+      },
+
+      "Country" : {
+        "title" : "Wähle deine Sprache",
+        "toaster" : "Standardsprache eingestellt auf :"
+      },
+
+      "Calls" : "Anruf"
+
+    },
+
+    "中国人" : {
+
+    },
+
+    "日本" : {
+
+    }
+  };
+
+  bool _fileExists = false;
+  late File _filePath;
+  String jsonFile = "languages.json";
+  late String _jsonString;
+  late String currentLanguage;
+
+  // Get app local path for App data
+  Future<String> get _localPath async {
+    final directory = await getApplicationDocumentsDirectory();
+    return directory.path;
+  }
+
+// Get file object with full path
+  Future<File> get _localFile async {
+    final path = await _localPath;
+    return File('$path/$jsonFile');
+  }
+
+  // Read json and update the lists on runtime
+  readJson() async {
+    _filePath = await _localFile;
+    _fileExists = await _filePath.exists();
+
+    if (_fileExists) {
+      try {
+        _jsonString = await _filePath.readAsString();
+        language = jsonDecode(_jsonString);
+      } catch (e) {
+
+      }
+    }
+    setState(() {
+      this.currentLanguage = language["language"];
+      language = jsonDecode(_jsonString);
+    });
+
+  }
+
+  // Write latest key and value to json
+  void writeJson(String key, dynamic value) async {
+    final filePath = await _localFile;
+    Map<String, dynamic> _newJson = {key: value};
+    language.addAll(_newJson);
+    _jsonString = jsonEncode(language);
+    filePath.writeAsString(_jsonString);
+  }
+
+  @override
+  void initState(){
+    readJson();
+    setState(() {
+      readJson();
+      currentLanguage = language["language"];
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context){
     return Scaffold(
@@ -69,8 +363,8 @@ class _DialerState extends State<Dialer>{
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Settings(mode_counter, modes, colors, fonts)),
-              );
+                MaterialPageRoute(builder: (context) => Settings(mode_counter, modes, colors, fonts, currentLanguage, language),
+              ));
             },
 
           ),
@@ -92,13 +386,13 @@ class _DialerState extends State<Dialer>{
 
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-                label: 'Calls',
+                label: '',
               icon : IconButton(
                 icon: Icon(Icons.call_rounded),
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => DialPadNumbers(mode_counter, modes, colors, fonts)),
+                    MaterialPageRoute(builder: (context) => DialPadNumbers(mode_counter, modes, colors, fonts, currentLanguage, language)),
                   );
                 },
               ),
@@ -111,13 +405,13 @@ class _DialerState extends State<Dialer>{
               ),
             ),
             BottomNavigationBarItem(
-              label: 'Contacts',
+              label: "",
               icon : IconButton(
                 icon: Icon(Icons.face_rounded),
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Contacts(mode_counter, modes, colors, fonts)),
+                    MaterialPageRoute(builder: (context) => Contacts(mode_counter, modes, colors, fonts, currentLanguage, language)),
                   );
                 },
               ),
@@ -134,8 +428,10 @@ class DialPadNumbers extends StatefulWidget {
   List<IconData> modes = [];
   List<Color> colors = [];
   List<Color> fonts  = [];
-  DialPadNumbers(this.mode_counter, this.modes, this.colors, this.fonts);
-  _DialPadNumberState createState() => _DialPadNumberState(mode_counter, modes, colors, fonts);
+  String current_language = "";
+  Map<dynamic, dynamic> language = {};
+  DialPadNumbers(this.mode_counter, this.modes, this.colors, this.fonts, this.current_language, this.language);
+  _DialPadNumberState createState() => _DialPadNumberState(mode_counter, modes, colors, fonts, current_language, language);
 }
 
 class _DialPadNumberState extends State<DialPadNumbers>{
@@ -145,7 +441,9 @@ class _DialPadNumberState extends State<DialPadNumbers>{
   List<IconData> modes = [];
   List<Color> colors = [];
   List<Color> fonts  = [];
-  _DialPadNumberState(this.mode_counter, this.modes, this.colors, this.fonts);
+  String current_language = "";
+  Map<dynamic, dynamic> language = {};
+  _DialPadNumberState(this.mode_counter, this.modes, this.colors, this.fonts, this.current_language, this.language);
   double fontsize = 55;
 
   bool _fileExists = false;
@@ -548,8 +846,8 @@ class _DialPadNumberState extends State<DialPadNumbers>{
     children: <Widget>[
     const SizedBox(width: 23.5,),
           TextButton.icon(
-            label: const Text(
-              "Call",
+            label: Text(
+              language[current_language]["Calls"],
               style: TextStyle(
                   fontSize: 16,
                   color: Colors.black),

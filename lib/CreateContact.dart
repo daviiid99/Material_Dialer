@@ -10,10 +10,15 @@ import 'dart:io';
 import 'Dialer.dart';
 import 'package:path_provider/path_provider.dart';
 import 'ManageMap.dart';
+import 'package:restart_app/restart_app.dart';
+
 
 class CreateContact extends StatefulWidget {
   @override
-  _CreateContactState createState() => _CreateContactState();
+  String current_language = "";
+  Map<dynamic, dynamic> language = {};
+  CreateContact(this.current_language, this.language);
+  _CreateContactState createState() => _CreateContactState(current_language, language);
 }
 
 class _CreateContactState extends State<CreateContact>{
@@ -21,6 +26,10 @@ class _CreateContactState extends State<CreateContact>{
   final phone = TextEditingController();
   final contact = TextEditingController();
   var mapa = ManageMap();
+  String current_language = "";
+  Map<dynamic, dynamic> language = {};
+
+  _CreateContactState(this.current_language, this.language);
 
   @override
   void initState(){
@@ -42,7 +51,7 @@ class _CreateContactState extends State<CreateContact>{
         backgroundColor: Colors.greenAccent,
         appBar: AppBar(
           backgroundColor: Colors.green,
-          title: const Text("Create Contact"),
+          title:  Text(language[current_language]["CreateContact"]["title"]),
         ),
         body: Container(
             child: Column(
@@ -51,26 +60,26 @@ class _CreateContactState extends State<CreateContact>{
                   TextFormField(
                     controller: phone,
                     keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
+                    decoration:  InputDecoration(
                       border: OutlineInputBorder(),
-                      labelText: 'Phone',
+                      labelText: language[current_language]["CreateContact"]["box1"],
                     ),
                   ),
                   Text("\n"),
 
                   TextFormField(
                     controller: contact,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       border: OutlineInputBorder(),
-                      labelText: 'Name',
+                      labelText: language[current_language]["CreateContact"]["box2"],
                     ),
                   ),
 
                   Text("\n\n\n"),
 
                   TextButton.icon(
-                    label: const Text(
-                      "Save Contact",
+                    label:  Text(
+                      language[current_language]["CreateContact"]["button"],
                       style: TextStyle(
                           fontSize: 16,
                           color: Colors.black),
@@ -83,16 +92,15 @@ class _CreateContactState extends State<CreateContact>{
                       ),
                     ),
                     onPressed: () {
-                      Navigator.of(context).push(
-                          MaterialPageRoute(
-                              builder: (BuildContext context)=> Dialer()));
                       setState(() {
                         mapa.writeJson(phone.text, contact.text );
                       });
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text("Saved your contact\n" + contact.text + "(" + phone.text+ ")"),
+                      content: Text(language[current_language]["CreateContact"]["toaster"]+"\n" + contact.text + "(" + phone.text+ ")"),
                       ));
+                      Restart.restartApp();
                     },
+
                     icon: Icon(Icons.face_rounded, color: Colors.black,),
                   )
                 ]

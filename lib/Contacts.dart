@@ -18,10 +18,12 @@ class Contacts extends StatefulWidget{
    List<IconData> modes = [];
    List<Color> colores = [];
    List<Color> fonts  = [];
-   Contacts(this.mode_counter, this.modes, this.colores, this.fonts);
+   String current_language = "";
+   Map<dynamic, dynamic> language = {};
+   Contacts(this.mode_counter, this.modes, this.colores, this.fonts, this.current_language, this.language);
    double fontsize = 55;
 
-   _ContactState createState() => _ContactState(mode_counter, modes, colores, fonts);
+   _ContactState createState() => _ContactState(mode_counter, modes, colores, fonts, current_language, language);
 }
 
 
@@ -31,8 +33,10 @@ class _ContactState extends State<Contacts>{
   List<IconData> modes = [];
   List<Color> colores = [];
   List<Color> fonts  = [];
+  String current_language = "";
+  Map<dynamic, dynamic> language = {};
 
-  _ContactState(this.mode_counter, this.modes, this.colores, this.fonts);
+  _ContactState(this.mode_counter, this.modes, this.colores, this.fonts, this.current_language, this.language);
 
   var filePath = 'assets/contacts.json';
   var contactos = ["Example"];
@@ -143,6 +147,8 @@ class _ContactState extends State<Contacts>{
     _readJson();
     number = "";
     name = "";
+    contactos = addContactsToList(mapa, contactos, telefonos);
+    telefonos = addPhonesToList(mapa, contactos, telefonos);
     super.initState();
   }
 
@@ -154,7 +160,7 @@ class _ContactState extends State<Contacts>{
       backgroundColor: colores[mode_counter],
       appBar: AppBar(
         backgroundColor: colores[mode_counter],
-        title: Text("My Contacts",
+        title: Text(language[current_language]["Contacts"]["title"],
           style: TextStyle(color: fonts[mode_counter]),
 
         ),
@@ -206,8 +212,8 @@ class _ContactState extends State<Contacts>{
                 children: <Widget>[
                   const SizedBox(width: 25,),
                   TextButton.icon(
-                    label: const Text(
-                      "Create Contact",
+                    label: Text(
+                      language[current_language]["Contacts"]["button1"],
                       style: TextStyle(
                           fontSize: 16,
                           color: Colors.black),
@@ -222,14 +228,14 @@ class _ContactState extends State<Contacts>{
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => CreateContact()),
+                        MaterialPageRoute(builder: (context) => CreateContact(current_language, language)),
                       );
                     },
                     icon: Icon(Icons.face_rounded, color: Colors.black,),
                   ), const SizedBox(width: 25,),
                   TextButton.icon(
-                    label: const Text(
-                      "Pick a Contact",
+                    label: Text(
+                      language[current_language]["Contacts"]["button2"],
                       style: TextStyle(
                           fontSize: 16,
                           color: Colors.black),

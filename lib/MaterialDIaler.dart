@@ -16,8 +16,10 @@ class MaterialDialer extends StatefulWidget{
   List<IconData> modes = [];
   List<Color> colores = [];
   List<Color> fonts  = [];
-  MaterialDialer(this.mode_counter, this.modes, this.colores, this.fonts);
-  _MaterialDialerState createState() => _MaterialDialerState(mode_counter, modes, colores, fonts);
+  String current_language = "";
+  Map<dynamic, dynamic> language = {};
+  MaterialDialer(this.mode_counter, this.modes, this.colores, this.fonts, this.current_language, this.language);
+  _MaterialDialerState createState() => _MaterialDialerState(mode_counter, modes, colores, fonts, current_language, language);
 
 }
 
@@ -27,9 +29,11 @@ class _MaterialDialerState extends State<MaterialDialer>{
   String packageName = "";
   String version = "";
   String buildNumber = "";
+  String current_language = "";
+  Map<dynamic, dynamic> language = {};
 
   @override
-  _MaterialDialerState(this.mode_counter, this.modes, this.colores, this.fonts);
+  _MaterialDialerState(this.mode_counter, this.modes, this.colores, this.fonts, this.current_language, this.language);
 
 
   int mode_counter = 1;
@@ -37,8 +41,8 @@ class _MaterialDialerState extends State<MaterialDialer>{
   List<Color> colores = [];
   List<Color> fonts  = [];
   List<String> images = ['assets/images/light_banner.png', 'assets/images/black_banner.png'];
-  List<String> options = ["Name", "Version", "Build Number", "Package Name"];
-  List<String> description = ["", "", "", ""];
+  List<String> options = [];
+  List<String> description = [];
   List<IconData> icons = [Icons.drive_file_rename_outline_rounded, Icons.format_list_numbered, Icons.build, Icons.gif_box];
 
   void checkBuild(){
@@ -54,8 +58,9 @@ class _MaterialDialerState extends State<MaterialDialer>{
     });}
 
   @override
-    void initState(){
+  void initState(){
     checkBuild();
+    options = [language[current_language]["About"]["card1"], language[current_language]["About"]["card2"], language[current_language]["About"]["card3"], language[current_language]["About"]["card4"]];
     description = [appName, version, buildNumber, packageName];
     super.initState();
   }
@@ -66,7 +71,7 @@ class _MaterialDialerState extends State<MaterialDialer>{
         backgroundColor: colores[mode_counter],
         appBar: AppBar(
           backgroundColor: colores[mode_counter],
-          title: Text("About Material Dialer",
+          title: Text(language[current_language]["About"]["title"],
             style: TextStyle(color: fonts[mode_counter]),
 
           ),

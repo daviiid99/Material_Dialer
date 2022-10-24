@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:material_calculator/SetLanguage.dart';
+import 'package:path_provider/path_provider.dart';
 import 'dart:convert';
 import 'dart:io';
 import 'MaterialDIaler.dart';
@@ -16,8 +17,10 @@ import 'package:url_launcher/url_launcher.dart';
    List<IconData> modes = [];
    List<Color> colores = [];
    List<Color> fonts  = [];
-   Settings(this.mode_counter, this.modes, this.colores, this.fonts);
-   _SettingState createState() => _SettingState(mode_counter, modes, colores, fonts);
+   String current_language = "";
+   Map<dynamic, dynamic> language = {};
+   Settings(this.mode_counter, this.modes, this.colores, this.fonts, this.current_language, this.language);
+   _SettingState createState() => _SettingState(mode_counter, modes, colores, fonts, current_language, language);
 
    }
 
@@ -26,24 +29,73 @@ import 'package:url_launcher/url_launcher.dart';
    List<IconData> modes = [];
    List<Color> colores = [];
    List<Color> fonts  = [];
-   List<String> options = ["View Project Source Code", "Set UI language", "Donate Us", "Rate Us", "About Material Dialer"];
-   List<String> description = ["Open the official GitHub page", "Choose your default language", "Buy me a coffee", "Rate this App on Google Play Store", "Check App details"];
+   List<dynamic> options = [];
+   List<dynamic> description = [];
+   Map<dynamic, dynamic> language = {};
+   String current_language = "";
    List<IconData> icons = [Icons.laptop_chromebook_rounded, Icons.language_rounded, Icons.coffee, Icons.star_border_rounded, Icons.info_rounded];
 
-   _SettingState(this.mode_counter, this.modes, this.colores, this.fonts);
+
+   _SettingState(this.mode_counter, this.modes, this.colores, this.fonts, this.current_language, this.language);
 
    _launchURL() async {
      const url = 'https://github.com/daviiid99/Material_Dialer';
      final Uri _url = Uri.parse(url);
      await launchUrl(_url,mode: LaunchMode.externalApplication);
    }
-   @override
+
+   bool _fileExists = false;
+   late File _filePath;
+   String jsonFile = "languages.json";
+   late String _jsonString;
+
+   // Get app local path for App data
+   Future<String> get _localPath async {
+     final directory = await getApplicationDocumentsDirectory();
+     return directory.path;
+   }
+
+// Get file object with full path
+     Future<File> get _localFile async {
+       final path = await _localPath;
+       return File('$path/$jsonFile');
+     }
+
+     // Read json and update the lists on runtime
+     readJson() async {
+       _filePath = await _localFile;
+       _fileExists = await _filePath.exists();
+
+       if (_fileExists) {
+         try {
+           _jsonString = await _filePath.readAsString();
+           language = jsonDecode(_jsonString);
+         } catch (e) {
+
+         }
+       }
+       setState(() {
+         this.current_language = language["language"];
+         language = jsonDecode(_jsonString);
+       });
+
+     }
+
+
+     @override
+     void initState(){
+     options = [language[current_language]["Settings"]["card1_title"], language[current_language]["Settings"]["card2_title"], language[current_language]["Settings"]["card3_title"], language[current_language]["Settings"]["card4_title"], language[current_language]["Settings"]["card5_title"]];
+     description = [language[current_language]["Settings"]["card1_subtitle"], language[current_language]["Settings"]["card2_subtitle"], language[current_language]["Settings"]["card3_subtitle"], language[current_language]["Settings"]["card4_subtitle"], language[current_language]["Settings"]["card5_subtitle"]];
+     super.initState();
+     }
+
+     @override
      Widget build(BuildContext context){
      return Scaffold(
          backgroundColor: colores[mode_counter],
        appBar: AppBar(
          backgroundColor: colores[mode_counter],
-         title: Text("My Settings",
+         title: Text(language[current_language]["Settings"]["title"],
            style: TextStyle(color: fonts[mode_counter]),
 
          ),
@@ -72,14 +124,14 @@ import 'package:url_launcher/url_launcher.dart';
                        else if (index == 1){
                          Navigator.push(
                            context,
-                           MaterialPageRoute(builder: (context) => SetLanguage(mode_counter, modes, colores, fonts)),
+                           MaterialPageRoute(builder: (context) => SetLanguage(mode_counter, modes, colores, fonts, current_language, language)),
                          );
 
                        }
                        if(index == 4){
                        Navigator.push(
                        context,
-                       MaterialPageRoute(builder: (context) => MaterialDialer(mode_counter, modes, colores, fonts)),
+                       MaterialPageRoute(builder: (context) => MaterialDialer(mode_counter, modes, colores, fonts, current_language, language)),
                        );
                        }
 

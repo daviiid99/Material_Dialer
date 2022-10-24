@@ -9,6 +9,8 @@ import 'dart:io';
 class ManageMap {
 bool _fileExists = false;
 late File _filePath;
+String jsonFile = "contacts.json";
+ManageMap({this.jsonFile = "contacts.json"});
 
 // First initialization of _json (if there is no json in the file)
 Map<dynamic, dynamic> mapa = {};
@@ -24,7 +26,7 @@ return directory.path;
 // Get file object with full path
 Future<File> get _localFile async {
 final path = await _localPath;
-return File('$path/contacts.json');
+return File('$path/$jsonFile');
 }
 
 // Write latest key and value to json
