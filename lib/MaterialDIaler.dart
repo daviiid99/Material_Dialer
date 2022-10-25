@@ -199,7 +199,7 @@ class _MaterialDialerState extends State<MaterialDialer>{
             ),
             style: TextButton.styleFrom(
               textStyle: TextStyle(color: Colors.black),
-              backgroundColor: Colors.green,
+              backgroundColor: Colors.green, fixedSize: const Size(340, 53),
               shape:RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(24.0),
               ),
@@ -240,7 +240,8 @@ class _MaterialDialerState extends State<MaterialDialer>{
             },
 
             icon: Icon(Icons.download, color: Colors.black,),
-          )
+          ),
+          Text("\n"),
         ],
       )
     ],
