@@ -32,6 +32,12 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
+    defaultConfig {
+        minSdkVersion 19
+    }
+}
+
+android {
     compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
@@ -51,6 +57,7 @@ android {
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.daviiid99.material_dialer"
+        minSdkVersion 26
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
         minSdkVersion flutter.minSdkVersion
