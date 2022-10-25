@@ -19,8 +19,10 @@ import 'package:url_launcher/url_launcher.dart';
    List<Color> fonts  = [];
    String current_language = "";
    Map<dynamic, dynamic> language = {};
-   Settings(this.mode_counter, this.modes, this.colores, this.fonts, this.current_language, this.language);
-   _SettingState createState() => _SettingState(mode_counter, modes, colores, fonts, current_language, language);
+   int index;
+
+   Settings(this.mode_counter, this.modes, this.colores, this.fonts, this.current_language, this.language, this.index);
+   _SettingState createState() => _SettingState(mode_counter, modes, colores, fonts, current_language, language, index);
 
    }
 
@@ -34,9 +36,10 @@ import 'package:url_launcher/url_launcher.dart';
    Map<dynamic, dynamic> language = {};
    String current_language = "";
    List<IconData> icons = [Icons.laptop_chromebook_rounded, Icons.language_rounded, Icons.coffee, Icons.star_border_rounded, Icons.info_rounded];
+   List<String> images = ['assets/images/settings_en.png', 'assets/images/settings_es.png', 'assets/images/settings_fr.png', 'assets/images/settings_it.png', 'assets/images/settings_de.png'];
+   int index;
 
-
-   _SettingState(this.mode_counter, this.modes, this.colores, this.fonts, this.current_language, this.language);
+   _SettingState(this.mode_counter, this.modes, this.colores, this.fonts, this.current_language, this.language, this.index);
 
    _launchURL() async {
      const url = 'https://github.com/daviiid99/Material_Dialer';
@@ -66,7 +69,13 @@ import 'package:url_launcher/url_launcher.dart';
          ),
        ),
 
-         body: ListView.builder(
+       body: Column(
+       children: <Widget>[
+       Text("\n"),
+       Image.asset(images[index]),
+       Text("\n"),
+       Expanded(
+       child : ListView.builder(
              itemCount: options.length,
              itemBuilder: (context, index) {
                return Card(
@@ -98,6 +107,14 @@ import 'package:url_launcher/url_launcher.dart';
                        }
 
 
-               } ));},));
+               } )
+               )
+               ;}
+         ,)
+       )
+       ]
+       )
+     )
+     ;
    }
    }

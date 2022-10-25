@@ -62,7 +62,8 @@ class _DialerState extends State<Dialer>{
         "card4_title" : "Rate Us",
         "card4_subtitle" : "Rate this App on Google Play Store",
         "card5_title" : "About Material Dialer",
-        "card5_subtitle" : "Check App details"
+        "card5_subtitle" : "Check App details",
+        "image" : 0
       },
 
       "About" : {
@@ -108,7 +109,8 @@ class _DialerState extends State<Dialer>{
         "card4_title": "Danos una puntuación",
         "card4_subtitle": "Puntua esta aplicación en Google Play Store",
         "card5_title": "Sobre Material Dialer",
-        "card5_subtitle": "Ver detalles de la aplicación"
+        "card5_subtitle": "Ver detalles de la aplicación",
+        "image" : 1
       },
 
       "About": {
@@ -287,6 +289,7 @@ class _DialerState extends State<Dialer>{
   String jsonFile = "languages.json";
   late String _jsonString;
   late String currentLanguage;
+  int index = 0;
 
   // Get app local path for App data
   Future<String> get _localPath async {
@@ -316,6 +319,7 @@ class _DialerState extends State<Dialer>{
     setState(() {
       this.currentLanguage = language["language"];
       language = jsonDecode(_jsonString);
+      setLanguage();
     });
 
   }
@@ -328,6 +332,29 @@ class _DialerState extends State<Dialer>{
     _jsonString = jsonEncode(language);
     filePath.writeAsString(_jsonString);
   }
+
+  void setLanguage() async{
+
+    if (currentLanguage == "English") {
+      index = 0;
+    }
+    else if (currentLanguage == "Español") {
+      index = 1;
+    }
+     else if(currentLanguage == "Français"){
+       index = 2;
+    }
+
+    else if(currentLanguage == "Italiano"){
+      index = 3;
+    }
+
+    else if(currentLanguage == "Deutsch"){
+      index = 4;
+    }
+
+  }
+
 
   @override
   void initState(){
@@ -363,9 +390,11 @@ class _DialerState extends State<Dialer>{
           IconButton(
               icon: Icon(Icons.settings,color: fonts[mode_counter]),
             onPressed: () {
+                setState(() {
+                });
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Settings(mode_counter, modes, colors, fonts, currentLanguage, language),
+                MaterialPageRoute(builder: (context) => Settings(mode_counter, modes, colors, fonts, currentLanguage, language, index),
               ));
             },
 
