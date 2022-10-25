@@ -222,11 +222,11 @@ class _MaterialDialerState extends State<MaterialDialer>{
                     ));
 
                     await Dio().download(
-                        "https://github.com/daviiid99/Material_Dialer/releases/download/v$version/app-release.apk",
-                        _localPath + "/" + "material_dialer_v$version.apk");
+                        "https://github.com/daviiid99/Material_Dialer/releases/download/v$_release/app-release.apk",
+                        _localPath + "/" + "material_dialer_v$_release.apk");
 
                     OpenFile.open(
-                        _localPath + "/" + "material_dialer_v$version.apk");
+                        _localPath + "/" + "material_dialer_v$_release.apk");
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: Text("You're on latest release!"),

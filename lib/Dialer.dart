@@ -70,7 +70,8 @@ class _DialerState extends State<Dialer>{
         "card1" : "Name",
         "card2" : "Version",
         "card3" : "Build Number",
-        "card4" : "Package Name"
+        "card4" : "Package Name",
+        "button" : "Check for Updates"
       },
 
       "Contacts" : {
@@ -115,8 +116,9 @@ class _DialerState extends State<Dialer>{
         "card1": "Nombre",
         "card2": "Versión",
         "card3": "Número de compilación",
-        "card4": "Nombre de paquete"
-      },
+        "card4": "Nombre de paquete",
+        "button" : "Buscar Actualizaciones"
+       },
 
       "Contacts": {
         "title": "Mis Contactos",
@@ -161,7 +163,8 @@ class _DialerState extends State<Dialer>{
         "card1" : "Nom",
         "card2" : "Version",
         "card3" : "Numéro de construction",
-        "card4" : "Nom du paquet"
+        "card4" : "Nom du paquet",
+        "button" : "Vérifier les mises à jour"
       },
 
       "Contacts" : {
@@ -206,7 +209,8 @@ class _DialerState extends State<Dialer>{
         "card1" : "Nome",
         "card2" : "Versione",
         "card3" : "Numero di build",
-        "card4" : "Nome del pacchetto"
+        "card4" : "Nome del pacchetto",
+        "button" : "Controlla gli aggiornamenti"
       },
 
       "Contacts" : {
@@ -251,7 +255,8 @@ class _DialerState extends State<Dialer>{
         "card1" : "Name",
         "card2" : "Ausführung",
         "card3" : "Build-Nummer",
-        "card4" : "Paketnamen"
+        "card4" : "Paketnamen",
+        "button" : "Auf Updates prüfen"
       },
 
       "Contacts" : {
