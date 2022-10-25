@@ -52,6 +52,7 @@ class _MaterialDialerState extends State<MaterialDialer>{
   List<String> options = [];
   List<String> description = [];
   List<IconData> icons = [Icons.drive_file_rename_outline_rounded, Icons.format_list_numbered, Icons.build, Icons.gif_box];
+  late String _release;
 
   void checkBuild(){
     PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
@@ -85,8 +86,6 @@ class _MaterialDialerState extends State<MaterialDialer>{
 
   Future<void> _prepareSaveDir() async {
     _localPath = (await _findLocalPath())!;
-
-    print(_localPath);
     final savedDir = Directory(_localPath);
     bool hasExisted = await savedDir.exists();
     if (!hasExisted) {
@@ -108,13 +107,29 @@ class _MaterialDialerState extends State<MaterialDialer>{
     }
   }
 
-  Future<String> readString(String path) async {
-    return await rootBundle.loadString(path);
+  void _read() async {
+    try {
+      await Dio().download("https://raw.githubusercontent.com/daviiid99/Material_Dialer/master/version.txt",
+          '/sdcard/download/' + "/" + "version.txt");
+      File file = File('/sdcard/download/version.txt');
+      var res  = await file.readAsString();
+
+      setState(() {
+        _release = res;
+
+      });
+
+    } catch (e) {
+      print("Couldn't read file");
+    }
+
+
   }
 
 
   @override
   void initState(){
+    _read();
     super.initState();
     checkBuild();
     options = [language[current_language]["About"]["card1"], language[current_language]["About"]["card2"], language[current_language]["About"]["card3"], language[current_language]["About"]["card4"]];
@@ -177,7 +192,7 @@ class _MaterialDialerState extends State<MaterialDialer>{
         children: <Widget> [
           TextButton.icon(
             label:  Text(
-              "Download Latest",
+              "Check for Updates",
               style: TextStyle(
                   fontSize: 16,
                   color: Colors.black),
@@ -195,27 +210,33 @@ class _MaterialDialerState extends State<MaterialDialer>{
               if (_permissionReady) {
                 await _prepareSaveDir();
                 try {
-                  //await Dio().download("https://raw.githubusercontent.com/daviiid99/Material_Dialer/master/version.txt",
-                  //    _localPath + "/" + "version.txt");
-                  //String ver = readString(_localPath  + "version.txt") as String;
-                  //deleteFile(File(_localPath + "/" + "version.txt"));
-
-                  //print(ver);
-                 // print(version);
-
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text("Downloading latest version\nPlease wait...")));
-                  await Dio().download("https://github.com/daviiid99/Material_Dialer/releases/download/latest/app-release.apk",
-                      _localPath + "/" + "material_dialer.apk");
-                  OpenFile.open(_localPath + "/" + "material_dialer.apk");
-                  deleteFile(File(_localPath + "/" + "material_dialer.apk"));
+                    content: Text("Checking for updates\nPlease wait..."),
+                  ));
+
+                  print(_release);
+
+                  if(_release.contains(version) == false){
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text("Downloading latest release\nPlease wait..."),
+                    ));
+
+                    await Dio().download(
+                        "https://github.com/daviiid99/Material_Dialer/releases/download/v$version/app-release.apk",
+                        _localPath + "/" + "material_dialer_v$version.apk");
+
+                    OpenFile.open(
+                        _localPath + "/" + "material_dialer_v$version.apk");
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text("You're on latest release!"),
+                    ));
+
+                  }
 
                 } catch (e) {
                 }
-
               }
-
-
             },
 
             icon: Icon(Icons.download, color: Colors.black,),
