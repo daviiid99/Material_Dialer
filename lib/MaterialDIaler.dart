@@ -192,7 +192,7 @@ class _MaterialDialerState extends State<MaterialDialer>{
         children: <Widget> [
           TextButton.icon(
             label:  Text(
-              "Check for Updates",
+              language[current_language]["About"]["title"],
               style: TextStyle(
                   fontSize: 16,
                   color: Colors.black),
