@@ -192,7 +192,7 @@ class _MaterialDialerState extends State<MaterialDialer>{
         children: <Widget> [
           TextButton.icon(
             label:  Text(
-              language[current_language]["About"]["title"],
+              language[current_language]["About"]["button"],
               style: TextStyle(
                   fontSize: 16,
                   color: Colors.black),
@@ -217,16 +217,17 @@ class _MaterialDialerState extends State<MaterialDialer>{
                   print(_release);
 
                   if(_release.contains(version) == false){
+                    String latest = _release;
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: Text("Downloading latest release\nPlease wait..."),
                     ));
 
                     await Dio().download(
-                        "https://github.com/daviiid99/Material_Dialer/releases/download/v$_release/app-release.apk",
-                        _localPath + "/" + "material_dialer_v$_release.apk");
+                        "https://github.com/daviiid99/Material_Dialer/releases/download/latest/app-release.apk",
+                        _localPath + "/" + "material_dialer_latest.apk");
 
                     OpenFile.open(
-                        _localPath + "/" + "material_dialer_v$_release.apk");
+                        _localPath + "/" + "material_dialer_latest.apk");
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: Text("You're on latest release!"),
