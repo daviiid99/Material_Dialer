@@ -113,6 +113,7 @@ class _MaterialDialerState extends State<MaterialDialer>{
           '/sdcard/download/' + "/" + "version.txt");
       File file = File('/sdcard/download/version.txt');
       var res  = await file.readAsString();
+      deleteFile(file); // Delete file for avoid issues next time
 
       setState(() {
         _release = res;
@@ -221,6 +222,9 @@ class _MaterialDialerState extends State<MaterialDialer>{
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: Text("Downloading latest release\nPlease wait..."),
                     ));
+
+                    File file = File('/sdcard/download/material_dialer_latest.apk');
+                    deleteFile(file); // Delete apk before downloading latest
 
                     await Dio().download(
                         "https://github.com/daviiid99/Material_Dialer/releases/download/latest/app-release.apk",
