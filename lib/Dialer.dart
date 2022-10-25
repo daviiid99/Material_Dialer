@@ -54,7 +54,7 @@ class _DialerState extends State<Dialer>{
       "Settings" : {
         "title" : "My Settings",
         "card1_title" : "View Project Source Code",
-        "card1_subtitle" : "Open the official GitHUb page",
+        "card1_subtitle" : "Open the official GitHub page",
         "card2_title" : "Set UI Language",
         "card2_subtitle" : "Choose your default language",
         "card3_title" : "Donate Us",
@@ -66,6 +66,7 @@ class _DialerState extends State<Dialer>{
       },
 
       "About" : {
+        "title" : "About Material Dialer",
         "card1" : "Name",
         "card2" : "Version",
         "card3" : "Build Number",
@@ -110,6 +111,7 @@ class _DialerState extends State<Dialer>{
       },
 
       "About": {
+        "title" : "Sobre Material Dialer",
         "card1": "Nombre",
         "card2": "Versión",
         "card3": "Número de compilación",
@@ -155,6 +157,7 @@ class _DialerState extends State<Dialer>{
       },
 
       "About" : {
+        "title" : "À propos de Material Dialer",
         "card1" : "Nom",
         "card2" : "Version",
         "card3" : "Numéro de construction",
@@ -199,6 +202,7 @@ class _DialerState extends State<Dialer>{
       },
 
       "About" : {
+        "title" : "Di Material Dialer",
         "card1" : "Nome",
         "card2" : "Versione",
         "card3" : "Numero di build",
@@ -243,6 +247,7 @@ class _DialerState extends State<Dialer>{
       },
 
       "About" : {
+        "title" : "Um Material Dialer",
         "card1" : "Name",
         "card2" : "Ausführung",
         "card3" : "Build-Nummer",
@@ -268,14 +273,6 @@ class _DialerState extends State<Dialer>{
       },
 
       "Calls" : "Anruf"
-
-    },
-
-    "中国人" : {
-
-    },
-
-    "日本" : {
 
     }
   };

@@ -5,7 +5,7 @@
     "Settings" : {
       "title" : "My Settings",
       "card1_title" : "View Project Source Code",
-      "card1_subtitle" : "Open the official GitHUb page",
+      "card1_subtitle" : "Open the official GitHub page",
       "card2_title" : "Set UI Language",
       "card2_subtitle" : "Choose your default language",
       "card3_title" : "Donate Us",
@@ -17,6 +17,7 @@
     },
 
     "About" : {
+      "title" : "About Material Dialer",
       "card1" : "Name",
       "card2" : "Version",
       "card3" : "Build Number",
@@ -61,6 +62,7 @@
     },
 
     "About": {
+      "title" : "Sobre Material Dialer",
       "card1": "Nombre",
       "card2": "Versión",
       "card3": "Número de compilación",
@@ -106,6 +108,7 @@
     },
 
     "About" : {
+      "title" : "À propos de Material Dialer",
       "card1" : "Nom",
       "card2" : "Version",
       "card3" : "Numéro de construction",
@@ -150,6 +153,7 @@
     },
 
     "About" : {
+      "title" : "Di Material Dialer",
       "card1" : "Nome",
       "card2" : "Versione",
       "card3" : "Numero di build",
@@ -194,6 +198,7 @@
     },
 
     "About" : {
+      "title" : "Um Material Dialer",
       "card1" : "Name",
       "card2" : "Ausführung",
       "card3" : "Build-Nummer",
@@ -219,14 +224,6 @@
     },
 
     "Calls" : "Anruf"
-
-  },
-
-  "中国人" : {
-
-  },
-
-  "日本" : {
 
   }
 }

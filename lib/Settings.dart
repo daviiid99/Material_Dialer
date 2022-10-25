@@ -44,44 +44,6 @@ import 'package:url_launcher/url_launcher.dart';
      await launchUrl(_url,mode: LaunchMode.externalApplication);
    }
 
-   bool _fileExists = false;
-   late File _filePath;
-   String jsonFile = "languages.json";
-   late String _jsonString;
-
-   // Get app local path for App data
-   Future<String> get _localPath async {
-     final directory = await getApplicationDocumentsDirectory();
-     return directory.path;
-   }
-
-// Get file object with full path
-     Future<File> get _localFile async {
-       final path = await _localPath;
-       return File('$path/$jsonFile');
-     }
-
-     // Read json and update the lists on runtime
-     readJson() async {
-       _filePath = await _localFile;
-       _fileExists = await _filePath.exists();
-
-       if (_fileExists) {
-         try {
-           _jsonString = await _filePath.readAsString();
-           language = jsonDecode(_jsonString);
-         } catch (e) {
-
-         }
-       }
-       setState(() {
-         this.current_language = language["language"];
-         language = jsonDecode(_jsonString);
-       });
-
-     }
-
-
      @override
      void initState(){
      options = [language[current_language]["Settings"]["card1_title"], language[current_language]["Settings"]["card2_title"], language[current_language]["Settings"]["card3_title"], language[current_language]["Settings"]["card4_title"], language[current_language]["Settings"]["card5_title"]];

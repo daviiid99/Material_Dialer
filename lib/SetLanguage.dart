@@ -32,7 +32,7 @@ class _SetLanguageState extends State<SetLanguage>{
   List<Color> fonts  = [];
   String current_language = "";
   Map<dynamic, dynamic> language = {};
-  List<String> languages = ["中国人", "Deutsch", "Español", "English", "Français", "Italiano", "日本"];
+  List<String> languages = ["Deutsch", "Español", "English", "Français", "Italiano"];
   _SetLanguageState(this.mode_counter, this.modes, this.colores, this.fonts, this.current_language, this.language);
 
   String jsonFile = "languages.json";
@@ -74,7 +74,7 @@ class _SetLanguageState extends State<SetLanguage>{
         leading: Icon(Icons.language_rounded, color: Colors.blueAccent),
         backgroundColor: colores[mode_counter],
         title: Text (
-            "Choose Your Language",
+            language[current_language]["Country"]["title"],
           style: TextStyle(color: fonts[mode_counter]),
 
         ),
@@ -97,7 +97,7 @@ class _SetLanguageState extends State<SetLanguage>{
                       });
 
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text("Default language set to : " + languages[index]),
+                        content: Text(language[current_language]["Country"]["toaster"] + languages[index]),
                       ));
 
                       Restart.restartApp();
