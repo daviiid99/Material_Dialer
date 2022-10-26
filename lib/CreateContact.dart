@@ -101,7 +101,7 @@ class _CreateContactState extends State<CreateContact>{
                       ));
                     },
 
-                    icon: Icon(Icons.face_rounded, color: Colors.black,),
+                    icon: Icon(Icons.save_rounded, color: Colors.black,),
                   )
                 ]
             )));

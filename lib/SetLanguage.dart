@@ -82,14 +82,20 @@ class _SetLanguageState extends State<SetLanguage>{
           color: fonts[mode_counter], //change your color here
         ),
       ),
-        body: ListView.builder(
+    body: Column(
+      children: <Widget>[
+      Text("\n"),
+      Image.asset('assets/images/language.png'),
+      Text("\n"),
+    Expanded(
+    child : ListView.builder(
           itemCount: languages.length,
           itemBuilder: (context, index) {
             return Card(
                 child: ListTile(
                     tileColor: colores[mode_counter] ,
                     textColor: fonts[mode_counter],
-                    title: Text(languages[index]),
+                    title: Text(languages[index], textAlign: TextAlign.center,),
                     onTap: () {
 
                       setState(() {
@@ -105,6 +111,6 @@ class _SetLanguageState extends State<SetLanguage>{
 
                       },
 
-            ));} ));
+            ));} ))]));
   }
 }

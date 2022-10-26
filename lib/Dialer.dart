@@ -70,7 +70,7 @@ class _DialerState extends State<Dialer>{
         "title" : "About Material Dialer",
         "card1" : "Name",
         "card2" : "Version",
-        "card3" : "Build Number",
+        "card3" : "Build Signature",
         "card4" : "Package Name",
         "button" : "Check for Updates"
       },
@@ -117,7 +117,7 @@ class _DialerState extends State<Dialer>{
         "title" : "Sobre Material Dialer",
         "card1": "Nombre",
         "card2": "Versión",
-        "card3": "Número de compilación",
+        "card3": "Firma de compilación",
         "card4": "Nombre de paquete",
         "button" : "Buscar Actualizaciones"
        },
@@ -164,7 +164,7 @@ class _DialerState extends State<Dialer>{
         "title" : "À propos de Material Dialer",
         "card1" : "Nom",
         "card2" : "Version",
-        "card3" : "Numéro de construction",
+        "card3" : "Signature de construction",
         "card4" : "Nom du paquet",
         "button" : "Vérifier les mises à jour"
       },
@@ -210,7 +210,7 @@ class _DialerState extends State<Dialer>{
         "title" : "Di Material Dialer",
         "card1" : "Nome",
         "card2" : "Versione",
-        "card3" : "Numero di build",
+        "card3" : "Firma di build",
         "card4" : "Nome del pacchetto",
         "button" : "Controlla gli aggiornamenti"
       },
@@ -256,7 +256,7 @@ class _DialerState extends State<Dialer>{
         "title" : "Um Material Dialer",
         "card1" : "Name",
         "card2" : "Ausführung",
-        "card3" : "Build-Nummer",
+        "card3" : "Build-Unterschrift",
         "card4" : "Paketnamen",
         "button" : "Auf Updates prüfen"
       },

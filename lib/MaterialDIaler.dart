@@ -51,7 +51,7 @@ class _MaterialDialerState extends State<MaterialDialer>{
   List<String> images = ['assets/images/light_banner.png', 'assets/images/black_banner.png'];
   List<String> options = [];
   List<String> description = [];
-  List<IconData> icons = [Icons.drive_file_rename_outline_rounded, Icons.format_list_numbered, Icons.build, Icons.gif_box];
+  List<IconData> icons = [Icons.drive_file_rename_outline_rounded, Icons.format_list_numbered,Icons.add_box, Icons.android_rounded, ];
   late String _release;
 
   void checkBuild(){
@@ -59,10 +59,10 @@ class _MaterialDialerState extends State<MaterialDialer>{
       appName = packageInfo.appName;
       packageName = packageInfo.packageName;
       version = packageInfo.version;
-      buildNumber = packageInfo.buildNumber;
+      buildNumber = packageInfo.buildSignature;
 
       setState(() {
-        description = [appName, version, buildNumber, packageName];
+        description = [appName, version, packageName, buildNumber];
       });
     });}
 
