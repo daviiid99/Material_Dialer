@@ -13,15 +13,18 @@
       "card4_title" : "Rate Us",
       "card4_subtitle" : "Rate this App on Google Play Store",
       "card5_title" : "About Material Dialer",
-      "card5_subtitle" : "Check App details"
+      "card5_subtitle" : "Check App details",
+      "image" : 0
     },
 
     "About" : {
       "title" : "About Material Dialer",
       "card1" : "Name",
       "card2" : "Version",
-      "card3" : "Build Number",
-      "card4" : "Package Name"
+      "card3" : "Package Name",
+      "card4" : "Build Signature",
+
+      "button" : "Check for Updates"
     },
 
     "Contacts" : {
@@ -58,15 +61,17 @@
       "card4_title": "Danos una puntuación",
       "card4_subtitle": "Puntua esta aplicación en Google Play Store",
       "card5_title": "Sobre Material Dialer",
-      "card5_subtitle": "Ver detalles de la aplicación"
+      "card5_subtitle": "Ver detalles de la aplicación",
+      "image" : 1
     },
 
     "About": {
       "title" : "Sobre Material Dialer",
       "card1": "Nombre",
       "card2": "Versión",
-      "card3": "Número de compilación",
-      "card4": "Nombre de paquete"
+      "card3": "Nombre de paquete",
+      "card4": "Firma de compilación",
+      "button" : "Buscar Actualizaciones"
     },
 
     "Contacts": {
@@ -111,8 +116,9 @@
       "title" : "À propos de Material Dialer",
       "card1" : "Nom",
       "card2" : "Version",
-      "card3" : "Numéro de construction",
-      "card4" : "Nom du paquet"
+      "card3" : "Nom du paquet",
+      "card4" : "Signature de construction",
+      "button" : "Vérifier les mises à jour"
     },
 
     "Contacts" : {
@@ -156,8 +162,9 @@
       "title" : "Di Material Dialer",
       "card1" : "Nome",
       "card2" : "Versione",
-      "card3" : "Numero di build",
-      "card4" : "Nome del pacchetto"
+      "card3" : "Nome del pacchetto",
+      "card4" : "Firma di build",
+      "button" : "Controlla gli aggiornamenti"
     },
 
     "Contacts" : {
@@ -201,8 +208,9 @@
       "title" : "Um Material Dialer",
       "card1" : "Name",
       "card2" : "Ausführung",
-      "card3" : "Build-Nummer",
-      "card4" : "Paketnamen"
+      "card3" : "Paketnamen",
+      "card4" : "Build-Unterschrift",
+      "button" : "Auf Updates prüfen"
     },
 
     "Contacts" : {

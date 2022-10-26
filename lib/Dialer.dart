@@ -70,8 +70,9 @@ class _DialerState extends State<Dialer>{
         "title" : "About Material Dialer",
         "card1" : "Name",
         "card2" : "Version",
-        "card3" : "Build Signature",
-        "card4" : "Package Name",
+        "card3" : "Package Name",
+        "card4" : "Build Signature",
+
         "button" : "Check for Updates"
       },
 
@@ -117,8 +118,8 @@ class _DialerState extends State<Dialer>{
         "title" : "Sobre Material Dialer",
         "card1": "Nombre",
         "card2": "Versión",
-        "card3": "Firma de compilación",
-        "card4": "Nombre de paquete",
+        "card3": "Nombre de paquete",
+        "card4": "Firma de compilación",
         "button" : "Buscar Actualizaciones"
        },
 
@@ -164,8 +165,8 @@ class _DialerState extends State<Dialer>{
         "title" : "À propos de Material Dialer",
         "card1" : "Nom",
         "card2" : "Version",
-        "card3" : "Signature de construction",
-        "card4" : "Nom du paquet",
+        "card3" : "Nom du paquet",
+        "card4" : "Signature de construction",
         "button" : "Vérifier les mises à jour"
       },
 
@@ -210,8 +211,8 @@ class _DialerState extends State<Dialer>{
         "title" : "Di Material Dialer",
         "card1" : "Nome",
         "card2" : "Versione",
-        "card3" : "Firma di build",
-        "card4" : "Nome del pacchetto",
+        "card3" : "Nome del pacchetto",
+        "card4" : "Firma di build",
         "button" : "Controlla gli aggiornamenti"
       },
 
@@ -256,8 +257,8 @@ class _DialerState extends State<Dialer>{
         "title" : "Um Material Dialer",
         "card1" : "Name",
         "card2" : "Ausführung",
-        "card3" : "Build-Unterschrift",
-        "card4" : "Paketnamen",
+        "card3" : "Paketnamen",
+        "card4" : "Build-Unterschrift",
         "button" : "Auf Updates prüfen"
       },
 
