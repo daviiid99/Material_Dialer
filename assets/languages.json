@@ -30,7 +30,8 @@
     "Contacts" : {
       "title" : "My Contacts",
       "button1" : "Create Contact",
-      "button2" : "Pick a Contact"
+      "button2" : "Pick a Contact",
+      "toaster" : "Saved your contact"
     },
 
     "CreateContact" : {
@@ -45,9 +46,15 @@
       "toaster" : "Default language set to :"
     },
 
-    "Calls" : "Call"
+    "Calls" : "Call",
+
+    "History" : {
+      "title" : "Calls History",
+      "subtitle" : "Last Calls"
+    },
 
   },
+
 
   "Español" : {
     "Settings": {
@@ -77,7 +84,8 @@
     "Contacts": {
       "title": "Mis Contactos",
       "button1": "Crear Contacto",
-      "button2": "Añadir Contacto"
+      "button2": "Añadir Contacto",
+      "toaster" : "Se ha guardado tu contacto"
     },
 
     "CreateContact": {
@@ -93,7 +101,12 @@
       "toaster" : "Idioma por defecto cambiado a :"
     },
 
-    "Calls": "Llamar"
+    "Calls": "Llamar",
+
+    "History" : {
+      "title" : "Registro de  Llamadas",
+      "subtitle" : "Últimas Llamadas"
+    },
 
   },
 
@@ -124,7 +137,8 @@
     "Contacts" : {
       "title" : "Mes Contacts",
       "button1" : "Créer contact",
-      "button2" : "Choisissez contact"
+      "button2" : "Choisissez contact",
+      "toaster" : "Saved your contact"
     },
 
     "CreateContact" : {
@@ -139,7 +153,12 @@
       "toaster" : "Langue par défaut définie sur :"
     },
 
-    "Calls" : "Téléphoner"
+    "Calls" : "Téléphoner",
+
+    "History" : {
+      "title" : "Historique des téléphone",
+      "subtitle" : "Dernier Appels Téléphoniques"
+    },
 
   },
 
@@ -170,7 +189,8 @@
     "Contacts" : {
       "title" : "I miei Contatti",
       "button1" : "Crea Contatto",
-      "button2" : "Scegli Contatto"
+      "button2" : "Scegli Contatto",
+      "toaster" : "Saved your contact"
     },
 
     "CreateContact" : {
@@ -185,7 +205,12 @@
       "toaster" : "Lingua predefinita impostata su :"
     },
 
-    "Calls" : "Chiamata"
+    "Calls" : "Chiamata",
+
+    "History" : {
+      "title" : "Cronologia chiamate",
+      "subtitle" : "Ultime Chiamate"
+    },
 
   },
 
@@ -216,7 +241,8 @@
     "Contacts" : {
       "title" : "Meine Kontakte",
       "button1" : "Kontakt Erstellen",
-      "button2" : "Wählen Sie einen Kontakt aus"
+      "button2" : "Wählen Sie einen Kontakt aus",
+      "toaster" : "Saved your contact"
     },
 
     "CreateContact" : {
@@ -231,7 +257,12 @@
       "toaster" : "Standardsprache eingestellt auf :"
     },
 
-    "Calls" : "Anruf"
+    "Calls" : "Anruf",
+
+    "History" : {
+      "title" : "Anrufverlauf",
+      "subtitle" : "Letzte Anrufe"
+    },
 
   }
 }

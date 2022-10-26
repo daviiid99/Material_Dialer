@@ -12,7 +12,7 @@ class MyFlutterApp extends StatelessWidget{
     return MaterialApp(
       title: title,
       theme: new ThemeData(scaffoldBackgroundColor: const Color(0xFFEFEFEF)),
-      home: Dialer(),
+      home: Dialer(""),
     );
   }
 }

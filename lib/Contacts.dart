@@ -7,6 +7,7 @@ import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:flutter_native_contact_picker/flutter_native_contact_picker.dart';
 import 'dart:convert';
 import 'dart:io';
+import 'DialPadNumbers.dart';
 import 'Dialer.dart';
 import 'package:path_provider/path_provider.dart';
 import 'CreateContact.dart';
@@ -20,10 +21,11 @@ class Contacts extends StatefulWidget{
    List<Color> fonts  = [];
    String current_language = "";
    Map<dynamic, dynamic> language = {};
-   Contacts(this.mode_counter, this.modes, this.colores, this.fonts, this.current_language, this.language);
+   Map<dynamic, dynamic> history = {};
+   Contacts(this.mode_counter, this.modes, this.colores, this.fonts, this.current_language, this.language, this.history);
    double fontsize = 55;
 
-   _ContactState createState() => _ContactState(mode_counter, modes, colores, fonts, current_language, language);
+   _ContactState createState() => _ContactState(mode_counter, modes, colores, fonts, current_language, language, history);
 }
 
 
@@ -35,8 +37,9 @@ class _ContactState extends State<Contacts>{
   List<Color> fonts  = [];
   String current_language = "";
   Map<dynamic, dynamic> language = {};
+  Map<dynamic, dynamic> history = {};
 
-  _ContactState(this.mode_counter, this.modes, this.colores, this.fonts, this.current_language, this.language);
+  _ContactState(this.mode_counter, this.modes, this.colores, this.fonts, this.current_language, this.language, this.history);
 
   var filePath = 'assets/contacts.json';
   var contactos = ["Example"];
@@ -168,13 +171,104 @@ class _ContactState extends State<Contacts>{
           color: fonts[mode_counter], //change your color here
         ),
     ),
-      body : ListView.builder(
+    body: Column(
+      children: <Widget>[
+      Text("\n"),
+      Image.asset('assets/images/contacts.png'),
+        Container(
+            child: Container(
+                width: MediaQuery
+                    .of(context)
+                    .size
+                    .width,
+                height: MediaQuery
+                    .of(context)
+                    .size
+                    .height / 6,
+                color: colores[mode_counter],
+                child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      const SizedBox(width: 25,),
+                      TextButton.icon(
+                        label: Text(
+                          language[current_language]["Contacts"]["button1"],
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.black),
+                        ),
+                        style: TextButton.styleFrom(
+                          textStyle: TextStyle(color: Colors.black),
+                          backgroundColor: Colors.green,
+                          shape:RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(24.0),
+                          ),
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => CreateContact(current_language, language)),
+                          );
+                        },
+                        icon: Icon(Icons.create_rounded, color: Colors.black,),
+                      ), const SizedBox(width: 25,),
+                      TextButton.icon(
+                        label: Text(
+                          language[current_language]["Contacts"]["button2"],
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.black),
+                        ),
+                        style: TextButton.styleFrom(
+                          textStyle: TextStyle(color: Colors.black),
+                          backgroundColor: Colors.orange,
+                          shape:RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(24.0),
+                          ),
+                        ),
+                        onPressed: () async {
+                          Contact? contact = await contactPicker.selectContact();
+                          if (contact !=null){
+                            number = contact.phoneNumbers![0];
+                            name = contact.fullName.toString();
+                            setState(() {
+                              mapa[number] = name;
+                              contactos = addContactsToList(mapa, contactos, telefonos);
+                              telefonos = addPhonesToList(mapa, contactos, telefonos);
+                              _writeJson(number, name);
+                            });
+                          };
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text(language[current_language]["Contacts"]["toaster"] + "\n" + name + "(" + number+ ")"),
+                          ));
+                        },
+                        icon: Icon(Icons.add_rounded, color: Colors.black,),
+                      ),  const SizedBox(width: 25,),
+                    ]))
+        ),
+      Expanded(
+    child : ListView.builder(
         itemCount: contactos.length,
         itemBuilder: (context, index){
-          return ListTile(
+          return Card(
+              child: ListTile(
             tileColor: colores[mode_counter] ,
             textColor: fonts[mode_counter],
             leading: IconButton(
+              icon: const Icon(Icons.call, color: Colors.blueAccent,),
+              onPressed: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => DialPadNumbers(mode_counter, modes, colores, fonts, current_language, language, telefonos[index], history)),
+                );
+              },
+            ),
+                  onTap: () {
+
+                  },
+            title: Text(contactos[index]),
+            subtitle: Text(telefonos[index]),
+            trailing: IconButton(
               icon : const Icon(Icons.remove_circle, color: Colors.redAccent,),
               onPressed: (){
                 mapa.remove(telefonos[index]);
@@ -183,89 +277,10 @@ class _ContactState extends State<Contacts>{
                 });
               },
 
-            ),
-            title: Text(contactos[index]),
-            subtitle: Text(telefonos[index]),
-            trailing: IconButton(
-                  icon: const Icon(Icons.call, color: Colors.blueAccent,),
-                  onPressed: (){
-                    llamar(telefonos, index);
-                  },
-                ),
-          );
+          )));
         },
       ),
 
-    bottomNavigationBar:  Container(
-        child: Container(
-            width: MediaQuery
-                .of(context)
-                .size
-                .width,
-            height: MediaQuery
-                .of(context)
-                .size
-                .height / 6,
-            color: colores[mode_counter],
-            child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  const SizedBox(width: 25,),
-                  TextButton.icon(
-                    label: Text(
-                      language[current_language]["Contacts"]["button1"],
-                      style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.black),
-                    ),
-                    style: TextButton.styleFrom(
-                      textStyle: TextStyle(color: Colors.black),
-                      backgroundColor: Colors.green,
-                      shape:RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(24.0),
-                      ),
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => CreateContact(current_language, language)),
-                      );
-                    },
-                    icon: Icon(Icons.face_rounded, color: Colors.black,),
-                  ), const SizedBox(width: 25,),
-                  TextButton.icon(
-                    label: Text(
-                      language[current_language]["Contacts"]["button2"],
-                      style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.black),
-                    ),
-                    style: TextButton.styleFrom(
-                      textStyle: TextStyle(color: Colors.black),
-                      backgroundColor: Colors.orange,
-                      shape:RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(24.0),
-                      ),
-                    ),
-                    onPressed: () async {
-                      Contact? contact = await contactPicker.selectContact();
-                      if (contact !=null){
-                        number = contact.phoneNumbers![0];
-                        name = contact.fullName.toString();
-                        setState(() {
-                          mapa[number] = name;
-                          contactos = addContactsToList(mapa, contactos, telefonos);
-                          telefonos = addPhonesToList(mapa, contactos, telefonos);
-                          _writeJson(number, name);
-                        });
-                      };
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text("Saved your contact\n" + name + "(" + number+ ")"),
-                      ));
-                    },
-                    icon: Icon(Icons.face_rounded, color: Colors.black,),
-                  ),  const SizedBox(width: 25,),
-                ]))
-    ),);
+    )]));
   }
 }

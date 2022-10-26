@@ -8,6 +8,8 @@ import 'Settings.dart';
 import 'Contacts.dart';
 import 'package:path_provider/path_provider.dart';
 import 'ManageMap.dart';
+import 'DialPadNumbers.dart';
+import 'History.dart';
 
 class Dialer extends StatefulWidget{
   @override
@@ -15,7 +17,9 @@ class Dialer extends StatefulWidget{
   static List<IconData> modes = [Icons.light_mode, Icons.dark_mode];
   static List<Color> colors = [Colors.white, Colors.black];
   static List<Color> fonts = [Colors.black, Colors.white];
-  _DialerState createState() => _DialerState(mode_counter, modes, colors, fonts);
+  String number = "";
+  Dialer(this.number);
+  _DialerState createState() => _DialerState(mode_counter, modes, colors, fonts, number);
 
 }
 
@@ -25,12 +29,9 @@ class _DialerState extends State<Dialer>{
   List<Color> colors = [];
   List<Color> fonts  = [];
   var idioma = ManageMap(jsonFile: "languages.json");
+  String number = "";
 
-  _DialerState(this.mode_counter, this.modes, this.colors, this.fonts);
-
-  void _navigateToNextScreen(BuildContext context) {
-  Navigator.of(context).push(MaterialPageRoute(builder: (context) => Contacts(mode_counter, modes, colors, fonts, currentLanguage, language)));
-   }
+  _DialerState(this.mode_counter, this.modes, this.colors, this.fonts, this.number);
 
   static const List<Widget> _pages = <Widget>[
     Icon(
@@ -46,6 +47,8 @@ class _DialerState extends State<Dialer>{
       size: 150,
     ),
   ];
+
+  Map<dynamic, dynamic> history = {};
 
   Map<dynamic, dynamic> language = {
     "language" : "English",
@@ -79,7 +82,8 @@ class _DialerState extends State<Dialer>{
       "Contacts" : {
         "title" : "My Contacts",
         "button1" : "Create Contact",
-        "button2" : "Pick a Contact"
+        "button2" : "Pick a Contact",
+        "toaster" : "Saved your contact"
       },
 
       "CreateContact" : {
@@ -94,9 +98,15 @@ class _DialerState extends State<Dialer>{
         "toaster" : "Default language set to :"
       },
 
-      "Calls" : "Call"
+      "Calls" : "Call",
+
+      "History" : {
+        "title" : "Calls History",
+        "subtitle" : "Last Calls"
+      },
 
     },
+
 
     "Español" : {
       "Settings": {
@@ -121,12 +131,13 @@ class _DialerState extends State<Dialer>{
         "card3": "Nombre de paquete",
         "card4": "Firma de compilación",
         "button" : "Buscar Actualizaciones"
-       },
+      },
 
       "Contacts": {
         "title": "Mis Contactos",
         "button1": "Crear Contacto",
-        "button2": "Añadir Contacto"
+        "button2": "Añadir Contacto",
+        "toaster" : "Se ha guardado tu contacto"
       },
 
       "CreateContact": {
@@ -142,7 +153,12 @@ class _DialerState extends State<Dialer>{
         "toaster" : "Idioma por defecto cambiado a :"
       },
 
-      "Calls": "Llamar"
+      "Calls": "Llamar",
+
+      "History" : {
+        "title" : "Registro de  Llamadas",
+        "subtitle" : "Últimas Llamadas"
+      },
 
     },
 
@@ -173,7 +189,8 @@ class _DialerState extends State<Dialer>{
       "Contacts" : {
         "title" : "Mes Contacts",
         "button1" : "Créer contact",
-        "button2" : "Choisissez contact"
+        "button2" : "Choisissez contact",
+        "toaster" : "Saved your contact"
       },
 
       "CreateContact" : {
@@ -188,7 +205,12 @@ class _DialerState extends State<Dialer>{
         "toaster" : "Langue par défaut définie sur :"
       },
 
-      "Calls" : "Téléphoner"
+      "Calls" : "Téléphoner",
+
+      "History" : {
+        "title" : "Historique des téléphone",
+        "subtitle" : "Dernier Appels Téléphoniques"
+      },
 
     },
 
@@ -219,7 +241,8 @@ class _DialerState extends State<Dialer>{
       "Contacts" : {
         "title" : "I miei Contatti",
         "button1" : "Crea Contatto",
-        "button2" : "Scegli Contatto"
+        "button2" : "Scegli Contatto",
+        "toaster" : "Saved your contact"
       },
 
       "CreateContact" : {
@@ -234,7 +257,12 @@ class _DialerState extends State<Dialer>{
         "toaster" : "Lingua predefinita impostata su :"
       },
 
-      "Calls" : "Chiamata"
+      "Calls" : "Chiamata",
+
+      "History" : {
+        "title" : "Cronologia chiamate",
+        "subtitle" : "Ultime Chiamate"
+      },
 
     },
 
@@ -265,7 +293,8 @@ class _DialerState extends State<Dialer>{
       "Contacts" : {
         "title" : "Meine Kontakte",
         "button1" : "Kontakt Erstellen",
-        "button2" : "Wählen Sie einen Kontakt aus"
+        "button2" : "Wählen Sie einen Kontakt aus",
+        "toaster" : "Saved your contact"
       },
 
       "CreateContact" : {
@@ -280,7 +309,12 @@ class _DialerState extends State<Dialer>{
         "toaster" : "Standardsprache eingestellt auf :"
       },
 
-      "Calls" : "Anruf"
+      "Calls" : "Anruf",
+
+      "History" : {
+        "title" : "Anrufverlauf",
+        "subtitle" : "Letzte Anrufe"
+      },
 
     }
   };
@@ -424,7 +458,7 @@ class _DialerState extends State<Dialer>{
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => DialPadNumbers(mode_counter, modes, colors, fonts, currentLanguage, language)),
+                    MaterialPageRoute(builder: (context) => DialPadNumbers(mode_counter, modes, colors, fonts, currentLanguage, language, number, history)),
                   );
                 },
               ),
@@ -432,8 +466,13 @@ class _DialerState extends State<Dialer>{
             BottomNavigationBarItem(
               label: '',
               icon : IconButton(
-                icon: Icon(Icons.contact_page), color: colors[mode_counter],
-                onPressed: () {null;}
+                icon: Icon(Icons.history_rounded), color: fonts[mode_counter],
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => History(mode_counter, modes, colors, fonts, currentLanguage, language)),
+                  );
+                }
               ),
             ),
             BottomNavigationBarItem(
@@ -443,7 +482,7 @@ class _DialerState extends State<Dialer>{
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Contacts(mode_counter, modes, colors, fonts, currentLanguage, language)),
+                    MaterialPageRoute(builder: (context) => Contacts(mode_counter, modes, colors, fonts, currentLanguage, language, history)),
                   );
                 },
               ),
@@ -454,450 +493,4 @@ class _DialerState extends State<Dialer>{
   }
 }
 
-class DialPadNumbers extends StatefulWidget {
-  @override
-  int mode_counter = 1;
-  List<IconData> modes = [];
-  List<Color> colors = [];
-  List<Color> fonts  = [];
-  String current_language = "";
-  Map<dynamic, dynamic> language = {};
-  DialPadNumbers(this.mode_counter, this.modes, this.colors, this.fonts, this.current_language, this.language);
-  _DialPadNumberState createState() => _DialPadNumberState(mode_counter, modes, colors, fonts, current_language, language);
-}
 
-class _DialPadNumberState extends State<DialPadNumbers>{
-
-  // Recover theme styles
-  int mode_counter = 1;
-  List<IconData> modes = [];
-  List<Color> colors = [];
-  List<Color> fonts  = [];
-  String current_language = "";
-  Map<dynamic, dynamic> language = {};
-  _DialPadNumberState(this.mode_counter, this.modes, this.colors, this.fonts, this.current_language, this.language);
-  double fontsize = 55;
-
-  bool _fileExists = false;
-  late File _filePath;
-
-  // First initialization of _json (if there is no json in the file)
-  Map<dynamic, dynamic> mapa = {};
-  late String _jsonString;
-  String data = "";
-
-  void llamar(String telefono) async{
-    await FlutterPhoneDirectCaller.callNumber("$telefono");
-  }
-
-  // Get app local path for App data
-  Future<String> get _localPath async {
-    final directory = await getApplicationDocumentsDirectory();
-    return directory.path;
-  }
-
-  // Get file object with full path
-  Future<File> get _localFile async {
-    final path = await _localPath;
-    return File('$path/contacts.json');
-  }
-
-  // Write latest key and value to json
-  void _writeJson(String key, dynamic value) async {
-    final filePath = await _localFile;
-    Map<String, dynamic> _newJson = {key: value};
-    mapa.addAll(_newJson);
-    _jsonString = jsonEncode(mapa);
-    filePath.writeAsString(_jsonString);
-  }
-
-  void saveContact(String telefono) async {
-    _writeJson(telefono, "myContact");
-}
-
-  void _readJson() async {
-    _filePath = await _localFile;
-    _fileExists = await _filePath.exists();
-
-    if (_fileExists) {
-      try {
-        _jsonString = await _filePath.readAsString();
-        mapa = jsonDecode(_jsonString);
-      } catch (e) {
-
-      }
-    }
-  }
-
-  // TO-DO
-  //void _navigateToNextScreen(BuildContext context) {
-    //Navigator.of(context).push(MaterialPageRoute(builder: (context) => llamar()));
- // }
-
-  String addNumber(String numero, String full){
-    if(full.length == 3) {
-      full += " ";
-    }
-    else if(full.length == 6){
-      full += " ";
-    } else if (full.length == 9){
-      full += " ";
-    }
-    return full += numero;
-  }
-
-  double checkFont(String numero, double font){
-
-    if(numero.length == 5){
-      font -= 5;
-    } else if (numero.length == 8) {
-      font -= 5;
-    } else if (numero.length > 8 && font > 45){
-      font = 45;
-    }  else if (numero.length == 1) {
-      font == 55;
-    } else if (numero.length > 12){
-      font = 25;
-    }
-
-    return font;
-
-  }
-
-  String removeCharacter(String numero){
-    var str = "";
-    str = numero.substring(0, numero.length - 1);
-    return str ;
-  }
-  @override
-  String number = "";
-
-  @override
-  void initState(){
-    _readJson();
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context){
-    return Column(
-      children: [
-        Container(
-          width: MediaQuery
-              .of(context)
-              .size
-              .width,
-          height: MediaQuery
-              .of(context)
-              .size
-              .height / 6,
-          color: colors[mode_counter],
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              SizedBox(width: 45, height: 50,),
-              Text(number, style: TextStyle(fontSize: fontsize,
-              color: fonts[mode_counter], decorationColor: colors[mode_counter]
-              ))],
-          ),
-        ), Container(
-          width: MediaQuery
-              .of(context)
-              .size
-              .width,
-          height: MediaQuery
-              .of(context)
-              .size
-              .height / 6,
-          color: colors[mode_counter],
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              const SizedBox(width: 23.5,),
-              SizedBox(
-                height: 95.0,
-                width: 95.0,
-                child: FittedBox(
-                  child: FloatingActionButton(
-                    backgroundColor: Colors.purple,
-                    child: Text("1"), focusColor: fonts[mode_counter],
-                    onPressed: () {
-                      setState(() {
-                        number = addNumber("1", number);
-                        fontsize = checkFont(number, fontsize);
-                      });
-                    },
-                  ),
-                ),
-              ), const SizedBox(width: 23.5,),
-              SizedBox(
-                height: 95.0,
-                width: 95.0,
-                child: FittedBox(
-                  child: FloatingActionButton(
-                    backgroundColor: Colors.purple,
-                    child: Text("2"),
-                    onPressed: () {
-                      setState(() {
-                        number = addNumber("2", number);
-                        fontsize = checkFont(number, fontsize);
-                      });
-                    },
-                  ),
-                ),
-              ), const SizedBox(width: 23.5,),
-              SizedBox(
-                height: 95.0,
-                width: 95.0,
-                child: FittedBox(
-                  child: FloatingActionButton(
-                    backgroundColor: Colors.purple,
-                    child: Text("3"),
-                    onPressed: () {
-                      setState(() {
-                        number = addNumber("3", number);
-                        fontsize = checkFont(number, fontsize);
-                      });
-                    },
-                  ),
-                ),
-              ),
-              const SizedBox(width: 23.5,),
-            ],
-          ),
-        ), Container(
-          width: MediaQuery
-              .of(context)
-              .size
-              .width,
-          height: MediaQuery
-              .of(context)
-              .size
-              .height / 6,
-          color: colors[mode_counter],
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              const SizedBox(width: 23.5,),
-              SizedBox(
-                height: 95.0,
-                width: 95.0,
-                child: FittedBox(
-                  child: FloatingActionButton(
-                    backgroundColor: Colors.purple,
-                    child: Text("4"),
-                    onPressed: () {
-                      setState(() {
-                        number = addNumber("4", number);
-                        fontsize = checkFont(number, fontsize);
-                      });
-                    },
-                  ),
-                ),
-              ), const SizedBox(width: 23.5,),
-              SizedBox(
-                height: 95.0,
-                width: 95.0,
-                child: FittedBox(
-                  child: FloatingActionButton(
-                    backgroundColor: Colors.purple,
-                    child: Text("5"),
-                    onPressed: () {
-                      setState(() {
-                        number = addNumber("5", number);
-                        fontsize = checkFont(number, fontsize);
-                      });
-                    },
-                  ),
-                ),
-              ), const SizedBox(width: 23.5,),
-              SizedBox(
-                height: 95.0,
-                width: 95.0,
-                child: FittedBox(
-                  child: FloatingActionButton(
-                    backgroundColor: Colors.purple,
-                    child: Text("6"),
-                    onPressed: () {
-                      setState(() {
-                        number = addNumber("6", number);
-                        fontsize = checkFont(number, fontsize);
-                      });
-                    },
-                  ),
-                ),
-              ),
-              const SizedBox(width: 23.5,),
-            ],
-          ),
-        ), Container(
-          width: MediaQuery
-              .of(context)
-              .size
-              .width,
-          height: MediaQuery
-              .of(context)
-              .size
-              .height / 6,
-          color: colors[mode_counter],
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              const SizedBox(width: 23.5,),
-              SizedBox(
-                height: 95.0,
-                width: 95.0,
-                child: FittedBox(
-                  child: FloatingActionButton(
-                    backgroundColor: Colors.purple,
-                    child: Text("7"),
-                    onPressed: () {
-                      setState(() {
-                        number = addNumber("7", number);
-                        fontsize = checkFont(number, fontsize);
-                      });
-                    },
-                  ),
-                ),
-              ), const SizedBox(width: 23.5,),
-              SizedBox(
-                height: 95.0,
-                width: 95.0,
-                child: FittedBox(
-                  child: FloatingActionButton(
-                    backgroundColor: Colors.purple,
-                    child: Text("8"),
-                    onPressed: () {
-                      setState(() {
-                        number = addNumber("8", number);
-                        fontsize = checkFont(number, fontsize);
-                      });
-                    },
-                  ),
-                ),
-              ), const SizedBox(width: 23.5,),
-              SizedBox(
-                height: 95.0,
-                width: 95.0,
-                child: FittedBox(
-                  child: FloatingActionButton(
-                    backgroundColor: Colors.purple,
-                    child: Text("9"),
-                    onPressed: () {
-                      setState(() {
-                        number = addNumber("9", number);
-                        fontsize = checkFont(number, fontsize);
-                      });
-                    },
-                  ),
-                ),
-              ),
-              const SizedBox(width: 23.5,),
-            ],
-          ),
-        ), Container(
-          width: MediaQuery
-              .of(context)
-              .size
-              .width,
-          height: MediaQuery
-              .of(context)
-              .size
-              .height / 6,
-          color: colors[mode_counter],
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              const SizedBox(width: 23.5,),
-              SizedBox(
-                height: 95.0,
-                width: 95.0,
-                child: FittedBox(
-                  child: FloatingActionButton(
-                    backgroundColor: Colors.purple,
-                    child: Text("+"),
-                    onPressed: () {
-                      setState(() {
-                        number = addNumber("+", number);
-                        fontsize = checkFont(number, fontsize);
-                      });
-                    },
-                  ),
-                ),
-              ), const SizedBox(width: 23.5,),
-              SizedBox(
-                height: 95.0,
-                width: 95.0,
-                child: FittedBox(
-                  child: FloatingActionButton(
-                    backgroundColor: Colors.purple,
-                    child: Text("0"),
-                    onPressed: () {
-                      setState(() {
-                        number = addNumber("0", number);
-                        fontsize = checkFont(number, fontsize);
-                      });
-                    },
-                  ),
-                ),
-              ), const SizedBox(width: 23.5,),
-              SizedBox(
-                height: 95.0,
-                width: 95.0,
-                child: FittedBox(
-                  child: FloatingActionButton(
-                    backgroundColor: Colors.purple,
-                    child: Icon(Icons.backspace_outlined, color: Colors.white,),
-                    onPressed: () {
-                      setState(() {
-                        number = removeCharacter(number);
-                        if (fontsize < 55){
-                          fontsize += 3;
-                        }
-                      });
-                    },
-                  ),
-                ),
-              ),
-              const SizedBox(width: 23.5,),
-            ],
-          ),
-        ),
-        Container(
-          width: MediaQuery
-              .of(context)
-          .size
-          .width,
-      height: MediaQuery
-          .of(context)
-          .size
-          .height / 6,
-      color: colors[mode_counter],
-    child: Row(
-    mainAxisSize: MainAxisSize.min,
-    children: <Widget>[
-    const SizedBox(width: 23.5,),
-          TextButton.icon(
-            label: Text(
-              language[current_language]["Calls"],
-              style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.black),
-            ),
-            style: TextButton.styleFrom(
-              textStyle: TextStyle(color: Colors.black),
-              backgroundColor: Colors.green,fixedSize: const Size(340, 53),
-              shape:RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(24.0),
-              ),
-            ),
-            onPressed: () => {llamar(number) ,
-            setState(() {
-            number = "";
-            })},
-            icon: Icon(Icons.call, color: Colors.black,),
-          ), const SizedBox(width: 46,),
-
-    ]))]);
-  }
-}

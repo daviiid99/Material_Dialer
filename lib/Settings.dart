@@ -41,8 +41,7 @@ import 'package:url_launcher/url_launcher.dart';
 
    _SettingState(this.mode_counter, this.modes, this.colores, this.fonts, this.current_language, this.language, this.index);
 
-   _launchURL() async {
-     const url = 'https://github.com/daviiid99/Material_Dialer';
+   _launchURL(String url) async {
      final Uri _url = Uri.parse(url);
      await launchUrl(_url,mode: LaunchMode.externalApplication);
    }
@@ -89,7 +88,7 @@ import 'package:url_launcher/url_launcher.dart';
                      onTap: () {
 
                        if (index == 0){
-                         _launchURL();
+                         _launchURL("https://github.com/daviiid99/Material_Dialer");
                        }
 
                        else if (index == 1){
@@ -98,8 +97,11 @@ import 'package:url_launcher/url_launcher.dart';
                            MaterialPageRoute(builder: (context) => SetLanguage(mode_counter, modes, colores, fonts, current_language, language)),
                          );
 
+                       } else if (index == 3){
+                         _launchURL("https://play.google.com/store/apps/details?id=com.daviiid99.material_dialer");
                        }
-                       if(index == 4){
+
+                       else if (index == 4){
                        Navigator.push(
                        context,
                        MaterialPageRoute(builder: (context) => MaterialDialer(mode_counter, modes, colores, fonts, current_language, language)),
