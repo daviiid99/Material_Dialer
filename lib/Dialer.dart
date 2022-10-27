@@ -101,7 +101,8 @@ class _DialerState extends State<Dialer>{
         "title" : "Create Contact",
         "box1" : "Phone",
         "box2" : "Name",
-        "button" : "Save Contact"
+        "button" : "Save Contact",
+        "toaster" : "Saved your contact"
       },
 
       "Country" : {
@@ -221,7 +222,8 @@ class _DialerState extends State<Dialer>{
         "title" : "Créer un Contact",
         "box1" : "Téléphone",
         "box2" : "Nom",
-        "button" : "Enregistrer le Contact"
+        "button" : "Enregistrer le Contact",
+        "toaster" : "Le contact a été enregistré"
       },
 
       "Country" : {
@@ -279,7 +281,8 @@ class _DialerState extends State<Dialer>{
         "title" : "Crea Contatto",
         "box1" : "Telefono",
         "box2" : "Nome",
-        "button" : "Salva Contatto"
+        "button" : "Salva Contatto",
+        "toaster" : "Salvato il contatto"
       },
 
       "Country" : {
@@ -337,7 +340,9 @@ class _DialerState extends State<Dialer>{
         "title" : "Kontakt Erstellen",
         "box1" : "Telefon",
         "box2" : "Name",
-        "button" : "Kontakt speichern"
+        "button" : "Kontakt speichern",
+        "toaster" : "Kontakt gespeichert"
+
       },
 
       "Country" : {
