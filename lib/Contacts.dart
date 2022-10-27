@@ -289,15 +289,28 @@ class _ContactState extends State<Contacts>{
                                          ),
                                          onPressed: () {
                                            setState(() {
-                                             mapa[phone.text] = contact.text;
-                                             contactos = addContactsToList(mapa, contactos, telefonos);
-                                             telefonos = addPhonesToList(mapa, contactos, telefonos);
-                                             _writeJson(phone.text, contact.text);
-                                             Navigator.pop(context);
+                                             if(phone.text.length > 0) {
+                                               mapa[phone.text] = contact.text;
+                                               contactos = addContactsToList(
+                                                   mapa, contactos, telefonos);
+                                               telefonos = addPhonesToList(
+                                                   mapa, contactos, telefonos);
+                                               _writeJson(
+                                                   phone.text, contact.text);
+                                               Navigator.pop(context);
+                                             }
                                            });
-                                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                             content: Text(language[current_language]["CreateContact"]["toaster"]+"\n" + contact.text + "(" + phone.text+ ")"),
-                                           ));
+                                           if(phone.text.length > 0) {
+                                             ScaffoldMessenger.of(context)
+                                                 .showSnackBar(SnackBar(
+                                               content: Text(
+                                                   language[current_language]["CreateContact"]["toaster"] +
+                                                       "\n" + contact.text +
+                                                       "(" + phone.text + ")"),
+                                             ));
+                                           }
+                                           contact.text = "";
+                                           phone.text = "";
                                          },
 
                                          icon: Icon(Icons.save_rounded, color: Colors.black,),
