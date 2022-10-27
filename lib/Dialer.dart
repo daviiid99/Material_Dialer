@@ -10,13 +10,15 @@ import 'package:path_provider/path_provider.dart';
 import 'ManageMap.dart';
 import 'DialPadNumbers.dart';
 import 'History.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+
 
 class Dialer extends StatefulWidget{
   @override
-  static int mode_counter = 1;
-  static List<IconData> modes = [Icons.light_mode, Icons.dark_mode];
-  static List<Color> colors = [Colors.white, Colors.black];
-  static List<Color> fonts = [Colors.black, Colors.white];
+  static int mode_counter = 0;
+  static List<IconData> modes = [Icons.palette_rounded, Icons.dark_mode];
+  static List<Color> colors = [Colors.black];
+  static List<Color> fonts = [Colors.white];
   String number = "";
   Dialer(this.number);
   _DialerState createState() => _DialerState(mode_counter, modes, colors, fonts, number);
@@ -24,7 +26,7 @@ class Dialer extends StatefulWidget{
 }
 
 class _DialerState extends State<Dialer>{
-  int mode_counter = 1;
+  int mode_counter = 0;
   List<IconData> modes = [];
   List<Color> colors = [];
   List<Color> fonts  = [];
@@ -47,6 +49,10 @@ class _DialerState extends State<Dialer>{
       size: 150,
     ),
   ];
+
+  Map<dynamic, dynamic> user = {
+    "color" : Colors.black
+  };
 
   Map<dynamic, dynamic> history = {};
 
@@ -339,22 +345,72 @@ class _DialerState extends State<Dialer>{
   }
 
   // Read json and update the lists on runtime
+  restireValues() async {
+    jsonFile = "user.json";
+    _filePath = await _localFile;
+    _fileExists = await _filePath.exists();
+
+    if (_fileExists) {
+      try {
+          _jsonString = await _filePath.readAsString();
+          user = jsonDecode(_jsonString);
+      } catch (e) {
+
+      }
+    }
+    setState(() {
+      String str = user["color"];
+      int value = int.parse(str, radix: 16);
+      Color otherColor = new Color(value);
+      colors[0] = otherColor;
+
+      jsonFile = "languages.json";
+      readJson();
+      currentLanguage = language["language"];
+      });
+
+  }
+
+  // Read json and update the lists on runtime
   readJson() async {
     _filePath = await _localFile;
     _fileExists = await _filePath.exists();
 
     if (_fileExists) {
       try {
-        _jsonString = await _filePath.readAsString();
-        language = jsonDecode(_jsonString);
+        if(jsonFile.contains("languages.json")) {
+          _jsonString = await _filePath.readAsString();
+          language = jsonDecode(_jsonString);
+        }
+
+        if (jsonFile.contains("user.json")){
+          _jsonString = await _filePath.readAsString();
+          user = jsonDecode(_jsonString);
+        }
       } catch (e) {
 
       }
     }
     setState(() {
-      this.currentLanguage = language["language"];
-      language = jsonDecode(_jsonString);
-      setLanguage();
+      if (jsonFile.contains("languages.json")) {
+        this.currentLanguage = language["language"];
+        language = jsonDecode(_jsonString);
+        setLanguage();
+
+      }
+
+      else if(jsonFile.contains("user.json")){
+        user = jsonDecode(_jsonString);
+        String str = user["color"];
+        int value = int.parse(str, radix: 16);
+        Color otherColor = new Color(value);
+
+        setState(() {
+          colors[0] = otherColor;
+          print(colors);
+        });
+
+      }
     });
 
   }
@@ -363,9 +419,19 @@ class _DialerState extends State<Dialer>{
   void writeJson(String key, dynamic value) async {
     final filePath = await _localFile;
     Map<String, dynamic> _newJson = {key: value};
-    language.addAll(_newJson);
-    _jsonString = jsonEncode(language);
-    filePath.writeAsString(_jsonString);
+
+    if (jsonFile == "languages.json") {
+      language.addAll(_newJson);
+      _jsonString = jsonEncode(language);
+      filePath.writeAsString(_jsonString);
+    }
+
+    else if (jsonFile == "user.json"){
+      user.addAll(_newJson);
+      _jsonString = jsonEncode(user);
+      filePath.writeAsString(_jsonString);
+
+    }
   }
 
   void setLanguage() async{
@@ -393,11 +459,10 @@ class _DialerState extends State<Dialer>{
 
   @override
   void initState(){
-    readJson();
-    setState(() {
-      readJson();
-      currentLanguage = language["language"];
-    });
+
+      setState(() {
+        restireValues();
+      });
     super.initState();
   }
 
@@ -408,17 +473,30 @@ class _DialerState extends State<Dialer>{
         floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(modes[mode_counter], color: fonts[mode_counter]),
+          icon: Icon(Icons.palette_rounded, color: fonts[mode_counter]),
           tooltip: 'Navigation menu',
             onPressed: () => {
-            setState((){
-            if(mode_counter == 1){
-            mode_counter = 0;
-            } else {
-            mode_counter = 1;
+            showDialog(
+            context: context,
+            builder: (BuildContext context){
+              return AlertDialog(
+                backgroundColor: Colors.white,
+              content: SingleChildScrollView(
+              child: BlockPicker(
+                pickerColor: colors[0], //default color
+                onColorChanged: (Color color) { //on color picked
+                  jsonFile = "user.json";
+                  String colorString = color.toString(); // Color(0x12345678)
+                  String valueString = colorString.split('(0x')[1].split(')')[0]; // kind of hacky..
+                  writeJson("color", valueString);
+                  readJson();
+
+                })
+              ),
+              );
             }
-            },
-            )}
+            )
+          }
         ),
         backgroundColor: colors[mode_counter],
         actions:  [
