@@ -298,9 +298,6 @@ class _ContactState extends State<Contacts>{
                                                _writeJson(
                                                    phone.text, contact.text);
                                                Navigator.pop(context);
-                                             }
-                                           });
-                                           if(phone.text.length > 0) {
                                              ScaffoldMessenger.of(context)
                                                  .showSnackBar(SnackBar(
                                                content: Text(
@@ -308,11 +305,12 @@ class _ContactState extends State<Contacts>{
                                                        "\n" + contact.text +
                                                        "(" + phone.text + ")"),
                                              ));
-                                             contact.text = "";
-                                             phone.text = "";
-                                           }
-                                         },
+                                               contact.text = "";
+                                               phone.text = "";
+                                             }
+                                           });
 
+                                         },
                                          icon: Icon(Icons.save_rounded, color: Colors.black,),
                                        )
                                      ]
