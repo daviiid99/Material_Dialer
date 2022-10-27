@@ -329,7 +329,7 @@ class _DialerState extends State<Dialer>{
   late File _filePath;
   String jsonFile = "languages.json";
   late String _jsonString;
-  late String currentLanguage;
+  String currentLanguage = "English";
   int index = 0;
 
   // Get app local path for App data
@@ -345,7 +345,7 @@ class _DialerState extends State<Dialer>{
   }
 
   // Read json and update the lists on runtime
-  restireValues() async {
+  restoreValues() async {
     jsonFile = "user.json";
     _filePath = await _localFile;
     _fileExists = await _filePath.exists();
@@ -364,9 +364,6 @@ class _DialerState extends State<Dialer>{
       Color otherColor = new Color(value);
       colors[0] = otherColor;
 
-      jsonFile = "languages.json";
-      readJson();
-      currentLanguage = language["language"];
       });
 
   }
@@ -454,14 +451,23 @@ class _DialerState extends State<Dialer>{
       index = 4;
     }
 
+    setState(() {
+      restoreValues();
+    });
+
   }
 
 
   @override
   void initState(){
 
+    jsonFile = "languages.json";
+    readJson();
+
       setState(() {
-        restireValues();
+        jsonFile = "languages.json";
+        readJson();
+        currentLanguage = language["language"];
       });
     super.initState();
   }
