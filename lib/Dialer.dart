@@ -81,8 +81,9 @@ class _DialerState extends State<Dialer>{
         "card2" : "Version",
         "card3" : "Package Name",
         "card4" : "Build Signature",
-
-        "button" : "Check for Updates"
+        "button" : "Check for Updates",
+        "toaster" : "Checking for updates\nPlease wait...",
+        "toaster2" : "You're on latest release"
       },
 
       "Contacts" : {
@@ -109,7 +110,7 @@ class _DialerState extends State<Dialer>{
       "History" : {
         "title" : "Calls History",
         "subtitle" : "Last Calls"
-      },
+      }
 
     },
 
@@ -136,7 +137,9 @@ class _DialerState extends State<Dialer>{
         "card2": "Versión",
         "card3": "Nombre de paquete",
         "card4": "Firma de compilación",
-        "button" : "Buscar Actualizaciones"
+        "button" : "Buscar Actualizaciones",
+        "toaster" : "Buscando actualizaciones\nPor favor, espera...",
+        "toaster2" : "Estás es la última versión"
       },
 
       "Contacts": {
@@ -164,7 +167,7 @@ class _DialerState extends State<Dialer>{
       "History" : {
         "title" : "Registro de  Llamadas",
         "subtitle" : "Últimas Llamadas"
-      },
+      }
 
     },
 
@@ -189,7 +192,9 @@ class _DialerState extends State<Dialer>{
         "card2" : "Version",
         "card3" : "Nom du paquet",
         "card4" : "Signature de construction",
-        "button" : "Vérifier les mises à jour"
+        "button" : "Vérifier les mises à jour",
+        "toaster" : "Vérification des mises à jour\nS'il vous plaît, attendez...",
+        "toaster2" : "Vous êtes sur la dernière version"
       },
 
       "Contacts" : {
@@ -216,7 +221,7 @@ class _DialerState extends State<Dialer>{
       "History" : {
         "title" : "Historique des téléphone",
         "subtitle" : "Dernier Appels Téléphoniques"
-      },
+      }
 
     },
 
@@ -241,7 +246,9 @@ class _DialerState extends State<Dialer>{
         "card2" : "Versione",
         "card3" : "Nome del pacchetto",
         "card4" : "Firma di build",
-        "button" : "Controlla gli aggiornamenti"
+        "button" : "Controlla gli aggiornamenti",
+        "toaster" : "Verifica aggiornamenti\nattendere prego...",
+        "toaster2" : "Sei all'ultima versione"
       },
 
       "Contacts" : {
@@ -268,7 +275,7 @@ class _DialerState extends State<Dialer>{
       "History" : {
         "title" : "Cronologia chiamate",
         "subtitle" : "Ultime Chiamate"
-      },
+      }
 
     },
 
@@ -293,7 +300,9 @@ class _DialerState extends State<Dialer>{
         "card2" : "Ausführung",
         "card3" : "Paketnamen",
         "card4" : "Build-Unterschrift",
-        "button" : "Auf Updates prüfen"
+        "button" : "Auf Updates prüfen",
+        "toaster" : "Suche nach Updates\nWarten Sie mal...",
+        "toaster2" : "Sie sind auf der neuesten Version"
       },
 
       "Contacts" : {
@@ -320,7 +329,7 @@ class _DialerState extends State<Dialer>{
       "History" : {
         "title" : "Anrufverlauf",
         "subtitle" : "Letzte Anrufe"
-      },
+      }
 
     }
   };
@@ -486,8 +495,9 @@ class _DialerState extends State<Dialer>{
             context: context,
             builder: (BuildContext context){
               return AlertDialog(
-                backgroundColor: Colors.white,
+                backgroundColor: Colors.transparent,
               content: SingleChildScrollView(
+
               child: BlockPicker(
                 pickerColor: colors[0], //default color
                 onColorChanged: (Color color) { //on color picked
@@ -496,6 +506,7 @@ class _DialerState extends State<Dialer>{
                   String valueString = colorString.split('(0x')[1].split(')')[0]; // kind of hacky..
                   writeJson("color", valueString);
                   readJson();
+                  Navigator.pop(context);
 
                 })
               ),

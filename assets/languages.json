@@ -23,8 +23,9 @@
       "card2" : "Version",
       "card3" : "Package Name",
       "card4" : "Build Signature",
-
-      "button" : "Check for Updates"
+      "button" : "Check for Updates",
+      "toaster" : "Checking for updates\nPlease wait...",
+      "toaster2" : "You're on latest release"
     },
 
     "Contacts" : {
@@ -51,7 +52,7 @@
     "History" : {
       "title" : "Calls History",
       "subtitle" : "Last Calls"
-    },
+    }
 
   },
 
@@ -78,7 +79,9 @@
       "card2": "Versión",
       "card3": "Nombre de paquete",
       "card4": "Firma de compilación",
-      "button" : "Buscar Actualizaciones"
+      "button" : "Buscar Actualizaciones",
+      "toaster" : "Buscando actualizaciones\nPor favor, espera...",
+      "toaster2" : "You're on latest release"
     },
 
     "Contacts": {
@@ -106,7 +109,7 @@
     "History" : {
       "title" : "Registro de  Llamadas",
       "subtitle" : "Últimas Llamadas"
-    },
+    }
 
   },
 
@@ -131,7 +134,9 @@
       "card2" : "Version",
       "card3" : "Nom du paquet",
       "card4" : "Signature de construction",
-      "button" : "Vérifier les mises à jour"
+      "button" : "Vérifier les mises à jour",
+      "toaster" : "Vérification des mises à jour\nS'il vous plaît, attendez...",
+      "toaster2" : "Vous êtes sur la dernière version"
     },
 
     "Contacts" : {
@@ -158,7 +163,7 @@
     "History" : {
       "title" : "Historique des téléphone",
       "subtitle" : "Dernier Appels Téléphoniques"
-    },
+    }
 
   },
 
@@ -183,7 +188,9 @@
       "card2" : "Versione",
       "card3" : "Nome del pacchetto",
       "card4" : "Firma di build",
-      "button" : "Controlla gli aggiornamenti"
+      "button" : "Controlla gli aggiornamenti",
+      "toaster" : "Verifica aggiornamenti\nattendere prego...",
+      "toaster2" : "Sei all'ultima versione"
     },
 
     "Contacts" : {
@@ -210,7 +217,7 @@
     "History" : {
       "title" : "Cronologia chiamate",
       "subtitle" : "Ultime Chiamate"
-    },
+    }
 
   },
 
@@ -235,7 +242,9 @@
       "card2" : "Ausführung",
       "card3" : "Paketnamen",
       "card4" : "Build-Unterschrift",
-      "button" : "Auf Updates prüfen"
+      "button" : "Auf Updates prüfen",
+      "toaster" : "Suche nach Updates\nWarten Sie mal...",
+      "toaster2" : "Sie sind auf der neuesten Version"
     },
 
     "Contacts" : {
@@ -262,7 +271,7 @@
     "History" : {
       "title" : "Anrufverlauf",
       "subtitle" : "Letzte Anrufe"
-    },
+    }
 
   }
 }

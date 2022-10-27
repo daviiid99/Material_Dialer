@@ -48,7 +48,7 @@ class _MaterialDialerState extends State<MaterialDialer>{
   List<IconData> modes = [];
   List<Color> colores = [];
   List<Color> fonts  = [];
-  List<String> images = ['assets/images/light_banner.png', 'assets/images/black_banner.png'];
+  List<String> images = ['assets/images/black_banner.png'];
   List<String> options = [];
   List<String> description = [];
   List<IconData> icons = [Icons.drive_file_rename_outline_rounded, Icons.format_list_numbered,Icons.add_box, Icons.android_rounded, ];
@@ -212,7 +212,7 @@ class _MaterialDialerState extends State<MaterialDialer>{
                 await _prepareSaveDir();
                 try {
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text("Checking for updates\nPlease wait..."),
+                    content: Text(language[current_language]["About"]["toaster"]),
                   ));
 
                   print(_release);
@@ -220,7 +220,7 @@ class _MaterialDialerState extends State<MaterialDialer>{
                   if(_release.contains(version) == false){
                     String latest = _release;
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text("Downloading latest release\nPlease wait..."),
+                      content: Text(language[current_language]["About"]["toaster"]),
                     ));
 
                     File file = File('/sdcard/download/material_dialer_latest.apk');
@@ -234,7 +234,7 @@ class _MaterialDialerState extends State<MaterialDialer>{
                         _localPath + "/" + "material_dialer_latest.apk");
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text("You're on latest release!"),
+                      content: Text(language[current_language]["About"]["toaster2"]),
                     ));
 
                   }
