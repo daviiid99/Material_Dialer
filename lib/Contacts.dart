@@ -197,11 +197,9 @@ class _ContactState extends State<Contacts>{
 
             onSelected: (value){
               if(value == 0){
-                print("import contacts");
               }
 
               else if ( value == 1){
-                print("export contacts");
               }
             }
           )
@@ -255,7 +253,7 @@ class _ContactState extends State<Contacts>{
                                        Text("\n"),
                                        TextFormField(
                                          controller: phone,
-                                         keyboardType: TextInputType.number,
+                                         keyboardType: TextInputType.phone,
                                          decoration:  InputDecoration(
                                            border: OutlineInputBorder(),
                                            labelText: language[current_language]["CreateContact"]["box1"],
