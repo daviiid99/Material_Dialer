@@ -308,9 +308,9 @@ class _ContactState extends State<Contacts>{
                                                        "\n" + contact.text +
                                                        "(" + phone.text + ")"),
                                              ));
+                                             contact.text = "";
+                                             phone.text = "";
                                            }
-                                           contact.text = "";
-                                           phone.text = "";
                                          },
 
                                          icon: Icon(Icons.save_rounded, color: Colors.black,),
