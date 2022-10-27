@@ -25,14 +25,18 @@
       "card4" : "Build Signature",
       "button" : "Check for Updates",
       "toaster" : "Checking for updates\nPlease wait...",
-      "toaster2" : "You're on latest release"
+      "toaster2" : "You're on latest release",
+      "toaster3" : "Downloading a new update!\nPlease, don't close the app"
     },
 
     "Contacts" : {
       "title" : "My Contacts",
       "button1" : "Create Contact",
       "button2" : "Pick a Contact",
-      "toaster" : "Saved your contact"
+      "toaster" : "Saved your contact",
+      "menu_button" : "Import Contacts",
+      "menu_button_2" : "Export Contacts",
+      "empty" : "\nNothing here, just leafs"
     },
 
     "CreateContact" : {
@@ -81,14 +85,19 @@
       "card4": "Firma de compilación",
       "button" : "Buscar Actualizaciones",
       "toaster" : "Buscando actualizaciones\nPor favor, espera...",
-      "toaster2" : "You're on latest release"
+      "toaster2" : "You're on latest release",
+      "toaster3" : "Descargando una nueva actualización!\nPor favor, no cierre la app"
     },
 
     "Contacts": {
       "title": "Mis Contactos",
       "button1": "Crear Contacto",
       "button2": "Añadir Contacto",
-      "toaster" : "Se ha guardado tu contacto"
+      "toaster" : "Se ha guardado tu contacto",
+      "menu_button" : "Importar Contactos",
+      "menu_button_2" : "Exportar Contactos",
+      "empty" : "\nNo hay nada, solo hojas"
+
     },
 
     "CreateContact": {
@@ -136,14 +145,18 @@
       "card4" : "Signature de construction",
       "button" : "Vérifier les mises à jour",
       "toaster" : "Vérification des mises à jour\nS'il vous plaît, attendez...",
-      "toaster2" : "Vous êtes sur la dernière version"
+      "toaster2" : "Vous êtes sur la dernière version",
+      "toaster3" : "Téléchargement d'une nouvelle mise à jour!\nS'il vous plaît, ne fermez pas l'application"
     },
 
     "Contacts" : {
       "title" : "Mes Contacts",
       "button1" : "Créer contact",
       "button2" : "Choisissez contact",
-      "toaster" : "Saved your contact"
+      "toaster" : "Saved your contact",
+      "menu_button" : "Contacts d'importation",
+      "menu_button_2" : "Exporter des contacts",
+      "empty" : "\nRien ici, juste des feuilles"
     },
 
     "CreateContact" : {
@@ -190,14 +203,18 @@
       "card4" : "Firma di build",
       "button" : "Controlla gli aggiornamenti",
       "toaster" : "Verifica aggiornamenti\nattendere prego...",
-      "toaster2" : "Sei all'ultima versione"
+      "toaster2" : "Sei all'ultima versione",
+      "toaster3" : "Download di un nuovo aggiornamento!\nPer favore, non chiudere l'app"
     },
 
     "Contacts" : {
       "title" : "I miei Contatti",
       "button1" : "Crea Contatto",
       "button2" : "Scegli Contatto",
-      "toaster" : "Saved your contact"
+      "toaster" : "Saved your contact",
+      "menu_button" : "Importa contatti",
+      "menu_button_2" : "Esporta contatti",
+      "empty" : "\nNiente qui, se ne va"
     },
 
     "CreateContact" : {
@@ -244,14 +261,18 @@
       "card4" : "Build-Unterschrift",
       "button" : "Auf Updates prüfen",
       "toaster" : "Suche nach Updates\nWarten Sie mal...",
-      "toaster2" : "Sie sind auf der neuesten Version"
+      "toaster2" : "Sie sind auf der neuesten Version",
+      "toaster3" : "Laden Sie ein neues Update herunter!\nBitte schließen Sie die App nicht"
     },
 
     "Contacts" : {
       "title" : "Meine Kontakte",
       "button1" : "Kontakt Erstellen",
       "button2" : "Wählen Sie einen Kontakt aus",
-      "toaster" : "Saved your contact"
+      "toaster" : "Saved your contact",
+      "menu_button" : "Kontakte importieren",
+      "menu_button_2" : "Kontakte exportieren",
+      "empty" : "\nNichts hier, nur Blätter"
     },
 
     "CreateContact" : {

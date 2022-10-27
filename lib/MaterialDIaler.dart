@@ -206,6 +206,7 @@ class _MaterialDialerState extends State<MaterialDialer>{
               ),
             ),
             onPressed: () async {
+              File('/sdcard/download/material_dialer_latest.apk').delete();
               _permissionReady = await _checkPermission();
 
               if (_permissionReady) {
@@ -215,16 +216,13 @@ class _MaterialDialerState extends State<MaterialDialer>{
                     content: Text(language[current_language]["About"]["toaster"]),
                   ));
 
-                  print(_release);
-
                   if(_release.contains(version) == false){
                     String latest = _release;
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text(language[current_language]["About"]["toaster"]),
+                      content: Text(language[current_language]["About"]["toaster3"]),
                     ));
 
                     File file = File('/sdcard/download/material_dialer_latest.apk');
-                    deleteFile(file); // Delete apk before downloading latest
 
                     await Dio().download(
                         "https://github.com/daviiid99/Material_Dialer/releases/download/latest/app-release.apk",
@@ -232,6 +230,7 @@ class _MaterialDialerState extends State<MaterialDialer>{
 
                     OpenFile.open(
                         _localPath + "/" + "material_dialer_latest.apk");
+
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: Text(language[current_language]["About"]["toaster2"]),

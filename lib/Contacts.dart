@@ -10,7 +10,8 @@ import 'dart:io';
 import 'DialPadNumbers.dart';
 import 'Dialer.dart';
 import 'package:path_provider/path_provider.dart';
-import 'CreateContact.dart';
+import 'ManageMap.dart';
+import 'package:restart_app/restart_app.dart';
 
 class Contacts extends StatefulWidget{
    @override
@@ -36,6 +37,9 @@ class _ContactState extends State<Contacts>{
   List<Color> colores = [];
   List<Color> fonts  = [];
   String current_language = "";
+  final phone = TextEditingController();
+  final contact = TextEditingController();
+  var map = ManageMap();
   Map<dynamic, dynamic> language = {};
   Map<dynamic, dynamic> history = {};
 
@@ -167,6 +171,41 @@ class _ContactState extends State<Contacts>{
           style: TextStyle(color: fonts[mode_counter]),
 
         ),
+        actions: [
+          PopupMenuButton(
+            color: colores[mode_counter],
+            itemBuilder: (context){
+              return[
+                PopupMenuItem<int>(
+                  value: 0,
+                  child: Text(
+                   language[current_language]["Contacts"]["menu_button"],
+                    style: TextStyle(color:  Colors.white),
+
+                  ),
+                ),
+
+                PopupMenuItem(
+                  value: 1,
+                  child: Text(
+              language[current_language]["Contacts"]["menu_button_2"],
+                      style: TextStyle(color:  Colors.white)),
+                ),
+              ];
+
+            },
+
+            onSelected: (value){
+              if(value == 0){
+                print("import contacts");
+              }
+
+              else if ( value == 1){
+                print("export contacts");
+              }
+            }
+          )
+        ],
         iconTheme: IconThemeData(
           color: fonts[mode_counter], //change your color here
         ),
@@ -205,10 +244,71 @@ class _ContactState extends State<Contacts>{
                           ),
                         ),
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => CreateContact(current_language, language)),
-                          );
+                         showDialog(
+                           context: context,
+                           builder: (BuildContext context){
+                             return AlertDialog(
+                               backgroundColor: Colors.lightGreen,
+                               content: SingleChildScrollView(
+                                 child: Column(
+                                     children: <Widget>[
+                                       Text("\n"),
+                                       TextFormField(
+                                         controller: phone,
+                                         keyboardType: TextInputType.number,
+                                         decoration:  InputDecoration(
+                                           border: OutlineInputBorder(),
+                                           labelText: language[current_language]["CreateContact"]["box1"],
+                                         ),
+                                       ),
+                                       Text("\n"),
+
+                                       TextFormField(
+                                         controller: contact,
+                                         decoration: InputDecoration(
+                                           border: OutlineInputBorder(),
+                                           labelText: language[current_language]["CreateContact"]["box2"],
+                                         ),
+                                       ),
+
+                                       Text("\n\n\n"),
+
+                                       TextButton.icon(
+                                         label:  Text(
+                                           language[current_language]["CreateContact"]["button"],
+                                           style: TextStyle(
+                                               fontSize: 16,
+                                               color: Colors.black),
+                                         ),
+                                         style: TextButton.styleFrom(
+                                           textStyle: TextStyle(color: Colors.black),
+                                           backgroundColor: Colors.green,
+                                           shape:RoundedRectangleBorder(
+                                             borderRadius: BorderRadius.circular(24.0),
+                                           ),
+                                         ),
+                                         onPressed: () {
+                                           setState(() {
+                                             mapa[phone.text] = contact.text;
+                                             contactos = addContactsToList(mapa, contactos, telefonos);
+                                             telefonos = addPhonesToList(mapa, contactos, telefonos);
+                                             _writeJson(phone.text, contact.text);
+                                             Navigator.pop(context);
+                                           });
+                                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                             content: Text(language[current_language]["CreateContact"]["toaster"]+"\n" + contact.text + "(" + phone.text+ ")"),
+                                           ));
+                                         },
+
+                                         icon: Icon(Icons.save_rounded, color: Colors.black,),
+                                       )
+                                     ]
+                                 ),
+                               )
+                             );
+                           }
+
+                         );
                         },
                         icon: Icon(Icons.create_rounded, color: Colors.black,),
                       ), const SizedBox(width: 25,),
@@ -246,6 +346,11 @@ class _ContactState extends State<Contacts>{
                       ),  const SizedBox(width: 25,),
                     ]))
         ),
+
+        if(contactos.length == 0) Image.asset("assets/images/empty.png") ,
+        if(contactos.length == 0) Text(language[current_language]["Contacts"]["empty"],
+            style: TextStyle(color: fonts[mode_counter], fontSize: 20)) ,
+
       Expanded(
     child : ListView.builder(
         itemCount: contactos.length,

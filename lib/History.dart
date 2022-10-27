@@ -10,7 +10,6 @@ import 'dart:io';
 import 'DialPadNumbers.dart';
 import 'Dialer.dart';
 import 'package:path_provider/path_provider.dart';
-import 'CreateContact.dart';
 
 
 class History extends StatefulWidget{
@@ -134,6 +133,10 @@ class _HistoryState extends State<History>{
           style: TextStyle(color: fonts[mode_counter], fontSize: 35),
 
           ),
+
+          if(numeros.length == 0) Image.asset("assets/images/empty.png") ,
+          if(numeros.length == 0) Text(language[current_language]["Contacts"]["empty"],
+              style: TextStyle(color: fonts[mode_counter], fontSize: 20)) ,
         Expanded(
           child : ListView.builder(
             itemCount: numeros.length,

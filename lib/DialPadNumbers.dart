@@ -187,7 +187,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                       backgroundColor: Colors.purple,
                       child: Text("1"), focusColor: fonts[mode_counter],
                       onPressed: () {
-                        player.play(AssetSource('sounds/1.mp3'));
+                        //player.play(AssetSource('sounds/1.mp3'));
 
                         setState(() {
                           number = addNumber("1", number);
@@ -205,7 +205,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                       backgroundColor: Colors.purple,
                       child: Text("2"),
                       onPressed: () {
-                        player.play(AssetSource('sounds/2.mp3'));
+                        //player.play(AssetSource('sounds/2.mp3'));
                         setState(() {
                           number = addNumber("2", number);
                           fontsize = checkFont(number, fontsize);
@@ -222,7 +222,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                       backgroundColor: Colors.purple,
                       child: Text("3"),
                       onPressed: () {
-                        player.play(AssetSource('sounds/3.mp3'));
+                        //player.play(AssetSource('sounds/3.mp3'));
                         setState(() {
                           number = addNumber("3", number);
                           fontsize = checkFont(number, fontsize);
@@ -256,7 +256,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                       backgroundColor: Colors.purple,
                       child: Text("4"),
                       onPressed: () {
-                        player.play(AssetSource('sounds/4.mp3'));
+                        //player.play(AssetSource('sounds/4.mp3'));
                         setState(() {
                           number = addNumber("4", number);
                           fontsize = checkFont(number, fontsize);
@@ -273,7 +273,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                       backgroundColor: Colors.purple,
                       child: Text("5"),
                       onPressed: () {
-                        player.play(AssetSource('sounds/5.mp3'));
+                        //player.play(AssetSource('sounds/5.mp3'));
                         setState(() {
                           number = addNumber("5", number);
                           fontsize = checkFont(number, fontsize);
@@ -290,7 +290,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                       backgroundColor: Colors.purple,
                       child: Text("6"),
                       onPressed: () {
-                        player.play(AssetSource('sounds/6.mp3'));
+                        //player.play(AssetSource('sounds/6.mp3'));
                         setState(() {
                           number = addNumber("6", number);
                           fontsize = checkFont(number, fontsize);
@@ -324,7 +324,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                       backgroundColor: Colors.purple,
                       child: Text("7"),
                       onPressed: () {
-                        player.play(AssetSource('sounds/7.mp3'));
+                        //player.play(AssetSource('sounds/7.mp3'));
                         setState(() {
                           number = addNumber("7", number);
                           fontsize = checkFont(number, fontsize);
@@ -341,7 +341,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                       backgroundColor: Colors.purple,
                       child: Text("8"),
                       onPressed: () {
-                        player.play(AssetSource('sounds/8.mp3'));
+                        //player.play(AssetSource('sounds/8.mp3'));
                         setState(() {
                           number = addNumber("8", number);
                           fontsize = checkFont(number, fontsize);
@@ -358,7 +358,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                       backgroundColor: Colors.purple,
                       child: Text("9"),
                       onPressed: () {
-                        player.play(AssetSource('sounds/9.mp3'));
+                        //player.play(AssetSource('sounds/9.mp3'));
                         setState(() {
                           number = addNumber("9", number);
                           fontsize = checkFont(number, fontsize);
@@ -408,7 +408,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                       backgroundColor: Colors.purple,
                       child: Text("0"),
                       onPressed: () {
-                        player.play(AssetSource('sounds/0.mp3'));
+                        //player.play(AssetSource('sounds/0.mp3'));
                         setState(() {
                           number = addNumber("0", number);
                           fontsize = checkFont(number, fontsize);
@@ -425,7 +425,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                       backgroundColor: Colors.purple,
                       child: Icon(Icons.backspace_outlined, color: Colors.white,),
                       onPressed: () {
-                        player.play(AssetSource('assets/sounds/del.mp3'));
+                        //player.play(AssetSource('assets/sounds/del.mp3'));
                         setState(() {
                           number = removeCharacter(number);
                           if (fontsize < 55){

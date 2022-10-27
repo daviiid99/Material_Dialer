@@ -97,7 +97,6 @@ class _SetLanguageState extends State<SetLanguage>{
                     textColor: fonts[mode_counter],
                     title: Text(languages[index], textAlign: TextAlign.center,),
                     onTap: () {
-
                       setState(() {
                         writeJson("language",languages[index]);
                       });
