@@ -57,6 +57,7 @@ class _SetLanguageState extends State<SetLanguage>{
     language.addAll(_newJson);
     _jsonString = jsonEncode(language);
     filePath.writeAsString(_jsonString);
+    print(filePath);
   }
 
   @override
@@ -72,6 +73,7 @@ class _SetLanguageState extends State<SetLanguage>{
       backgroundColor:  colores[mode_counter],
       appBar: AppBar(
         backgroundColor: colores[mode_counter],
+        leading: Icon(Icons.language_rounded, color: Colors.blueAccent),
         title: Text (
             language[current_language]["Country"]["title"],
           style: TextStyle(color: fonts[mode_counter]),
@@ -98,13 +100,9 @@ class _SetLanguageState extends State<SetLanguage>{
                     onTap: () {
                       setState(() {
                         writeJson("language",languages[index]);
+                        Restart.restartApp();
                       });
 
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text(language[current_language]["Country"]["toaster"] + languages[index]),
-                      ));
-
-                      Restart.restartApp();
 
 
                       },

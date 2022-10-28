@@ -11,9 +11,11 @@ import 'ManageMap.dart';
 import 'DialPadNumbers.dart';
 import 'History.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'SetLanguage.dart';
 
 
 class Dialer extends StatefulWidget{
+
   @override
   static int mode_counter = 0;
   static List<IconData> modes = [Icons.palette_rounded, Icons.dark_mode];
@@ -51,7 +53,7 @@ class _DialerState extends State<Dialer>{
   ];
 
   Map<dynamic, dynamic> user = {
-    "color" : Colors.black
+    "color" : Colors.black,
   };
 
   Map<dynamic, dynamic> history = {};
@@ -94,7 +96,7 @@ class _DialerState extends State<Dialer>{
         "toaster" : "Saved your contact",
         "menu_button" : "Import Contacts",
         "menu_button_2" : "Export Contacts",
-        "empty" : "\nNothing here, just leafs",
+        "empty" : "Nothing here, just leafs",
         "export" : "Exported your current contacts to the path",
         "import" : "Restored your contacts!"
       },
@@ -157,7 +159,7 @@ class _DialerState extends State<Dialer>{
         "toaster" : "Se ha guardado tu contacto",
         "menu_button" : "Importar Contactos",
         "menu_button_2" : "Exportar Contactos",
-        "empty" : "\nNo hay nada, solo hojas",
+        "empty" : "No hay nada, solo hojas",
         "export" : "Exportados tus contactos al directorio",
         "import" : "Restaurados tus contactos!"
 
@@ -219,7 +221,7 @@ class _DialerState extends State<Dialer>{
         "toaster" : "Saved your contact",
         "menu_button" : "Contacts d'importation",
         "menu_button_2" : "Exporter des contacts",
-        "empty" : "\nRien ici, juste des feuilles",
+        "empty" : "Rien ici, juste des feuilles",
         "export" : "Exporté vos contacts actuels vers le répertoire",
         "import" : "Restauré vos contacts!"
       },
@@ -280,7 +282,7 @@ class _DialerState extends State<Dialer>{
         "toaster" : "Saved your contact",
         "menu_button" : "Importa contatti",
         "menu_button_2" : "Esporta contatti",
-        "empty" : "\nNiente qui, se ne va",
+        "empty" : "Niente qui, se ne va",
         "export" : "Hai esportato i tuoi contatti attuali nella directory",
         "import" : "Hai ripristinato i tuoi contatti!"
       },
@@ -341,7 +343,7 @@ class _DialerState extends State<Dialer>{
         "toaster" : "Saved your contact",
         "menu_button" : "Kontakte importieren",
         "menu_button_2" : "Kontakte exportieren",
-        "empty" : "\nNichts hier, nur Blätter",
+        "empty" : "Nichts hier, nur Blätter",
         "export" : "Ihre aktuellen Kontakte in das Verzeichnis exportiert",
         "import" : "Ihre Kontakte wiederhergestellt!"
       },
@@ -449,7 +451,6 @@ class _DialerState extends State<Dialer>{
 
         setState(() {
           colors[0] = otherColor;
-          print(colors);
         });
 
       }
@@ -502,18 +503,37 @@ class _DialerState extends State<Dialer>{
 
   }
 
+  void isCleanInstall() async {
+
+    final path = await _localPath;
+    final languagesFile = File("/data/user/0/com.daviiid99.material_dialer/app_flutter/languages.json");
+
+    bool exists = await languagesFile.exists();
+
+
+    if (!exists) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) =>
+              SetLanguage(mode_counter, modes, colors, fonts, currentLanguage,
+                  language),
+          ));
+    }
+  }
 
   @override
   void initState(){
-
     jsonFile = "languages.json";
     readJson();
 
-      setState(() {
-        jsonFile = "languages.json";
-        readJson();
-        currentLanguage = language["language"];
-      });
+    setState(() async {
+      jsonFile = "languages.json";
+      readJson();
+      currentLanguage = language["language"];
+
+      isCleanInstall();
+
+    });
     super.initState();
   }
 
