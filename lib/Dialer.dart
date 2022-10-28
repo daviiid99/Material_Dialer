@@ -94,7 +94,9 @@ class _DialerState extends State<Dialer>{
         "toaster" : "Saved your contact",
         "menu_button" : "Import Contacts",
         "menu_button_2" : "Export Contacts",
-        "empty" : "\nNothing here, just leafs"
+        "empty" : "\nNothing here, just leafs",
+        "export" : "Exported your current contacts to the path",
+        "import" : "Restored your contacts!"
       },
 
       "CreateContact" : {
@@ -144,7 +146,7 @@ class _DialerState extends State<Dialer>{
         "card4": "Firma de compilación",
         "button" : "Buscar Actualizaciones",
         "toaster" : "Buscando actualizaciones\nPor favor, espera...",
-        "toaster2" : "You're on latest release",
+        "toaster2" : "Estás en la última versión",
         "toaster3" : "Descargando una nueva actualización!\nPor favor, no cierre la app"
       },
 
@@ -155,7 +157,9 @@ class _DialerState extends State<Dialer>{
         "toaster" : "Se ha guardado tu contacto",
         "menu_button" : "Importar Contactos",
         "menu_button_2" : "Exportar Contactos",
-        "empty" : "\nNo hay nada, solo hojas"
+        "empty" : "\nNo hay nada, solo hojas",
+        "export" : "Exportados tus contactos al directorio",
+        "import" : "Restaurados tus contactos!"
 
       },
 
@@ -215,7 +219,9 @@ class _DialerState extends State<Dialer>{
         "toaster" : "Saved your contact",
         "menu_button" : "Contacts d'importation",
         "menu_button_2" : "Exporter des contacts",
-        "empty" : "\nRien ici, juste des feuilles"
+        "empty" : "\nRien ici, juste des feuilles",
+        "export" : "Exporté vos contacts actuels vers le répertoire",
+        "import" : "Restauré vos contacts!"
       },
 
       "CreateContact" : {
@@ -274,7 +280,9 @@ class _DialerState extends State<Dialer>{
         "toaster" : "Saved your contact",
         "menu_button" : "Importa contatti",
         "menu_button_2" : "Esporta contatti",
-        "empty" : "\nNiente qui, se ne va"
+        "empty" : "\nNiente qui, se ne va",
+        "export" : "Hai esportato i tuoi contatti attuali nella directory",
+        "import" : "Hai ripristinato i tuoi contatti!"
       },
 
       "CreateContact" : {
@@ -333,7 +341,9 @@ class _DialerState extends State<Dialer>{
         "toaster" : "Saved your contact",
         "menu_button" : "Kontakte importieren",
         "menu_button_2" : "Kontakte exportieren",
-        "empty" : "\nNichts hier, nur Blätter"
+        "empty" : "\nNichts hier, nur Blätter",
+        "export" : "Ihre aktuellen Kontakte in das Verzeichnis exportiert",
+        "import" : "Ihre Kontakte wiederhergestellt!"
       },
 
       "CreateContact" : {

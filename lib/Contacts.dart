@@ -12,6 +12,8 @@ import 'Dialer.dart';
 import 'package:path_provider/path_provider.dart';
 import 'ManageMap.dart';
 import 'package:restart_app/restart_app.dart';
+import 'package:intl/intl.dart';
+import 'package:file_picker/file_picker.dart';
 
 class Contacts extends StatefulWidget{
    @override
@@ -42,6 +44,13 @@ class _ContactState extends State<Contacts>{
   var map = ManageMap();
   Map<dynamic, dynamic> language = {};
   Map<dynamic, dynamic> history = {};
+  late String formattedDate;
+  String myBackupFile = "";
+  String myBackupDir = "";
+  String? myJsonBackup = "";
+  DateTime now = DateTime.now();
+  String path = "";
+  late List<PlatformFile> files;
 
   _ContactState(this.mode_counter, this.modes, this.colores, this.fonts, this.current_language, this.language, this.history);
 
@@ -138,6 +147,105 @@ class _ContactState extends State<Contacts>{
     return telefonos;
   }
 
+void exportContacts(String path) async{
+    // Set path
+    File backup = File("$path/material_dialer_backup_$formattedDate.json");
+
+    // Write file string
+    final jsonFile = jsonEncode(mapa);
+
+    // Save the file into directory
+    backup.writeAsString(jsonFile);
+
+    setState(() async {
+      myBackupFile = language[current_language]["Contacts"]["export"] + "\n" + backup.path;
+
+      });
+  }
+
+  void pickDirectory() async{
+    // Set user path for downloading the file later
+    String? myDirectory = await FilePicker.platform.getDirectoryPath();
+
+    // Check if the user closed the file picker
+    if (myDirectory == null){
+      setState(() {
+        myBackupDir = "empty";
+
+      });
+    } else {
+      myBackupDir = myDirectory;
+    }
+  }
+
+  void pickFile() async {
+    bool exists = false;
+
+    // User can choose a file from storage
+     final result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['json'],
+        allowMultiple: false,
+      );
+
+
+    // Check if the user closed the file picker
+    if (result != null) {
+      PlatformFile myFile = result.files.first;
+      exists = true;
+
+
+      if (exists) {
+        setState(() async {
+          path = myFile.path!;
+          await File(path).rename(
+              '/data/user/0/com.daviiid99.material_dialer/app_flutter/backup.json');
+          path = await _localPath;
+          readFile();
+        });
+      }
+    }
+  }
+  
+  void readBackup(File myBackup) async{
+
+    setState(() async {
+      _jsonString = await myBackup.readAsString();
+      mapa = jsonDecode(_jsonString);
+      final filePath = await _localFile;
+      _jsonString = jsonEncode(mapa);
+      filePath.writeAsString(_jsonString);
+      contactos = addContactsToList(mapa, contactos, telefonos);
+      telefonos = addPhonesToList(mapa, contactos, telefonos);
+    });
+    
+  }
+
+  void readFile() async {
+
+    // Create a new File using backup path
+    File myBackup = File('/data/user/0/com.daviiid99.material_dialer/app_flutter/backup.json');
+
+    // Read backup content
+    readBackup(myBackup);
+
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: language[current_language]["Contacts"]["import"],
+    ));
+
+
+  }
+
+  Future<void> deleteFile(File file) async {
+    try {
+      if (await file.exists()) {
+        await file.delete();
+      }
+    } catch (e) {
+      // Error in getting access to the file.
+    }
+  }
+
 
 
   List colors = [Colors.blue, Colors.red,Colors.yellow, Colors.green];
@@ -156,6 +264,7 @@ class _ContactState extends State<Contacts>{
     name = "";
     contactos = addContactsToList(mapa, contactos, telefonos);
     telefonos = addPhonesToList(mapa, contactos, telefonos);
+    formattedDate = DateFormat('yyyy_MM_dd' ).format(now);
     super.initState();
   }
 
@@ -195,11 +304,26 @@ class _ContactState extends State<Contacts>{
 
             },
 
-            onSelected: (value){
+            onSelected: (value) async {
               if(value == 0){
+                pickFile();
+
               }
 
               else if ( value == 1){
+                pickDirectory(); // User can pick a dir
+                if (myBackupDir == null){
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text("User cancelled the operation :("),
+                ));
+                } else{
+                exportContacts(myBackupDir);
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text("$myBackupFile"),
+                ));
+
+                }
+
               }
             }
           )
@@ -226,7 +350,7 @@ class _ContactState extends State<Contacts>{
                 child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
-                      const SizedBox(width: 25,),
+                      const SizedBox(width: 18,),
                       TextButton.icon(
                         label: Text(
                           language[current_language]["Contacts"]["button1"],
@@ -352,7 +476,7 @@ class _ContactState extends State<Contacts>{
                           ));
                         },
                         icon: Icon(Icons.add_rounded, color: Colors.black,),
-                      ),  const SizedBox(width: 25,),
+                      ),  const SizedBox(width: 18,),
                     ]))
         ),
 

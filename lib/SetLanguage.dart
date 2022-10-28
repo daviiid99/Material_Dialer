@@ -71,7 +71,6 @@ class _SetLanguageState extends State<SetLanguage>{
     return Scaffold(
       backgroundColor:  colores[mode_counter],
       appBar: AppBar(
-        leading: Icon(Icons.language_rounded, color: Colors.blueAccent),
         backgroundColor: colores[mode_counter],
         title: Text (
             language[current_language]["Country"]["title"],

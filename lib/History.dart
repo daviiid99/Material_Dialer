@@ -133,7 +133,7 @@ class _HistoryState extends State<History>{
           style: TextStyle(color: fonts[mode_counter], fontSize: 35),
 
           ),
-
+          if(numeros.length == 0) Text("\n"),
           if(numeros.length == 0) Image.asset("assets/images/empty.png") ,
           if(numeros.length == 0) Text(language[current_language]["Contacts"]["empty"],
               style: TextStyle(color: fonts[mode_counter], fontSize: 20)) ,
