@@ -29,11 +29,12 @@ dependencies :
 ```
 
  # Screens
-| Home Screen| Contacts Screen| New Contacts Screen | Call Screen| Settings Screen | Language Screen | Build Screen|
-| :---------------------- |:----------------------     |:----------------------|:----------------------|:----------------------|:----------------------|:----------------------|
-| <img src="screens/screen_1.png">                        | <img src="screens/screen_2.png">                           | <img src="screens/screen_3.png">|<img src="screens/screen_4.png">|<img src="screens/screen_5.png">|<img src="screens/screen_7.png">|<img src="screens/screen_6.png">|
+<img src="screens/screen_1.png"/>
+<img src="screens/screen_2.png"/>
+<img src="screens/screen_3.png"/>
+<img src="screens/screen_4.png"/>
+<img src="screens/screen_5.png"/>
+<img src="screens/screen_6.png"/>
 
- # Get the source
- ```
- git clone https://github.com/daviiid99/Material_Dialer Material_Dialer
- ```
+ # Download
+ Click <a href ="https://github.com/daviiid99/Material_Dialer/releases/download/latest/app-release.apk">here</a> to grab the latest build
