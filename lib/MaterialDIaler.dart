@@ -12,7 +12,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:open_file/open_file.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MaterialDialer extends StatefulWidget{
   @override
@@ -66,37 +66,6 @@ class _MaterialDialerState extends State<MaterialDialer>{
       });
     });}
 
-  Future<bool> _checkPermission() async {
-    if (platform == TargetPlatform.android) {
-      final status = await Permission.storage.status;
-      if (status != PermissionStatus.granted) {
-        final result = await Permission.storage.request();
-        if (result == PermissionStatus.granted) {
-          return true;
-        }
-      } else {
-        return true;
-      }
-    } else {
-      return true;
-    }
-    return false;
-  }
-
-
-  Future<void> _prepareSaveDir() async {
-    _localPath = (await _findLocalPath())!;
-    final savedDir = Directory(_localPath);
-    bool hasExisted = await savedDir.exists();
-    if (!hasExisted) {
-      savedDir.create();
-    }
-  }
-
-  Future<String> _findLocalPath() async {
-    return "/sdcard/download/";
-  }
-
   Future<void> deleteFile(File file) async {
     try {
       if (await file.exists()) {
@@ -125,6 +94,11 @@ class _MaterialDialerState extends State<MaterialDialer>{
     }
 
 
+  }
+
+  _launchURL(String url) async {
+    final Uri _url = Uri.parse(url);
+    await launchUrl(_url,mode: LaunchMode.externalApplication);
   }
 
 
@@ -206,11 +180,7 @@ class _MaterialDialerState extends State<MaterialDialer>{
               ),
             ),
             onPressed: () async {
-              File('/sdcard/download/material_dialer_latest.apk').delete();
-              _permissionReady = await _checkPermission();
 
-              if (_permissionReady) {
-                await _prepareSaveDir();
                 try {
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     content: Text(language[current_language]["About"]["toaster"]),
@@ -222,16 +192,9 @@ class _MaterialDialerState extends State<MaterialDialer>{
                       content: Text(language[current_language]["About"]["toaster3"]),
                     ));
 
-                    File file = File('/sdcard/download/material_dialer_latest.apk');
-
-                    await Dio().download(
-                        "https://github.com/daviiid99/Material_Dialer/releases/download/latest/app-release.apk",
-                        _localPath + "/" + "material_dialer_latest.apk");
-
-                    OpenFile.open(
-                        _localPath + "/" + "material_dialer_latest.apk");
-
-                  } else {
+                    _launchURL("https://play.google.com/store/apps/details?id=com.daviiid99.material_dialer");
+                    }
+                     else {
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: Text(language[current_language]["About"]["toaster2"]),
                     ));
@@ -240,8 +203,7 @@ class _MaterialDialerState extends State<MaterialDialer>{
 
                 } catch (e) {
                 }
-              }
-            },
+    },
 
             icon: Icon(Icons.download, color: Colors.black,),
           ),
