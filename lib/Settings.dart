@@ -9,6 +9,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'MaterialDIaler.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'Profile.dart';
 
 
  class Settings extends StatefulWidget{
@@ -35,7 +36,7 @@ import 'package:url_launcher/url_launcher.dart';
    List<dynamic> description = [];
    Map<dynamic, dynamic> language = {};
    String current_language = "";
-   List<IconData> icons = [Icons.laptop_chromebook_rounded, Icons.language_rounded, Icons.coffee, Icons.star_border_rounded, Icons.info_rounded];
+   List<IconData> icons = [Icons.laptop_chromebook_rounded, Icons.language_rounded, Icons.face_rounded, Icons.star_border_rounded, Icons.info_rounded];
    List<String> images = ['assets/images/settings_en.png', 'assets/images/settings_es.png', 'assets/images/settings_fr.png', 'assets/images/settings_it.png', 'assets/images/settings_de.png'];
    int index;
 
@@ -97,7 +98,18 @@ import 'package:url_launcher/url_launcher.dart';
                            MaterialPageRoute(builder: (context) => SetLanguage(mode_counter, modes, colores, fonts, current_language, language)),
                          );
 
-                       } else if (index == 3){
+                       }
+
+                       else if (index == 2){
+                         Navigator.push(
+                           context,
+                           MaterialPageRoute(builder: (context) => Profile()),
+                         );
+
+                       }
+
+
+                       else if (index == 3){
                          _launchURL("https://play.google.com/store/apps/details?id=com.daviiid99.material_dialer");
                        }
 

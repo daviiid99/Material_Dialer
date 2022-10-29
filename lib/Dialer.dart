@@ -12,6 +12,9 @@ import 'DialPadNumbers.dart';
 import 'History.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'SetLanguage.dart';
+import 'Profile.dart';
+import 'package:intl/intl.dart';
+
 
 
 class Dialer extends StatefulWidget{
@@ -34,6 +37,9 @@ class _DialerState extends State<Dialer>{
   List<Color> fonts  = [];
   var idioma = ManageMap(jsonFile: "languages.json");
   String number = "";
+  String name = "";
+  DateTime now = DateTime.now();
+  String setTime = "";
 
   _DialerState(this.mode_counter, this.modes, this.colors, this.fonts, this.number);
 
@@ -53,7 +59,6 @@ class _DialerState extends State<Dialer>{
   ];
 
   Map<dynamic, dynamic> user = {
-    "color" : Colors.black,
   };
 
   Map<dynamic, dynamic> history = {};
@@ -62,14 +67,28 @@ class _DialerState extends State<Dialer>{
     "language" : "English",
 
     "English" : {
+
+      "Home" : {
+        "title_morning" : "Good morning",
+        "title_afternoon" : "Good afternoon",
+        "title_evening" : "Good night",
+        "subtitle" : "Check some recommendations",
+        "card1_title" : "Make a Call",
+        "card1_subtitle" : "Call your friends",
+        "card1_button" : "Call now",
+        "card2_title" : "Add Contact",
+        "card2_subtitle" : "Save a contact",
+        "card2_button" : "Add contact"
+      },
+
       "Settings" : {
         "title" : "My Settings",
         "card1_title" : "View Project Source Code",
         "card1_subtitle" : "Open the official GitHub page",
         "card2_title" : "Set UI Language",
         "card2_subtitle" : "Choose your default language",
-        "card3_title" : "Donate Us",
-        "card3_subtitle" : "Buy me a coffee",
+        "card3_title" : "Change your name",
+        "card3_subtitle" : "Reset your profile",
         "card4_title" : "Rate Us",
         "card4_subtitle" : "Rate this App on Google Play Store",
         "card5_title" : "About Material Dialer",
@@ -125,14 +144,28 @@ class _DialerState extends State<Dialer>{
 
 
     "Español" : {
+
+      "Home" : {
+        "title_morning" : "Buenos días",
+        "title_afternoon" : "Buenas tardes",
+        "title_evening" : "Buenas noches",
+        "subtitle" : "Aquí tienes algunas recomendaciones",
+        "card1_title" : "Hacer Llamada",
+        "card1_subtitle" : "Llama a tus amigos",
+        "card1_button" : "Llamar ahora",
+        "card2_title" : "Contactos",
+        "card2_subtitle" : "Registrar contacto",
+        "card2_button" : "Añadir contacto"
+      },
+
       "Settings": {
         "title": "Mis Ajustes",
         "card1_title": "Ver código fuente del programa",
         "card1_subtitle": "Abrir la página oficial de GitHub",
         "card2_title": "Asignar idioma a interfaz",
         "card2_subtitle": "Selecciona tu idioma por defecto",
-        "card3_title": "Haz una donación",
-        "card3_subtitle": "Págame un café",
+        "card3_title": "Cambia tu nombre",
+        "card3_subtitle": "Reestablece tu perfil",
         "card4_title": "Danos una puntuación",
         "card4_subtitle": "Puntua esta aplicación en Google Play Store",
         "card5_title": "Sobre Material Dialer",
@@ -188,6 +221,21 @@ class _DialerState extends State<Dialer>{
     },
 
     "Français" : {
+
+      "Home" : {
+        "title_morning" : "Bon matin",
+        "title_afternoon" : "Bon après-midi",
+        "title_evening" : "Bon Soir",
+        "subtitle" : "Consultez quelques recommandations",
+        "card1_title" : "Fais Téléphonee",
+        "card1_subtitle" : "téléphoner vos amis",
+        "card1_button" : "Téléphoner",
+        "card2_title" : "Contacts",
+        "card2_subtitle" : "Enregistrer un contact",
+        "card2_button" : "Ajouter le contact"
+      },
+
+
       "Settings" : {
         "title" : "Mes Paramètres",
         "card1_title" : "Afficher le code source du projet",
@@ -249,6 +297,21 @@ class _DialerState extends State<Dialer>{
     },
 
     "Italiano" : {
+
+      "Home" : {
+        "title_morning" : "Buongiorno",
+        "title_afternoon" : "Buone tarde",
+        "title_evening" : "Buona Notte",
+        "subtitle" : "Alcuni consigli",
+        "card1_title" : "Effettuare Chiamata",
+        "card1_subtitle" : "Chiama i tuoi amici",
+        "card1_button" : "Chiamare",
+        "card2_title" : "Contatti",
+        "card2_subtitle" : "Registra un contatto",
+        "card2_button" : "Aggiungi contatto"
+      },
+
+
       "Settings" : {
         "title" : "Le mie Impostazioni",
         "card1_title" : "Visualizza il codice sorgente del progetto",
@@ -310,6 +373,20 @@ class _DialerState extends State<Dialer>{
     },
 
     "Deutsch" : {
+
+      "Home" : {
+        "title_morning" : "Guten Morgen",
+        "title_afternoon" : "Guten Nachmittag",
+        "title_evening" : "Guten Abend",
+        "subtitle" : "Überprüfen Sie einige Empfehlungen",
+        "card1_title" : "Anrufen",
+        "card1_subtitle" : "Freunde anrufen",
+        "card1_button" : "Jetzt anrufen",
+        "card2_title" : "Kontakte",
+        "card2_subtitle" : "Kontakt speichern",
+        "card2_button" : "Hinzufügen"
+      },
+
       "Settings" : {
         "title" : "Meine Einstellungen",
         "card1_title" : "Projektquellcode anzeigen",
@@ -405,13 +482,19 @@ class _DialerState extends State<Dialer>{
 
       }
     }
+
     setState(() {
+      user = jsonDecode(_jsonString);
       String str = user["color"];
+      String name = user["name"];
       int value = int.parse(str, radix: 16);
+      String nm = name.toString();
       Color otherColor = new Color(value);
       colors[0] = otherColor;
+      this.name = nm;
+      writeJson("color", otherColor);
 
-      });
+    });
 
   }
 
@@ -446,11 +529,14 @@ class _DialerState extends State<Dialer>{
       else if(jsonFile.contains("user.json")){
         user = jsonDecode(_jsonString);
         String str = user["color"];
+        String name = user["name"];
         int value = int.parse(str, radix: 16);
+        String nm = name.toString();
         Color otherColor = new Color(value);
 
         setState(() {
           colors[0] = otherColor;
+          this.name = nm;
         });
 
       }
@@ -503,6 +589,61 @@ class _DialerState extends State<Dialer>{
 
   }
 
+  void isStartColor(bool exist2) async {
+    final emptyFile = File(
+        "/data/user/0/com.daviiid99.material_dialer/app_flutter/empty.json");
+    bool exists = await emptyFile.exists();
+
+
+    if (exist2 == true && exists == false)  {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              backgroundColor: Colors.transparent,
+              content: SingleChildScrollView(
+
+                  child: BlockPicker(
+                      pickerColor: colors[0], //default color
+                      onColorChanged: (Color color) { //on color picked
+                        jsonFile = "user.json";
+                        String colorString = color
+                            .toString(); // Color(0x12345678)
+                        String valueString = colorString.split('(0x')[1].split(
+                            ')')[0]; // kind of hacky..
+                        writeJson("color", valueString);
+                        readJson();
+                        Navigator.pop(context);
+                      })
+              ),
+            );
+          }
+      );
+    }
+    File('/data/user/0/com.daviiid99.material_dialer/app_flutter/empty.json').writeAsString("w");
+  }
+
+
+
+  void isNewProfile() async{
+    final path = await _localPath;
+    final languagesFile = File("/data/user/0/com.daviiid99.material_dialer/app_flutter/user.json");
+
+    bool exists = await languagesFile.exists();
+
+    if (!exists) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) =>
+              Profile(),
+          ));
+
+    } else {
+      isStartColor(exists);
+    }
+
+  }
+
   void isCleanInstall() async {
 
     final path = await _localPath;
@@ -518,6 +659,8 @@ class _DialerState extends State<Dialer>{
               SetLanguage(mode_counter, modes, colors, fonts, currentLanguage,
                   language),
           ));
+    } else {
+      isNewProfile();
     }
   }
 
@@ -530,8 +673,13 @@ class _DialerState extends State<Dialer>{
       jsonFile = "languages.json";
       readJson();
       currentLanguage = language["language"];
-
       isCleanInstall();
+
+      setTime = DateFormat('H' ).format(now);
+
+      if (int.parse(setTime) >=6 && int.parse(setTime) < 12)  setTime = "title_morning";
+      if (int.parse(setTime) >=12 && int.parse(setTime) < 21)  setTime = "title_afternoon";
+      if (int.parse(setTime) >=21 && int.parse(setTime) < 6)  setTime = "title_evening";
 
     });
     super.initState();
@@ -570,6 +718,7 @@ class _DialerState extends State<Dialer>{
             }
             )
           }
+
         ),
         backgroundColor: colors[mode_counter],
         actions:  [
@@ -587,12 +736,184 @@ class _DialerState extends State<Dialer>{
           ),
         ],
       ),
-      body : Center(
-            child: Text("Material\n  Dialer", style: TextStyle(fontSize: 41,
-                color: fonts[mode_counter],
-                backgroundColor: colors[mode_counter]),),
-    ),
+    body: Column(
+    children: <Widget>[
+     SizedBox(height: 5,),
+      Text(
+         language[currentLanguage]["Home"][setTime] + ", " + "$name" + "\n",
+      style: TextStyle(
+        fontSize: 30,
+        color: Colors.white,
+      )
+      ),
 
+      Text(
+        language[currentLanguage]["Home"]["subtitle"] + "\n",
+        style: TextStyle(
+          fontSize: 20,
+          color: Colors.white,
+
+        ),
+      ),
+
+      SizedBox(
+        height: 220,
+        child: Stack(
+          alignment: Alignment.bottomCenter,
+          children: [
+            Container(
+              height: 200,
+              width: double.infinity,
+              padding: const EdgeInsets.all(8.0),
+              child: Card(
+                color: Colors.blueAccent,
+                child: Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                         Text(language[currentLanguage]["Home"]["card1_title"],
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold)),
+                         SizedBox(
+                          height: 5,
+                        ),
+                         Text(language[currentLanguage]["Home"]["card1_subtitle"],
+                            style: TextStyle(
+                                letterSpacing: 2,
+                                color: Colors.white,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w300)),
+                         SizedBox(
+                          height: 6,
+                        ),
+                        ElevatedButton(
+                          //on pressed
+                          onPressed: () async {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => DialPadNumbers(mode_counter, modes, colors, fonts, currentLanguage, language, number, history)),
+                            );
+                          },
+                          //text to shoe in to the button
+                          child:  Text(language[currentLanguage]["Home"]["card1_button"],
+                              style: TextStyle(color: Colors.white)),
+                          //style section code here
+                          style: ButtonStyle(
+                            elevation: MaterialStateProperty.all<double>(0),
+                            shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(18.0),
+                                )),
+                            backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.black),
+                          ),
+                        ),
+                      ]),
+                ),
+              ),
+            ),
+            Positioned(
+              left: 170,
+              right: 0,
+              top: 0,
+              child: Image.asset(
+                "assets/images/call.png",
+                fit: BoxFit.fitWidth,
+                height: 300,
+                width:  180,
+                scale: 0.5,
+
+              ),
+            )
+          ],
+        ),
+      ),
+
+      SizedBox(
+        height: 220,
+        child: Stack(
+          alignment: Alignment.bottomCenter,
+          children: [
+            Container(
+              height: 200,
+              width: double.infinity,
+              padding: const EdgeInsets.all(8.0),
+              child: Card(
+                color: Colors.purpleAccent,
+                child: Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                         Text(language[currentLanguage]["Home"]["card2_title"],
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold)),
+                         SizedBox(
+                          height: 5,
+                        ),
+                         Text(language[currentLanguage]["Home"]["card2_subtitle"],
+                            style: TextStyle(
+                                letterSpacing: 2,
+                                color: Colors.white,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w300)),
+                         SizedBox(
+                          height: 6,
+                        ),
+                        ElevatedButton(
+                          //on pressed
+                          onPressed: () async {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => Contacts(mode_counter, modes, colors, fonts, currentLanguage, language, history)),
+                            );
+                          },
+                          //text to shoe in to the button
+                          child: Text(language[currentLanguage]["Home"]["card2_button"],
+                              style: TextStyle(color: Colors.white)),
+                          //style section code here
+                          style: ButtonStyle(
+                            elevation: MaterialStateProperty.all<double>(0),
+                            shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(18.0),
+                                )),
+                            backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.black),
+                          ),
+                        ),
+                      ]),
+                ),
+              ),
+            ),
+            Positioned(
+              left: 170,
+              right: 0,
+              top: 0,
+              child: Image.asset(
+                "assets/images/contact.png",
+                fit: BoxFit.fitWidth,
+                height: 235,
+                width: 200,
+                scale: 0.9,
+
+              ),
+            )
+          ],
+        ),
+      ),
+
+    ]
+    ),
         bottomNavigationBar: BottomNavigationBar(
           iconSize: 35,
           showSelectedLabels: true,
