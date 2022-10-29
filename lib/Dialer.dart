@@ -707,10 +707,11 @@ class _DialerState extends State<Dialer>{
       isCleanInstall();
 
       setTime = DateFormat('H' ).format(now);
+      if (int.parse(setTime) >= 0 && int.parse(setTime) < 6)  setTime = "title_evening";
+      else if (int.parse(setTime) >=6 && int.parse(setTime) < 12)  setTime = "title_morning";
+      else if (int.parse(setTime) >=12 && int.parse(setTime) < 21)  setTime = "title_afternoon";
+      else if (int.parse(setTime) >= 21 && int.parse(setTime) <  23)  setTime = "title_evening";
 
-      if (int.parse(setTime) >=6 && int.parse(setTime) < 12)  setTime = "title_morning";
-      if (int.parse(setTime) >=12 && int.parse(setTime) < 21)  setTime = "title_afternoon";
-      if (int.parse(setTime) >=21 && int.parse(setTime) < 6)  setTime = "title_evening";
 
     });
     super.initState();
