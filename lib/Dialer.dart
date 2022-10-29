@@ -81,6 +81,13 @@ class _DialerState extends State<Dialer>{
         "card2_button" : "Add contact"
       },
 
+      "Profile" : {
+        "title" : "Creating Your Profile",
+        "subtitle" : "Tell Us About You",
+        "subtitle2" : "We need your name before continue",
+        "button" : "Save profile"
+      },
+
       "Settings" : {
         "title" : "My Settings",
         "card1_title" : "View Project Source Code",
@@ -165,11 +172,18 @@ class _DialerState extends State<Dialer>{
         "card2_button" : "Añadir contacto"
       },
 
+      "Profile" : {
+        "title" : "Creando Tu Perfil",
+        "subtitle" : "Cuéntanos Sobre Ti",
+        "subtitle2" : "Necesitamos tu nombre antes de continuar",
+        "button" : "Guardar perfil"
+      },
+
       "Settings": {
         "title": "Mis Ajustes",
         "card1_title": "Ver código fuente del programa",
         "card1_subtitle": "Abrir la página oficial de GitHub",
-        "card2_title": "Asignar idioma a interfaz",
+        "card2_title": "Cambiar idioma",
         "card2_subtitle": "Selecciona tu idioma por defecto",
         "card3_title": "Cambia tu nombre",
         "card3_subtitle": "Reestablece tu perfil",
@@ -248,6 +262,13 @@ class _DialerState extends State<Dialer>{
         "card2_button" : "Ajouter le contact"
       },
 
+      "Profile" : {
+        "title" : "Création Votre Profil",
+        "subtitle" : "Parlez Nous De Vous",
+        "subtitle2" : "Nous avons besoin de votre nom avant de continuer",
+        "button" : "Enregistrer Profil"
+      },
+
 
       "Settings" : {
         "title" : "Mes Paramètres",
@@ -255,8 +276,8 @@ class _DialerState extends State<Dialer>{
         "card1_subtitle" : "Ouvrez la page officielle GitHUb",
         "card2_title" : "Définir la langue de l'interface utilisateur",
         "card2_subtitle" : "Choisissez votre langue par défaut",
-        "card3_title" : "Faites-nous un don",
-        "card3_subtitle" : "Achetez-moi un café",
+        "card3_title" : "Changez votre nom",
+        "card3_subtitle" : "Réinitialiser votre profil",
         "card4_title" : "Évaluez nous",
         "card4_subtitle" : "Évaluez cette application sur Google Play Store",
         "card5_title" : "À propos du Material Dialer",
@@ -331,14 +352,21 @@ class _DialerState extends State<Dialer>{
       },
 
 
+      "Profile" : {
+        "title" : "Creazione Tuo Profilo",
+        "subtitle" : "Raccontaci Di Te",
+        "subtitle2" : "Abbiamo bisogno del tuo nome prima di continuare",
+        "button" : "Salva Profilo"
+      },
+
       "Settings" : {
         "title" : "Le mie Impostazioni",
         "card1_title" : "Visualizza il codice sorgente del progetto",
         "card1_subtitle" : "Apri la pagina ufficiale di GitHub",
         "card2_title" : "Imposta la lingua dell'interfaccia utente",
         "card2_subtitle" : "Scegli la tua lingua predefinita",
-        "card3_title" : "Donaci",
-        "card3_subtitle" : "Offrimi un caffè",
+        "card3_title" : "Cambia il tuo nome",
+        "card3_subtitle" : "Reimposta il tuo profilo",
         "card4_title" : "Valutaci",
         "card4_subtitle" : "Valuta questa app su Google Play Store",
         "card5_title" : "Informazioni su Material Dialer",
@@ -412,14 +440,21 @@ class _DialerState extends State<Dialer>{
         "card2_button" : "Hinzufügen"
       },
 
+      "Profile" : {
+        "title" : "Erstellung Ihres Profils",
+        "subtitle" : "Erzähl Uns Von Dir",
+        "subtitle2" : "Wir brauchen Ihren Namen, bevor Sie fortfahren",
+        "button" : "Profil speichern"
+      },
+
       "Settings" : {
         "title" : "Meine Einstellungen",
         "card1_title" : "Projektquellcode anzeigen",
         "card1_subtitle" : "Öffnen Sie die offizielle GitHub-Seite",
         "card2_title" : "Legen sie UI",
         "card2_subtitle" : "Wählen Sie Ihre Standardsprache",
-        "card3_title" : "Spenden Sie uns",
-        "card3_subtitle" : "Kaufen Sie mir einen Kaffee",
+        "card3_title" : "Ändere deinen Namen",
+        "card3_subtitle" : "Setzen Sie Ihr Profil zurück",
         "card4_title" : "Bewerten Sie uns",
         "card4_subtitle" : "Bewerten Sie diese App im Google Play Store",
         "card5_title" : "Über Material Dialer",
@@ -666,7 +701,7 @@ class _DialerState extends State<Dialer>{
       Navigator.push(
           context,
           MaterialPageRoute(builder: (context) =>
-              Profile(),
+              Profile(colors[mode_counter]),
           ));
 
     } else {
@@ -711,7 +746,6 @@ class _DialerState extends State<Dialer>{
       else if (int.parse(setTime) >=6 && int.parse(setTime) < 12)  setTime = "title_morning";
       else if (int.parse(setTime) >=12 && int.parse(setTime) < 21)  setTime = "title_afternoon";
       else if (int.parse(setTime) >= 21 && int.parse(setTime) <  23)  setTime = "title_evening";
-
 
     });
     super.initState();

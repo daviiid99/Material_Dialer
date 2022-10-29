@@ -103,7 +103,7 @@ import 'Profile.dart';
                        else if (index == 2){
                          Navigator.push(
                            context,
-                           MaterialPageRoute(builder: (context) => Profile()),
+                           MaterialPageRoute(builder: (context) => Profile(colores[mode_counter])),
                          );
 
                        }

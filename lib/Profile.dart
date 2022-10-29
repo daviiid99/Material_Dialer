@@ -16,19 +16,32 @@ import 'package:restart_app/restart_app.dart';
 
 class Profile extends StatefulWidget{
   @override
-  _ProfileState createState() => _ProfileState();
+  Color color;
+  Profile(this.color);
+
+  _ProfileState createState() => _ProfileState(color);
 }
 
 class _ProfileState extends State<Profile>{
+
+
 
   final name = TextEditingController();
   late String _jsonString;
   bool _fileExists = false;
   late File _filePath;
+  String file = "";
+  String currentLanguage = "";
+  Color color;
+
+  _ProfileState(this.color);
+  Map<dynamic, dynamic> language = {
+  };
 
 
   Map<dynamic, dynamic> user = {
   };
+
 
   // Get app local path for App data
   Future<String> get _localPath async {
@@ -39,7 +52,7 @@ class _ProfileState extends State<Profile>{
 // Get file object with full path
   Future<File> get _localFile async {
     final path = await _localPath;
-    return File('/data/user/0/com.daviiid99.material_dialer/app_flutter/user.json');
+    return File('$path/$file');
   }
 
   // Write latest key and value to json
@@ -49,8 +62,6 @@ class _ProfileState extends State<Profile>{
     user.addAll(_newJson);
     _jsonString = jsonEncode(user);
     filePath.writeAsString(_jsonString);
-    print(_jsonString);
-    print(user);
 
   }
 
@@ -61,23 +72,51 @@ class _ProfileState extends State<Profile>{
 
     if (_fileExists) {
       try {
+        if (file.contains("user.json")) {
           _jsonString = await _filePath.readAsString();
           user = jsonDecode(_jsonString);
-      } catch (e) {
+        };
+
+        if (file.contains("languages.json")){
+          _jsonString = await _filePath.readAsString();
+          language = jsonDecode(_jsonString);
+
+        };
+
+        }
+        catch (e) {
 
       }
     }
     setState(() {
+      if (file.contains("user.json")) {
         user = jsonDecode(_jsonString);
+      };
+
+        if (file.contains("languages.json")){
+          this.currentLanguage = language["language"];
+        }
 
 
       });
   }
 
+  void checkLanguages() async {
+    final languagesFile = File(
+        "/data/user/0/com.daviiid99.material_dialer/app_flutter/languages.json");
+    bool exists = await languagesFile.exists();
+
+    if (exists) {
+      setState(() {
+        file = "languages.json";
+        readJson();
+      });
+    }
+  }
+
   @override
   void initState(){
-    readJson();
-
+    checkLanguages();
     super.initState();
   }
 
@@ -88,20 +127,20 @@ class _ProfileState extends State<Profile>{
       appBar: AppBar(
         leading: Icon(Icons.face_rounded, color: Colors.blueAccent),
         backgroundColor: Colors.black,
-        title: Text("Creating Your Profile"),
+        title: Text(language[currentLanguage]["Profile"]["title"]),
       ),
       body: Column(
         children: [
           SizedBox(height: 5,),
           Text(
-              "Tell Us About You\n",
+            language[currentLanguage]["Profile"]["subtitle"] + "\n",
           style: TextStyle(
             fontSize: 25,
             color: Colors.white,
           ),
           ),
           Text(
-              "We need your name before continue\n",
+            language[currentLanguage]["Profile"]["subtitle2"] + "\n",
             style: TextStyle(
               fontSize: 15,
               color: Colors.white,
@@ -136,7 +175,7 @@ class _ProfileState extends State<Profile>{
 
                 TextButton.icon(
                   label:  Text(
-                    "Save your profile",
+                    language[currentLanguage]["Profile"]["button"],
                     style: TextStyle(
                         fontSize: 16,
                         color: Colors.black),
@@ -150,9 +189,14 @@ class _ProfileState extends State<Profile>{
                   ),
                   onPressed: () {
                     setState(() {
+                      file = "user.json";
                       writeJson("name", name.text);
-                    });
 
+                    });
+                    String colorString =color.toString(); // Color(0x12345678)
+                    String valueString = colorString.split('(0x')[1].split(')')[0]; // kind of hacky..
+                    writeJson("color", valueString);
+                    readJson();
                     Restart.restartApp();
                     },
                   icon: Icon(Icons.check, color: Colors.white,),
