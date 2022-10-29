@@ -105,7 +105,14 @@ class _DialerState extends State<Dialer>{
         "button" : "Check for Updates",
         "toaster" : "Checking for updates\nPlease wait...",
         "toaster2" : "You're on latest release",
-        "toaster3" : "Downloading a new update!\nPlease, don't close the app"
+        "toaster3" : "Downloading a new update!\nPlease, don't close the app",
+        "downloading_title" : "Downloading Latest Release",
+        "downloading_subtitle" : "Installed Version",
+        "downloading_subtitle2" : "Latest Version",
+        "downloading_progress" : "Downloading",
+        "downloading_button" : "Install",
+        "downloading_warning" : "Please, don't close the application\nuntil the installation succeeds"
+
       },
 
       "Contacts" : {
@@ -182,7 +189,13 @@ class _DialerState extends State<Dialer>{
         "button" : "Buscar Actualizaciones",
         "toaster" : "Buscando actualizaciones\nPor favor, espera...",
         "toaster2" : "Estás en la última versión",
-        "toaster3" : "Descargando una nueva actualización!\nPor favor, no cierre la app"
+        "toaster3" : "Descargando una nueva actualización!\nPor favor, no cierre la app",
+        "downloading_title" : "Descargando Última Versión",
+        "downloading_subtitle" : "Versión Instalada",
+        "downloading_subtitle2" : "Última Versión",
+        "downloading_progress" : "Descargando",
+        "downloading_button" : "Instalar",
+        "downloading_warning" : "Por favor, no cierre la aplicación\nhasta completar la instalación"
       },
 
       "Contacts": {
@@ -259,7 +272,13 @@ class _DialerState extends State<Dialer>{
         "button" : "Vérifier les mises à jour",
         "toaster" : "Vérification des mises à jour\nS'il vous plaît, attendez...",
         "toaster2" : "Vous êtes sur la dernière version",
-        "toaster3" : "Téléchargement d'une nouvelle mise à jour!\nS'il vous plaît, ne fermez pas l'application"
+        "toaster3" : "Téléchargement d'une nouvelle mise à jour!\nS'il vous plaît, ne fermez pas l'application",
+        "downloading_title" : "Téléchargement Dernière Version",
+        "downloading_subtitle" : "Version installée",
+        "downloading_subtitle2" : "Dernière version",
+        "downloading_progress" : "Téléchargement",
+        "downloading_button" : "Installer",
+        "downloading_warning" : "Veuillez ne pas fermer l'application\ntant que l'installation n'a pas réussi"
       },
 
       "Contacts" : {
@@ -335,7 +354,13 @@ class _DialerState extends State<Dialer>{
         "button" : "Controlla gli aggiornamenti",
         "toaster" : "Verifica aggiornamenti\nattendere prego...",
         "toaster2" : "Sei all'ultima versione",
-        "toaster3" : "Download di un nuovo aggiornamento!\nPer favore, non chiudere l'app"
+        "toaster3" : "Download di un nuovo aggiornamento!\nPer favore, non chiudere l'app",
+        "downloading_title" : "Scaricando Ultima Versione",
+        "downloading_subtitle" : "Versione Installata",
+        "downloading_subtitle2" : "Ultima Versione",
+        "downloading_progress" : "Scaricando",
+        "downloading_button" : "Installare",
+        "downloading_warning" : "Per favore, non chiudere l'applicazione\nfino a quando l'installazione non riesce"
       },
 
       "Contacts" : {
@@ -410,7 +435,13 @@ class _DialerState extends State<Dialer>{
         "button" : "Auf Updates prüfen",
         "toaster" : "Suche nach Updates\nWarten Sie mal...",
         "toaster2" : "Sie sind auf der neuesten Version",
-        "toaster3" : "Laden Sie ein neues Update herunter!\nBitte schließen Sie die App nicht"
+        "toaster3" : "Laden Sie ein neues Update herunter!\nBitte schließen Sie die App nicht",
+        "downloading_title" : "Laden Neueste Version",
+        "downloading_subtitle" : "Installierte Version",
+        "downloading_subtitle2" : "Letzte Version",
+        "downloading_progress" : "wird heruntergeladen",
+        "downloading_button" : "Installieren",
+        "downloading_warning" : "Bitte schließen Sie die Anwendung nicht\nbis die Installation erfolgreich ist"
       },
 
       "Contacts" : {

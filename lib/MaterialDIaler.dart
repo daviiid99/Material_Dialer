@@ -53,6 +53,7 @@ class _MaterialDialerState extends State<MaterialDialer>{
   List<String> description = [];
   List<IconData> icons = [Icons.drive_file_rename_outline_rounded, Icons.format_list_numbered,Icons.add_box, Icons.android_rounded, ];
   late String _release;
+  String progress = "";
 
   void checkBuild(){
     PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
@@ -123,7 +124,129 @@ class _MaterialDialerState extends State<MaterialDialer>{
     } catch (e) {
       print("Couldn't read file");
     }
+  }
 
+  void createDownloadScreen() async {
+
+    _permissionReady = await _checkPermission();
+
+    if (_permissionReady) {
+      await _prepareSaveDir();
+      try {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(language[current_language]["About"]["toaster"]),
+        ));
+
+        if(_release.contains(version) == false){
+          File file = File('/sdcard/download/material_dialer_latest.apk');
+
+          if (await file.exists()){
+            await File("/sdcard/download/material_dialer_latest.apk").rename(
+                '/sdcard/download/old.apk');
+            await File("/sdcard/download/old.apk").delete();
+
+          }
+
+          await Dio().download(
+              "https://github.com/daviiid99/Material_Dialer/releases/download/latest/app-release.apk",
+              _localPath + "/" + "material_dialer_latest.apk",
+              onReceiveProgress: (received, total){
+                setState(() {
+                  progress = ((received/total) * 100).toStringAsFixed(0) + "%";
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context){
+                        return AlertDialog(
+                            backgroundColor: colores[mode_counter],
+                            content: SingleChildScrollView(
+                                child: Column(
+                                    children: <Widget>[
+                                      Text(
+                                        language[current_language]["About"]["downloading_title"] +"\n\n",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 20,
+                                        ),),
+
+                                      Text(language[current_language]["About"]["downloading_subtitle"] + "  :  $version",style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 15,
+                                      ),),
+                                      Text(language[current_language]["About"]["downloading_subtitle2"]  + " : $_release ", style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 15,
+                                      ),),
+
+                                        Text( "\n" + language[current_language]["About"]["downloading_progress"]  + " : $progress",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 15,
+                                          ),),
+
+                                      SizedBox(height: 100,),
+
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(4),
+                                        child: Stack(
+                                          children: <Widget>[
+                                            Positioned.fill(
+                                              child: Container(
+                                                decoration: const BoxDecoration(
+                                                  gradient: LinearGradient(
+                                                    colors: <Color>[
+                                                      Color(0xFFE8F5E9),
+                                                      Color(0xFFA5D6A7),
+                                                      Color(0xFF66BB6A),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            TextButton(
+                                              style: TextButton.styleFrom(
+                                                foregroundColor: Colors.white,
+                                                padding: const EdgeInsets.all(16.0),
+                                                textStyle: const TextStyle(fontSize: 20),
+                                              ),
+                                              onPressed: () {
+                                                if (progress.contains("100")){
+                                                  OpenFile.open(
+                                                  _localPath + "/" + "material_dialer_latest.apk");
+                                                }
+                                                },
+                                              child: Text(language[current_language]["About"]["downloading_button"] ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      SizedBox(height: 100,),
+
+                                      Text(language[current_language]["About"]["downloading_warning"] , style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 15,
+                                      ),),
+
+
+                                    ]
+                                )
+                            ));
+                      });
+                });
+              }
+          );
+
+
+
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(language[current_language]["About"]["toaster2"]),
+          ));
+
+        }
+
+      } catch (e) {
+      }
+    }
 
   }
 
@@ -206,41 +329,7 @@ class _MaterialDialerState extends State<MaterialDialer>{
               ),
             ),
             onPressed: () async {
-              File('/sdcard/download/material_dialer_latest.apk').delete();
-              _permissionReady = await _checkPermission();
-
-              if (_permissionReady) {
-                await _prepareSaveDir();
-                try {
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text(language[current_language]["About"]["toaster"]),
-                  ));
-
-                  if(_release.contains(version) == false){
-                    String latest = _release;
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text(language[current_language]["About"]["toaster3"]),
-                    ));
-
-                    File file = File('/sdcard/download/material_dialer_latest.apk');
-
-                    await Dio().download(
-                        "https://github.com/daviiid99/Material_Dialer/releases/download/latest/app-release.apk",
-                        _localPath + "/" + "material_dialer_latest.apk");
-
-                    OpenFile.open(
-                        _localPath + "/" + "material_dialer_latest.apk");
-
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text(language[current_language]["About"]["toaster2"]),
-                    ));
-
-                  }
-
-                } catch (e) {
-                }
-              }
+              createDownloadScreen();
             },
 
             icon: Icon(Icons.download, color: Colors.black,),
