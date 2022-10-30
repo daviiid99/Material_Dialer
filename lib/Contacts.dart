@@ -336,7 +336,7 @@ void exportContacts(String path) async{
       children: <Widget>[
       Text("\n"),
       Image.asset('assets/images/contacts.png'),
-        Container(
+        FittedBox(
             child: Container(
                 width: MediaQuery
                     .of(context)
@@ -347,10 +347,10 @@ void exportContacts(String path) async{
                     .size
                     .height / 6,
                 color: colores[mode_counter],
+                child: FittedBox(
                 child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
-                      const SizedBox(width: 18,),
                       TextButton.icon(
                         label: Text(
                           language[current_language]["Contacts"]["button1"],
@@ -444,7 +444,7 @@ void exportContacts(String path) async{
                          );
                         },
                         icon: Icon(Icons.create_rounded, color: Colors.black,),
-                      ), const SizedBox(width: 25,),
+                      ), SizedBox(width: 10,),
                       TextButton.icon(
                         label: Text(
                           language[current_language]["Contacts"]["button2"],
@@ -476,11 +476,11 @@ void exportContacts(String path) async{
                           ));
                         },
                         icon: Icon(Icons.add_rounded, color: Colors.black,),
-                      ),  const SizedBox(width: 18,),
+                      ),
                     ]))
         ),
 
-        if(contactos.length == 0) Image.asset("assets/images/empty.png") ,
+        ),if(contactos.length == 0) Image.asset("assets/images/empty.png") ,
         if(contactos.length == 0) Text(language[current_language]["Contacts"]["empty"],
             style: TextStyle(color: fonts[mode_counter], fontSize: 20)) ,
 

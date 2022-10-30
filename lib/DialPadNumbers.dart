@@ -165,20 +165,14 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                     color: fonts[mode_counter], decorationColor: colors[mode_counter]
                 ))],
             ),
-          ), Container(
-            width: MediaQuery
-                .of(context)
-                .size
-                .width,
-            height: MediaQuery
-                .of(context)
-                .size
-                .height / 6,
-            color: colors[mode_counter],
+
+
+          ),
+          SizedBox(height: 50,),
+          FittedBox(
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                const SizedBox(width: 23.5,),
                 SizedBox(
                   height: 95.0,
                   width: 95.0,
@@ -196,7 +190,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                       },
                     ),
                   ),
-                ), const SizedBox(width: 23.5,),
+                ), SizedBox(width: 10,),
                 SizedBox(
                   height: 95.0,
                   width: 95.0,
@@ -213,7 +207,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                       },
                     ),
                   ),
-                ), const SizedBox(width: 23.5,),
+                ),  SizedBox(width: 10,),
                 SizedBox(
                   height: 95.0,
                   width: 95.0,
@@ -231,23 +225,15 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                     ),
                   ),
                 ),
-                const SizedBox(width: 23.5,),
+
               ],
             ),
-          ), Container(
-            width: MediaQuery
-                .of(context)
-                .size
-                .width,
-            height: MediaQuery
-                .of(context)
-                .size
-                .height / 6,
-            color: colors[mode_counter],
+          ),
+          SizedBox(height: 10,),
+          FittedBox(
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                const SizedBox(width: 23.5,),
                 SizedBox(
                   height: 95.0,
                   width: 95.0,
@@ -264,7 +250,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                       },
                     ),
                   ),
-                ), const SizedBox(width: 23.5,),
+                ),SizedBox(width: 10,),
                 SizedBox(
                   height: 95.0,
                   width: 95.0,
@@ -281,7 +267,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                       },
                     ),
                   ),
-                ), const SizedBox(width: 23.5,),
+                ),SizedBox(width: 10,),
                 SizedBox(
                   height: 95.0,
                   width: 95.0,
@@ -299,23 +285,16 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                     ),
                   ),
                 ),
-                const SizedBox(width: 23.5,),
               ],
             ),
-          ), Container(
-            width: MediaQuery
-                .of(context)
-                .size
-                .width,
-            height: MediaQuery
-                .of(context)
-                .size
-                .height / 6,
-            color: colors[mode_counter],
+          ),
+
+          SizedBox(height: 10,),
+
+           FittedBox(
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                const SizedBox(width: 23.5,),
                 SizedBox(
                   height: 95.0,
                   width: 95.0,
@@ -332,7 +311,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                       },
                     ),
                   ),
-                ), const SizedBox(width: 23.5,),
+                ), SizedBox(width: 10,),
                 SizedBox(
                   height: 95.0,
                   width: 95.0,
@@ -349,7 +328,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                       },
                     ),
                   ),
-                ), const SizedBox(width: 23.5,),
+                ),SizedBox(width: 10,),
                 SizedBox(
                   height: 95.0,
                   width: 95.0,
@@ -367,23 +346,16 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                     ),
                   ),
                 ),
-                const SizedBox(width: 23.5,),
               ],
             ),
-          ), Container(
-            width: MediaQuery
-                .of(context)
-                .size
-                .width,
-            height: MediaQuery
-                .of(context)
-                .size
-                .height / 6,
-            color: colors[mode_counter],
+          ),
+
+          SizedBox(height: 10,),
+
+          FittedBox(
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                const SizedBox(width: 23.5,),
                 SizedBox(
                   height: 95.0,
                   width: 95.0,
@@ -399,7 +371,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                       },
                     ),
                   ),
-                ), const SizedBox(width: 23.5,),
+                ),SizedBox(width: 10,),
                 SizedBox(
                   height: 95.0,
                   width: 95.0,
@@ -416,7 +388,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                       },
                     ),
                   ),
-                ), const SizedBox(width: 23.5,),
+                ), SizedBox(width: 10,),
                 SizedBox(
                   height: 95.0,
                   width: 95.0,
@@ -436,24 +408,16 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                     ),
                   ),
                 ),
-                const SizedBox(width: 23.5,),
               ],
             ),
           ),
-          Container(
-              width: MediaQuery
-                  .of(context)
-                  .size
-                  .width,
-              height: MediaQuery
-                  .of(context)
-                  .size
-                  .height / 6,
-              color: colors[mode_counter],
+
+          SizedBox(height: 50,),
+          FittedBox(
+
               child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    const SizedBox(width: 23.5,),
                     TextButton.icon(
                       label: Text(
                         language[current_language]["Calls"],
@@ -475,7 +439,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                           number = "";
                         })},
                       icon: Icon(Icons.call, color: Colors.black,),
-                    ), const SizedBox(width: 46,),
+                    ),
 
                   ]))]);
   }
