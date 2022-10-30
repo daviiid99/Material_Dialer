@@ -780,7 +780,7 @@ class _DialerState extends State<Dialer>{
     }  else if (numero.length == 1) {
       font == 55;
     } else if (numero.length > 12){
-      font = 40;
+      font = 35;
     }
 
     return font;
@@ -1433,8 +1433,9 @@ class _DialerState extends State<Dialer>{
               child: Image.asset(
                 "assets/images/contact.png",
                 fit: BoxFit.fitWidth,
-                height: 235,
+                height: 255,
                 width: 200,
+                scale: 2.0,
 
               ),
             )
