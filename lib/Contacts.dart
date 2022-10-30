@@ -7,7 +7,6 @@ import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:flutter_native_contact_picker/flutter_native_contact_picker.dart';
 import 'dart:convert';
 import 'dart:io';
-import 'DialPadNumbers.dart';
 import 'Dialer.dart';
 import 'package:path_provider/path_provider.dart';
 import 'ManageMap.dart';
@@ -45,6 +44,7 @@ class _ContactState extends State<Contacts>{
   Map<dynamic, dynamic> language = {};
   Map<dynamic, dynamic> history = {};
   late String formattedDate;
+  late String historyDate;
   String myBackupFile = "";
   String myBackupDir = "";
   String? myJsonBackup = "";
@@ -62,6 +62,8 @@ class _ContactState extends State<Contacts>{
 
   // First initialization of _json (if there is no json in the file)
   Map<dynamic, dynamic> mapa = {};
+  String jsonFile = "languages.json";
+
   late String _jsonString;
   String data = "";
 
@@ -74,16 +76,26 @@ class _ContactState extends State<Contacts>{
   // Get file object with full path
   Future<File> get _localFile async {
     final path = await _localPath;
-    return File('$path/contacts.json');
+    return File('$path/$jsonFile');
   }
 
   // Write latest key and value to json
   void _writeJson(String key, dynamic value) async {
     final filePath = await _localFile;
     Map<String, dynamic> _newJson = {key: value};
-    mapa.addAll(_newJson);
-    _jsonString = jsonEncode(mapa);
-    filePath.writeAsString(_jsonString);
+
+    if (jsonFile.contains("contacts.json")) {
+      mapa.addAll(_newJson);
+      _jsonString = jsonEncode(mapa);
+      filePath.writeAsString(_jsonString);
+    }
+
+    else if (jsonFile.contains("history.json")) {
+      history.addAll(_newJson);
+      _jsonString = jsonEncode(history);
+      filePath.writeAsString(_jsonString);
+
+    }
   }
 
   // Read json and update the lists on runtime
@@ -93,8 +105,13 @@ class _ContactState extends State<Contacts>{
 
     if (_fileExists) {
       try {
-        _jsonString = await _filePath.readAsString();
-        mapa = jsonDecode(_jsonString);
+        if (jsonFile.contains("contacts.json")) {
+          _jsonString = await _filePath.readAsString();
+          mapa = jsonDecode(_jsonString);
+        } else if (jsonFile.contains("history.json")){
+          _jsonString = await _filePath.readAsString();
+          history = jsonDecode(_jsonString);
+        }
       } catch (e) {
 
       }
@@ -259,12 +276,15 @@ void exportContacts(String path) async{
       contactos.remove("Example") && telefonos.remove("123");
 
     }
+    jsonFile = "contacts.json";
     _readJson();
     number = "";
     name = "";
     contactos = addContactsToList(mapa, contactos, telefonos);
     telefonos = addPhonesToList(mapa, contactos, telefonos);
     formattedDate = DateFormat('yyyy_MM_dd' ).format(now);
+    historyDate = DateFormat('EEE d MMM' ).format(now);
+
     super.initState();
   }
 
@@ -417,6 +437,7 @@ void exportContacts(String path) async{
                                                    mapa, contactos, telefonos);
                                                telefonos = addPhonesToList(
                                                    mapa, contactos, telefonos);
+                                               jsonFile = "contacts.json";
                                                _writeJson(
                                                    phone.text, contact.text);
                                                Navigator.pop(context);
@@ -464,10 +485,11 @@ void exportContacts(String path) async{
                           if (contact !=null){
                             number = contact.phoneNumbers![0];
                             name = contact.fullName.toString();
-                            setState(() {
+                            setState(() async {
                               mapa[number] = name;
                               contactos = addContactsToList(mapa, contactos, telefonos);
                               telefonos = addPhonesToList(mapa, contactos, telefonos);
+                              jsonFile = "contacts.json";
                               _writeJson(number, name);
                             });
                           };
@@ -494,11 +516,11 @@ void exportContacts(String path) async{
             textColor: fonts[mode_counter],
             leading: IconButton(
               icon: const Icon(Icons.call, color: Colors.blueAccent,),
-              onPressed: (){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => DialPadNumbers(mode_counter, modes, colores, fonts, current_language, language, telefonos[index], history)),
-                );
+              onPressed: () async{
+                jsonFile = "history.json";
+                _readJson();
+                _writeJson(telefonos[index], historyDate);
+                llamar(telefonos, index);
               },
             ),
                   onTap: () {

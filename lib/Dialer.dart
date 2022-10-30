@@ -8,7 +8,6 @@ import 'Settings.dart';
 import 'Contacts.dart';
 import 'package:path_provider/path_provider.dart';
 import 'ManageMap.dart';
-import 'DialPadNumbers.dart';
 import 'History.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'SetLanguage.dart';
@@ -36,11 +35,13 @@ class _DialerState extends State<Dialer>{
   List<Color> colors = [];
   List<Color> fonts  = [];
   var idioma = ManageMap(jsonFile: "languages.json");
-  String number = "";
+  late String number;
   String name = "";
   DateTime now = DateTime.now();
   String setTime = "";
   QuickActions quickActions = const QuickActions();
+  double fontsize = 55;
+  late String formattedDate;
 
   _DialerState(this.mode_counter, this.modes, this.colors, this.fonts, this.number);
 
@@ -572,7 +573,6 @@ class _DialerState extends State<Dialer>{
     });
 
   }
-
   // Read json and update the lists on runtime
   readJson() async {
     _filePath = await _localFile;
@@ -588,6 +588,11 @@ class _DialerState extends State<Dialer>{
         if (jsonFile.contains("user.json")){
           _jsonString = await _filePath.readAsString();
           user = jsonDecode(_jsonString);
+        }
+
+        if(jsonFile.contains("history.json")){
+          _jsonString = await _filePath.readAsString();
+          history = jsonDecode(_jsonString);
         }
       } catch (e) {
 
@@ -635,6 +640,12 @@ class _DialerState extends State<Dialer>{
       _jsonString = jsonEncode(user);
       filePath.writeAsString(_jsonString);
 
+    }
+
+    else if (jsonFile == "history.json"){
+      history.addAll(_newJson);
+      _jsonString = jsonEncode(history);
+      filePath.writeAsString(_jsonString);
     }
   }
 
@@ -739,6 +750,411 @@ class _DialerState extends State<Dialer>{
     }
   }
 
+  String addNumber(String numero, String full){
+
+    setState(() {
+      if(full.length == 3) {
+        full += " ";
+      }
+      else if(full.length == 6){
+        full += " ";
+      } else if (full.length == 9){
+        full += " ";
+      }
+
+      full += numero;
+
+    });
+
+    return full ;
+  }
+
+  double checkFont(String numero, double font){
+
+    if(numero.length == 5){
+      font -= 5;
+    } else if (numero.length == 8) {
+      font -= 5;
+    } else if (numero.length > 8 && font > 45){
+      font = 45;
+    }  else if (numero.length == 1) {
+      font == 55;
+    } else if (numero.length > 12){
+      font = 35;
+    }
+
+    return font;
+
+  }
+
+  String removeCharacter(String numero){
+    var str = "";
+    str = numero.substring(0, numero.length - 1);
+    return str ;
+  }
+
+  void llamar(String telefono) async{
+    await FlutterPhoneDirectCaller.callNumber("$telefono");
+  }
+
+  void dialPad() async {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return StatefulBuilder(
+              builder: (context, setState) {
+          return AlertDialog(
+              backgroundColor: Colors.transparent,
+              content: SingleChildScrollView(
+                  child: Column(
+                      children: [
+                        Container(
+                          width: MediaQuery
+                              .of(context)
+                              .size
+                              .width,
+                          height: MediaQuery
+                              .of(context)
+                              .size
+                              .height / 6,
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              SizedBox(width: 45, height: 30,),
+                              Text(number, style: TextStyle(
+                                  fontSize: fontsize,
+                                  color: fonts[mode_counter],
+                                  decorationColor: Colors.black
+                              ))
+                            ],
+                          ),
+
+
+                        ),
+                        SizedBox(height: 5,),
+                        FittedBox(
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              SizedBox(
+                                height: 95.0,
+                                width: 95.0,
+                                child: FittedBox(
+                                  child: FloatingActionButton(
+                                    backgroundColor: Colors
+                                        .purple,
+                                    child: Text("1"),
+                                    focusColor: fonts[mode_counter],
+                                    onPressed: () {
+                                      //player.play(AssetSource('sounds/1.mp3'));
+
+                                      setState(() {
+                                        number = addNumber(
+                                            "1", number);
+                                        fontsize = checkFont(
+                                            number, fontsize);
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ), SizedBox(width: 10,),
+                              SizedBox(
+                                height: 95.0,
+                                width: 95.0,
+                                child: FittedBox(
+                                  child: FloatingActionButton(
+                                    backgroundColor: Colors
+                                        .purple,
+                                    child: Text("2"),
+                                    onPressed: () {
+                                      //player.play(AssetSource('sounds/2.mp3'));
+                                      setState(() {
+                                        number = addNumber(
+                                            "2", number);
+                                        fontsize = checkFont(
+                                            number, fontsize);
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ), SizedBox(width: 10,),
+                              SizedBox(
+                                height: 95.0,
+                                width: 95.0,
+                                child: FittedBox(
+                                  child: FloatingActionButton(
+                                    backgroundColor: Colors
+                                        .purple,
+                                    child: Text("3"),
+                                    onPressed: () {
+                                      //player.play(AssetSource('sounds/3.mp3'));
+                                      setState(() {
+                                        number = addNumber(
+                                            "3", number);
+                                        fontsize = checkFont(
+                                            number, fontsize);
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ),
+
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 10,),
+                        FittedBox(
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              SizedBox(
+                                height: 95.0,
+                                width: 95.0,
+                                child: FittedBox(
+                                  child: FloatingActionButton(
+                                    backgroundColor: Colors
+                                        .purple,
+                                    child: Text("4"),
+                                    onPressed: () {
+                                      //player.play(AssetSource('sounds/4.mp3'));
+                                      setState(() {
+                                        number = addNumber(
+                                            "4", number);
+                                        fontsize = checkFont(
+                                            number, fontsize);
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ), SizedBox(width: 10,),
+                              SizedBox(
+                                height: 95.0,
+                                width: 95.0,
+                                child: FittedBox(
+                                  child: FloatingActionButton(
+                                    backgroundColor: Colors
+                                        .purple,
+                                    child: Text("5"),
+                                    onPressed: () {
+                                      //player.play(AssetSource('sounds/5.mp3'));
+                                      setState(() {
+                                        number = addNumber(
+                                            "5", number);
+                                        fontsize = checkFont(
+                                            number, fontsize);
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ), SizedBox(width: 10,),
+                              SizedBox(
+                                height: 95.0,
+                                width: 95.0,
+                                child: FittedBox(
+                                  child: FloatingActionButton(
+                                    backgroundColor: Colors
+                                        .purple,
+                                    child: Text("6"),
+                                    onPressed: () {
+                                      //player.play(AssetSource('sounds/6.mp3'));
+                                      setState(() {
+                                        number = addNumber(
+                                            "6", number);
+                                        fontsize = checkFont(
+                                            number, fontsize);
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        SizedBox(height: 10,),
+
+                        FittedBox(
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              SizedBox(
+                                height: 95.0,
+                                width: 95.0,
+                                child: FittedBox(
+                                  child: FloatingActionButton(
+                                    backgroundColor: Colors
+                                        .purple,
+                                    child: Text("7"),
+                                    onPressed: () {
+                                      //player.play(AssetSource('sounds/7.mp3'));
+                                      setState(() {
+                                        number = addNumber(
+                                            "7", number);
+                                        fontsize = checkFont(
+                                            number, fontsize);
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ), SizedBox(width: 10,),
+                              SizedBox(
+                                height: 95.0,
+                                width: 95.0,
+                                child: FittedBox(
+                                  child: FloatingActionButton(
+                                    backgroundColor: Colors
+                                        .purple,
+                                    child: Text("8"),
+                                    onPressed: () {
+                                      //player.play(AssetSource('sounds/8.mp3'));
+                                      setState(() {
+                                        number = addNumber(
+                                            "8", number);
+                                        fontsize = checkFont(
+                                            number, fontsize);
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ), SizedBox(width: 10,),
+                              SizedBox(
+                                height: 95.0,
+                                width: 95.0,
+                                child: FittedBox(
+                                  child: FloatingActionButton(
+                                    backgroundColor: Colors
+                                        .purple,
+                                    child: Text("9"),
+                                    onPressed: () {
+                                      //player.play(AssetSource('sounds/9.mp3'));
+                                      setState(() {
+                                        number = addNumber(
+                                            "9", number);
+                                        fontsize = checkFont(
+                                            number, fontsize);
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        SizedBox(height: 10,),
+
+                        FittedBox(
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              SizedBox(
+                                height: 95.0,
+                                width: 95.0,
+                                child: FittedBox(
+                                  child: FloatingActionButton(
+                                    backgroundColor: Colors
+                                        .purple,
+                                    child: Text("+"),
+                                    onPressed: () {
+                                      setState(() {
+                                        number = addNumber(
+                                            "+", number);
+                                        fontsize = checkFont(
+                                            number, fontsize);
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ), SizedBox(width: 10,),
+                              SizedBox(
+                                height: 95.0,
+                                width: 95.0,
+                                child: FittedBox(
+                                  child: FloatingActionButton(
+                                    backgroundColor: Colors
+                                        .purple,
+                                    child: Text("0"),
+                                    onPressed: () {
+                                      //player.play(AssetSource('sounds/0.mp3'));
+                                      setState(() {
+                                        number = addNumber(
+                                            "0", number);
+                                        fontsize = checkFont(
+                                            number, fontsize);
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ), SizedBox(width: 10,),
+                              SizedBox(
+                                height: 95.0,
+                                width: 95.0,
+                                child: FittedBox(
+                                  child: FloatingActionButton(
+                                    backgroundColor: Colors
+                                        .purple,
+                                    child: Icon(
+                                      Icons.backspace_outlined,
+                                      color: Colors.white,),
+                                    onPressed: () {
+                                      //player.play(AssetSource('assets/sounds/del.mp3'));
+                                      setState(() {
+                                        number = removeCharacter(
+                                            number);
+                                        if (fontsize < 55) {
+                                          fontsize += 3;
+                                        }
+                                      }
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        SizedBox(height: 50,),
+                        FittedBox(
+
+                            child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  TextButton.icon(
+                                    label: Text(
+                                      language[currentLanguage]["Calls"],
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.black),
+                                    ),
+                                    style: TextButton.styleFrom(
+                                      textStyle: TextStyle(color: Colors.black),
+                                      backgroundColor: Colors.green,fixedSize: const Size(340, 53),
+                                      shape:RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(24.0),
+                                      ),
+                                    ),
+                                    onPressed: () async {
+                                    jsonFile = "history.json";
+                                    readJson();
+                                    writeJson(number, formattedDate);
+                                    llamar(number);
+                                    number = "";
+                                     },
+                                    icon: Icon(Icons.call, color: Colors.black,),
+                                  ),
+
+                                ]))
+                      ]
+                  )
+              ),
+            );
+           },
+          );
+       }
+    );
+  }
+
   @override
   void initState(){
     jsonFile = "languages.json";
@@ -749,12 +1165,14 @@ class _DialerState extends State<Dialer>{
       readJson();
       currentLanguage = language["language"];
       isCleanInstall();
+      formattedDate = DateFormat('EEE d MMM').format(now);
+
 
       setTime = DateFormat('H' ).format(now);
       if (int.parse(setTime) >= 0 && int.parse(setTime) < 6)  setTime = "title_evening";
       else if (int.parse(setTime) >=6 && int.parse(setTime) < 12)  setTime = "title_morning";
       else if (int.parse(setTime) >=12 && int.parse(setTime) < 21)  setTime = "title_afternoon";
-      else if (int.parse(setTime) >= 21 && int.parse(setTime) <  23)  setTime = "title_evening";
+      else if (int.parse(setTime) >= 21 && int.parse(setTime) <=  23)  setTime = "title_evening";
 
       super.initState();
 
@@ -769,10 +1187,7 @@ class _DialerState extends State<Dialer>{
 
       quickActions.initialize((shortcutType) {
         if (shortcutType == 'callaction') {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => DialPadNumbers(mode_counter, modes, colors, fonts, currentLanguage, language, number, history)),
-          );
+          dialPad();
         } else if(shortcutType == "contactaction"){
           Navigator.push(
             context,
@@ -908,10 +1323,7 @@ class _DialerState extends State<Dialer>{
                         ElevatedButton(
                           //on pressed
                           onPressed: () async {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => DialPadNumbers(mode_counter, modes, colors, fonts, currentLanguage, language, number, history)),
-                            );
+                            dialPad();
                           },
                           //text to shoe in to the button
                           child:  Text(language[currentLanguage]["Home"]["card1_button"],
@@ -1042,23 +1454,25 @@ class _DialerState extends State<Dialer>{
               icon : IconButton(
                 icon: Icon(Icons.call_rounded),
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => DialPadNumbers(mode_counter, modes, colors, fonts, currentLanguage, language, number, history)),
-                  );
+                setState(() async {
+                  dialPad();
                 },
-              ),
+                );
+            }
             ),
+
+            ),
+
             BottomNavigationBarItem(
               label: '',
               icon : IconButton(
-                icon: Icon(Icons.history_rounded), color: fonts[mode_counter],
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => History(mode_counter, modes, colors, fonts, currentLanguage, language)),
-                  );
-                }
+                  icon: Icon(Icons.history_rounded), color: fonts[mode_counter],
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => History(mode_counter, modes, colors, fonts, currentLanguage, language)),
+                    );
+                  }
               ),
             ),
             BottomNavigationBarItem(
@@ -1072,7 +1486,7 @@ class _DialerState extends State<Dialer>{
                   );
                 },
               ),
-            ),
+            )
           ],
         ),
       );

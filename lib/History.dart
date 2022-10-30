@@ -7,7 +7,6 @@ import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:flutter_native_contact_picker/flutter_native_contact_picker.dart';
 import 'dart:convert';
 import 'dart:io';
-import 'DialPadNumbers.dart';
 import 'Dialer.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -101,6 +100,11 @@ class _HistoryState extends State<History>{
     });
   }
 
+  void llamar(List<String> telefonos, index) async{
+    String number = "tel:${telefonos[index]}";
+    await FlutterPhoneDirectCaller.callNumber(number);
+  }
+
   @override
   void initState(){
     _readJson();
@@ -148,10 +152,7 @@ class _HistoryState extends State<History>{
                   leading: IconButton(
                     icon: const Icon(Icons.call, color: Colors.blueAccent,),
                     onPressed: (){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => DialPadNumbers(mode_counter, modes, colores, fonts, current_language, language, numeros[index], history)),
-                      );
+                     llamar(numeros, index);
                     },
                   ),
               onTap: () {

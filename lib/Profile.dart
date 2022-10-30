@@ -8,7 +8,6 @@ import 'Settings.dart';
 import 'Contacts.dart';
 import 'package:path_provider/path_provider.dart';
 import 'ManageMap.dart';
-import 'DialPadNumbers.dart';
 import 'History.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'SetLanguage.dart';
