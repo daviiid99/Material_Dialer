@@ -36,7 +36,7 @@ import 'Profile.dart';
    List<dynamic> description = [];
    Map<dynamic, dynamic> language = {};
    String current_language = "";
-   List<IconData> icons = [Icons.laptop_chromebook_rounded, Icons.language_rounded, Icons.face_rounded, Icons.star_border_rounded, Icons.info_rounded];
+   List<IconData> icons = [Icons.laptop_chromebook_rounded, Icons.language_rounded, Icons.face_rounded, Icons.star_border_rounded, Icons.security_rounded, Icons.info_rounded];
    List<String> images = ['assets/images/settings_en.png', 'assets/images/settings_es.png', 'assets/images/settings_fr.png', 'assets/images/settings_it.png', 'assets/images/settings_de.png'];
    int index;
 
@@ -49,9 +49,9 @@ import 'Profile.dart';
 
      @override
      void initState(){
-     options = [language[current_language]["Settings"]["card1_title"], language[current_language]["Settings"]["card2_title"], language[current_language]["Settings"]["card3_title"], language[current_language]["Settings"]["card4_title"], language[current_language]["Settings"]["card5_title"]];
-     description = [language[current_language]["Settings"]["card1_subtitle"], language[current_language]["Settings"]["card2_subtitle"], language[current_language]["Settings"]["card3_subtitle"], language[current_language]["Settings"]["card4_subtitle"], language[current_language]["Settings"]["card5_subtitle"]];
-     super.initState();
+       options = [language[current_language]["Settings"]["card1_title"], language[current_language]["Settings"]["card2_title"], language[current_language]["Settings"]["card3_title"], language[current_language]["Settings"]["card4_title"],  language[current_language]["Settings"]["card6_title"], language[current_language]["Settings"]["card5_title"]];
+       description = [language[current_language]["Settings"]["card1_subtitle"], language[current_language]["Settings"]["card2_subtitle"], language[current_language]["Settings"]["card3_subtitle"], language[current_language]["Settings"]["card4_subtitle"], language[current_language]["Settings"]["card6_subtitle"], language[current_language]["Settings"]["card5_subtitle"]];
+       super.initState();
      }
 
      @override
@@ -114,6 +114,10 @@ import 'Profile.dart';
                        }
 
                        else if (index == 4){
+                         _launchURL("https://daviiid99.github.io/Material_Dialer/privacy.html");
+                       }
+
+                       else if (index == 5){
                        Navigator.push(
                        context,
                        MaterialPageRoute(builder: (context) => MaterialDialer(mode_counter, modes, colores, fonts, current_language, language)),

@@ -101,7 +101,8 @@ class _DialerState extends State<Dialer>{
         "card4_subtitle" : "Rate this App on Google Play Store",
         "card5_title" : "About Material Dialer",
         "card5_subtitle" : "Check App details",
-        "image" : 0
+        "card6_title" : "Read Security Policy",
+        "card6_subtitle" : "Latest application policy for users"
       },
 
       "About" : {
@@ -192,7 +193,8 @@ class _DialerState extends State<Dialer>{
         "card4_subtitle": "Puntua esta aplicación en Google Play Store",
         "card5_title": "Sobre Material Dialer",
         "card5_subtitle": "Ver detalles de la aplicación",
-        "image" : 1
+        "card6_title" : "Leer poliza de seguridad",
+        "card6_subtitle" : "Última poliza de aplicación para los usuarios",
       },
 
       "About": {
@@ -282,7 +284,9 @@ class _DialerState extends State<Dialer>{
         "card4_title" : "Évaluez nous",
         "card4_subtitle" : "Évaluez cette application sur Google Play Store",
         "card5_title" : "À propos du Material Dialer",
-        "card5_subtitle" : "Vérifier les détails de l'application"
+        "card5_subtitle" : "Vérifier les détails de l'application",
+        "card6_title" : "Lire la politique de sécurité",
+        "card6_subtitle" : "Dernière politique d'application pour les utilisateurs",
       },
 
       "About" : {
@@ -371,7 +375,9 @@ class _DialerState extends State<Dialer>{
         "card4_title" : "Valutaci",
         "card4_subtitle" : "Valuta questa app su Google Play Store",
         "card5_title" : "Informazioni su Material Dialer",
-        "card5_subtitle" : "Controlla i dettagli dell'app"
+        "card5_subtitle" : "Controlla i dettagli dell'app",
+        "card6_title" : "Leggi la politica di sicurezza",
+        "card6_subtitle" : "Politica dell'applicazione più recente per gli utenti",
       },
 
       "About" : {
@@ -459,7 +465,9 @@ class _DialerState extends State<Dialer>{
         "card4_title" : "Bewerten Sie uns",
         "card4_subtitle" : "Bewerten Sie diese App im Google Play Store",
         "card5_title" : "Über Material Dialer",
-        "card5_subtitle" : "Überprüfen Sie die App-Details"
+        "card5_subtitle" : "Überprüfen Sie die App-Details",
+        "card6_title": "Sicherheitsrichtlinie lesen",
+        "card6_subtitle": "Neueste Anwendungsrichtlinie für Benutzer",
       },
 
       "About" : {
