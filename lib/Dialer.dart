@@ -751,10 +751,10 @@ class _DialerState extends State<Dialer>{
       super.initState();
 
       quickActions.setShortcutItems(<ShortcutItem>[
-        ShortcutItem(type: 'callaction', localizedTitle: 'Make a Call', icon: Platform.isAndroid ? 'quick_box' : 'QuickBox'),
-        ShortcutItem(type: 'contactaction', localizedTitle: 'Create a Contact', icon: Platform.isAndroid ? 'quick_box' : 'QuickBox'),
-        ShortcutItem(type: 'settingsaction', localizedTitle: 'Change Settings', icon: Platform.isAndroid ? 'quick_box' : 'QuickBox'),
-        ShortcutItem(type: 'updateaction', localizedTitle: 'Check for Updates', icon: Platform.isAndroid ? 'quick_box' : 'QuickBox')
+        ShortcutItem(type: 'callaction', localizedTitle: 'Make a Call'),
+        ShortcutItem(type: 'contactaction', localizedTitle: 'Create a Contact'),
+        ShortcutItem(type: 'settingsaction', localizedTitle: 'Change Settings'),
+        ShortcutItem(type: 'updateaction', localizedTitle: 'Check for Updates')
 
 
       ]);
