@@ -161,7 +161,7 @@ class _DialPadNumberState extends State<DialPadNumbers>{
               children: <Widget>[
                 SizedBox(width: 45, height: 50,),
                 Text(number, style: TextStyle(fontSize: fontsize,
-                    color: fonts[mode_counter], decorationColor: colors[mode_counter]
+                    color: fonts[mode_counter], decorationColor: Colors.black
                 ))],
             ),
 
