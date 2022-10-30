@@ -14,8 +14,8 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'SetLanguage.dart';
 import 'Profile.dart';
 import 'package:intl/intl.dart';
-
-
+import 'package:quick_actions/quick_actions.dart';
+import 'MaterialDIaler.dart';
 
 class Dialer extends StatefulWidget{
 
@@ -40,6 +40,7 @@ class _DialerState extends State<Dialer>{
   String name = "";
   DateTime now = DateTime.now();
   String setTime = "";
+  QuickActions quickActions = const QuickActions();
 
   _DialerState(this.mode_counter, this.modes, this.colors, this.fonts, this.number);
 
@@ -747,6 +748,46 @@ class _DialerState extends State<Dialer>{
       else if (int.parse(setTime) >=12 && int.parse(setTime) < 21)  setTime = "title_afternoon";
       else if (int.parse(setTime) >= 21 && int.parse(setTime) <  23)  setTime = "title_evening";
 
+      super.initState();
+
+      quickActions.setShortcutItems(<ShortcutItem>[
+        ShortcutItem(type: 'callaction', localizedTitle: 'Make a Call', icon: Platform.isAndroid ? 'quick_box' : 'QuickBox'),
+        ShortcutItem(type: 'contactaction', localizedTitle: 'Create a Contact', icon: Platform.isAndroid ? 'quick_box' : 'QuickBox'),
+        ShortcutItem(type: 'settingsaction', localizedTitle: 'Change Settings', icon: Platform.isAndroid ? 'quick_box' : 'QuickBox'),
+        ShortcutItem(type: 'updateaction', localizedTitle: 'Check for Updates', icon: Platform.isAndroid ? 'quick_box' : 'QuickBox')
+
+
+      ]);
+
+      quickActions.initialize((shortcutType) {
+        if (shortcutType == 'callaction') {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => DialPadNumbers(mode_counter, modes, colors, fonts, currentLanguage, language, number, history)),
+          );
+        } else if(shortcutType == "contactaction"){
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Contacts(mode_counter, modes, colors, fonts, currentLanguage, language, history)),
+          );
+        }
+        else if(shortcutType == "settingsaction"){
+          Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Settings(mode_counter, modes, colors, fonts, currentLanguage, language, index),
+              ));
+        }
+
+        else if(shortcutType == "updateaction"){
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => MaterialDialer(mode_counter, modes, colors, fonts, currentLanguage, language)),
+          );
+        }
+
+        // More handling code...
+      });
+
     });
     super.initState();
   }
@@ -970,7 +1011,6 @@ class _DialerState extends State<Dialer>{
                 fit: BoxFit.fitWidth,
                 height: 235,
                 width: 200,
-                scale: 0.9,
 
               ),
             )
