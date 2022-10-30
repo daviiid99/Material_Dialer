@@ -156,7 +156,6 @@ class _DialPadNumberState extends State<DialPadNumbers>{
                 .of(context)
                 .size
                 .height / 6,
-            color: colors[mode_counter],
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
