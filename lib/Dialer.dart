@@ -780,7 +780,7 @@ class _DialerState extends State<Dialer>{
     }  else if (numero.length == 1) {
       font == 55;
     } else if (numero.length > 12){
-      font = 35;
+      font = 40;
     }
 
     return font;
@@ -820,7 +820,7 @@ class _DialerState extends State<Dialer>{
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
-                              SizedBox(width: 45, height: 30,),
+                              SizedBox(width: 45, height: 10,),
                               Text(number, style: TextStyle(
                                   fontSize: fontsize,
                                   color: fonts[mode_counter],
@@ -831,14 +831,13 @@ class _DialerState extends State<Dialer>{
 
 
                         ),
-                        SizedBox(height: 5,),
                         FittedBox(
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               SizedBox(
-                                height: 95.0,
-                                width: 95.0,
+                                height: 110.0,
+                                width: 110.0,
                                 child: FittedBox(
                                   child: FloatingActionButton(
                                     backgroundColor: Colors
@@ -857,10 +856,10 @@ class _DialerState extends State<Dialer>{
                                     },
                                   ),
                                 ),
-                              ), SizedBox(width: 10,),
+                              ), SizedBox(width: 15,),
                               SizedBox(
-                                height: 95.0,
-                                width: 95.0,
+                                height: 110.0,
+                                width: 110.0,
                                 child: FittedBox(
                                   child: FloatingActionButton(
                                     backgroundColor: Colors
@@ -877,10 +876,10 @@ class _DialerState extends State<Dialer>{
                                     },
                                   ),
                                 ),
-                              ), SizedBox(width: 10,),
+                              ), SizedBox(width: 15,),
                               SizedBox(
-                                height: 95.0,
-                                width: 95.0,
+                                height: 110.0,
+                                width: 110.0,
                                 child: FittedBox(
                                   child: FloatingActionButton(
                                     backgroundColor: Colors
@@ -902,14 +901,14 @@ class _DialerState extends State<Dialer>{
                             ],
                           ),
                         ),
-                        SizedBox(height: 10,),
+                        SizedBox(height: 15,),
                         FittedBox(
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               SizedBox(
-                                height: 95.0,
-                                width: 95.0,
+                                height: 110.0,
+                                width: 110.0,
                                 child: FittedBox(
                                   child: FloatingActionButton(
                                     backgroundColor: Colors
@@ -926,10 +925,10 @@ class _DialerState extends State<Dialer>{
                                     },
                                   ),
                                 ),
-                              ), SizedBox(width: 10,),
+                              ), SizedBox(width: 15,),
                               SizedBox(
-                                height: 95.0,
-                                width: 95.0,
+                                height: 110.0,
+                                width: 110.0,
                                 child: FittedBox(
                                   child: FloatingActionButton(
                                     backgroundColor: Colors
@@ -946,10 +945,10 @@ class _DialerState extends State<Dialer>{
                                     },
                                   ),
                                 ),
-                              ), SizedBox(width: 10,),
+                              ), SizedBox(width: 15,),
                               SizedBox(
-                                height: 95.0,
-                                width: 95.0,
+                                height: 110.0,
+                                width: 110.0,
                                 child: FittedBox(
                                   child: FloatingActionButton(
                                     backgroundColor: Colors
@@ -971,15 +970,15 @@ class _DialerState extends State<Dialer>{
                           ),
                         ),
 
-                        SizedBox(height: 10,),
+                        SizedBox(height: 15,),
 
                         FittedBox(
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               SizedBox(
-                                height: 95.0,
-                                width: 95.0,
+                                height: 110.0,
+                                width: 110.0,
                                 child: FittedBox(
                                   child: FloatingActionButton(
                                     backgroundColor: Colors
@@ -996,10 +995,10 @@ class _DialerState extends State<Dialer>{
                                     },
                                   ),
                                 ),
-                              ), SizedBox(width: 10,),
+                              ), SizedBox(width: 15,),
                               SizedBox(
-                                height: 95.0,
-                                width: 95.0,
+                                height: 110.0,
+                                width: 110.0,
                                 child: FittedBox(
                                   child: FloatingActionButton(
                                     backgroundColor: Colors
@@ -1016,10 +1015,10 @@ class _DialerState extends State<Dialer>{
                                     },
                                   ),
                                 ),
-                              ), SizedBox(width: 10,),
+                              ), SizedBox(width: 15,),
                               SizedBox(
-                                height: 95.0,
-                                width: 95.0,
+                                height: 110.0,
+                                width: 110.0,
                                 child: FittedBox(
                                   child: FloatingActionButton(
                                     backgroundColor: Colors
@@ -1041,15 +1040,15 @@ class _DialerState extends State<Dialer>{
                           ),
                         ),
 
-                        SizedBox(height: 10,),
+                        SizedBox(height: 15,),
 
                         FittedBox(
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               SizedBox(
-                                height: 95.0,
-                                width: 95.0,
+                                height: 110.0,
+                                width: 110.0,
                                 child: FittedBox(
                                   child: FloatingActionButton(
                                     backgroundColor: Colors
@@ -1065,10 +1064,10 @@ class _DialerState extends State<Dialer>{
                                     },
                                   ),
                                 ),
-                              ), SizedBox(width: 10,),
+                              ), SizedBox(width: 15,),
                               SizedBox(
-                                height: 95.0,
-                                width: 95.0,
+                                height: 110.0,
+                                width: 110.0,
                                 child: FittedBox(
                                   child: FloatingActionButton(
                                     backgroundColor: Colors
@@ -1085,10 +1084,10 @@ class _DialerState extends State<Dialer>{
                                     },
                                   ),
                                 ),
-                              ), SizedBox(width: 10,),
+                              ), SizedBox(width: 15,),
                               SizedBox(
-                                height: 95.0,
-                                width: 95.0,
+                                height: 110.0,
+                                width: 110.0,
                                 child: FittedBox(
                                   child: FloatingActionButton(
                                     backgroundColor: Colors
@@ -1114,7 +1113,7 @@ class _DialerState extends State<Dialer>{
                           ),
                         ),
 
-                        SizedBox(height: 50,),
+                        SizedBox(height: 30,),
                         FittedBox(
 
                             child: Row(
@@ -1129,7 +1128,7 @@ class _DialerState extends State<Dialer>{
                                     ),
                                     style: TextButton.styleFrom(
                                       textStyle: TextStyle(color: Colors.black),
-                                      backgroundColor: Colors.green,fixedSize: const Size(340, 53),
+                                      backgroundColor: Colors.green,fixedSize: const Size(340, 70),
                                       shape:RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(24.0),
                                       ),
@@ -1139,7 +1138,12 @@ class _DialerState extends State<Dialer>{
                                     readJson();
                                     writeJson(number, formattedDate);
                                     llamar(number);
-                                    number = "";
+
+                                    setState((){
+                                      number = "";
+                                      fontsize = 45;
+                                    });
+
                                      },
                                     icon: Icon(Icons.call, color: Colors.black,),
                                   ),
