@@ -128,6 +128,8 @@ class _MaterialDialerState extends State<MaterialDialer>{
 
   void createDownloadScreen() async {
 
+    bool show = false;
+
     _permissionReady = await _checkPermission();
 
     if (_permissionReady) {
@@ -138,21 +140,16 @@ class _MaterialDialerState extends State<MaterialDialer>{
         ));
 
         if(_release.contains(version) == false){
-          File file = File('/sdcard/download/material_dialer_latest.apk');
-
-          if (await file.exists()){
-            await File("/sdcard/download/material_dialer_latest.apk").rename(
-                '/sdcard/download/old.apk');
-            await File("/sdcard/download/old.apk").delete();
-
-          }
-
           await Dio().download(
               "https://github.com/daviiid99/Material_Dialer/releases/download/latest/app-release.apk",
               _localPath + "/" + "material_dialer_latest.apk",
               onReceiveProgress: (received, total){
                 setState(() {
-                  progress = ((received/total) * 100).toStringAsFixed(0) + "%";
+                    progress =  ((received/total) * 100).toStringAsFixed(0) + "%";
+
+                    if(((received/total) * 100) == 100){
+                      show = true;
+                    }
                   showDialog(
                       context: context,
                       builder: (BuildContext context){
@@ -177,7 +174,7 @@ class _MaterialDialerState extends State<MaterialDialer>{
                                         fontSize: 15,
                                       ),),
 
-                                        Text( "\n" + language[current_language]["About"]["downloading_progress"]  + " : $progress",
+                                        Text( "\n" + language[current_language]["About"]["downloading_progress"]  + " : " +  progress,
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 15,
@@ -185,7 +182,7 @@ class _MaterialDialerState extends State<MaterialDialer>{
 
                                       SizedBox(height: 100,),
 
-                                      ClipRRect(
+                                      if (show) ClipRRect(
                                         borderRadius: BorderRadius.circular(4),
                                         child: Stack(
                                           children: <Widget>[
@@ -209,9 +206,10 @@ class _MaterialDialerState extends State<MaterialDialer>{
                                                 textStyle: const TextStyle(fontSize: 20),
                                               ),
                                               onPressed: () {
+                                                 File("/sdcard/download/material_dialer_latest.apk").rename("/sdcard/download/temp.apk");
                                                 if (progress.contains("100")){
                                                   OpenFile.open(
-                                                  _localPath + "/" + "material_dialer_latest.apk");
+                                                  _localPath + "/" + "temp.apk");
                                                 }
                                                 },
                                               child: Text(language[current_language]["About"]["downloading_button"] ),
