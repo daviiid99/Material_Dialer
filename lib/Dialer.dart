@@ -15,6 +15,7 @@ import 'Profile.dart';
 import 'package:intl/intl.dart';
 import 'package:quick_actions/quick_actions.dart';
 import 'MaterialDIaler.dart';
+import 'dart:math';
 
 class Dialer extends StatefulWidget{
 
@@ -42,6 +43,11 @@ class _DialerState extends State<Dialer>{
   QuickActions quickActions = const QuickActions();
   double fontsize = 55;
   late String formattedDate;
+  Random random = new Random();
+  int randomNumber = 0;
+  int randomNumber2 = 0;
+  List<String> images = ["assets/images/call.png", "assets/images/contact.png", "assets/images/palette.png", "assets/images/lgs.png",  "assets/images/ota.png",  "assets/images/name.png"];
+
 
   _DialerState(this.mode_counter, this.modes, this.colors, this.fonts, this.number);
 
@@ -75,12 +81,24 @@ class _DialerState extends State<Dialer>{
         "title_afternoon" : "Good afternoon",
         "title_evening" : "Good night",
         "subtitle" : "Check some recommendations",
-        "card1_title" : "Make a Call",
-        "card1_subtitle" : "Call your friends",
-        "card1_button" : "Call now",
-        "card2_title" : "Add Contact",
-        "card2_subtitle" : "Save a contact",
-        "card2_button" : "Add contact"
+        "card0_title" : "Make a Call",
+        "card0_subtitle" : "Call your friends",
+        "card0_button" : "Call now",
+        "card1_title" : "Add Contact",
+        "card1_subtitle" : "Save a contact",
+        "card1_button" : "Add contact",
+        "card2_title" : "Choose Theme",
+        "card2_subtitle" : "Pick a color",
+        "card2_button" : "Color picker",
+        "card3_title" : "Set Language",
+        "card3_subtitle" : "Change your language",
+        "card3_button" : "Choose language",
+        "card4_title" : "Check Updates",
+        "card4_subtitle" : "Look for updates",
+        "card4_button" : "Open updater",
+        "card5_title" : "Set Your Name",
+        "card5_subtitle" : "Modify your profile",
+        "card5_button" : "Set profile"
       },
 
       "Profile" : {
@@ -167,12 +185,24 @@ class _DialerState extends State<Dialer>{
         "title_afternoon" : "Buenas tardes",
         "title_evening" : "Buenas noches",
         "subtitle" : "Aquí tienes algunas recomendaciones",
-        "card1_title" : "Hacer Llamada",
-        "card1_subtitle" : "Llama a tus amigos",
-        "card1_button" : "Llamar ahora",
-        "card2_title" : "Contactos",
-        "card2_subtitle" : "Registrar contacto",
-        "card2_button" : "Añadir contacto"
+        "card0_title" : "Hacer Llamada",
+        "card0_subtitle" : "Llama a tus amigos",
+        "card0_button" : "Llamar ahora",
+        "card1_title" : "Contactos",
+        "card1_subtitle" : "Registrar contacto",
+        "card1_button" : "Añadir contacto",
+        "card2_title" : "Elegir Tema",
+        "card2_subtitle" : "Escoge un color",
+        "card2_button" : "Seleccionar color",
+        "card3_title" : "Elegir Idioma",
+        "card3_subtitle" : "Cambia tu idioma",
+        "card3_button" : "Seleccionar idioma",
+        "card4_title" : "Buscar OTA",
+        "card4_subtitle" : "Busca actualizaciones",
+        "card4_button" : "Abrir actualizador",
+        "card5_title" : "Elegir Nombre",
+        "card5_subtitle" : "Modifica tu perfil",
+        "card5_button" : "Establecer perfil"
       },
 
       "Profile" : {
@@ -258,12 +288,24 @@ class _DialerState extends State<Dialer>{
         "title_afternoon" : "Bon après-midi",
         "title_evening" : "Bon Soir",
         "subtitle" : "Consultez quelques recommandations",
-        "card1_title" : "Fais Téléphonee",
-        "card1_subtitle" : "téléphoner vos amis",
-        "card1_button" : "Téléphoner",
-        "card2_title" : "Contacts",
-        "card2_subtitle" : "Enregistrer un contact",
-        "card2_button" : "Ajouter le contact"
+        "card0_title" : "Fais Téléphonee",
+        "card0_subtitle" : "téléphoner vos amis",
+        "card0_button" : "Téléphoner",
+        "card1_title" : "Contacts",
+        "card1_subtitle" : "Enregistrer un contact",
+        "card1_button" : "Ajouter le contact",
+        "card2_title": "Choisir Thème",
+        "card2_subtitle": "Choisissez une couleur",
+        "card2_button": "Sélecteur de couleurs",
+        "card3_title": "Définir Langue",
+        "card3_subtitle": "Changez votre langue",
+        "card3_button": "Choisir la langue",
+        "card4_title": "Vérifier OTA",
+        "card4_subtitle": "Rechercher les mises à jour",
+        "card4_button": "Ouvrir OTA",
+        "card5_title": "Définissez Votre Nom",
+        "card5_subtitle": "Modifiez votre profil",
+        "card5_button" : "Définir le profil"
       },
 
       "Profile" : {
@@ -349,12 +391,24 @@ class _DialerState extends State<Dialer>{
         "title_afternoon" : "Buone tarde",
         "title_evening" : "Buona Notte",
         "subtitle" : "Alcuni consigli",
-        "card1_title" : "Effettuare Chiamata",
-        "card1_subtitle" : "Chiama i tuoi amici",
-        "card1_button" : "Chiamare",
-        "card2_title" : "Contatti",
-        "card2_subtitle" : "Registra un contatto",
-        "card2_button" : "Aggiungi contatto"
+        "card0_title" : "Effettuare Chiamata",
+        "card0_subtitle" : "Chiama i tuoi amici",
+        "card0_button" : "Chiamare",
+        "card1_title" : "Contatti",
+        "card1_subtitle" : "Registra un contatto",
+        "card1_button" : "Aggiungi contatto",
+        "card2_title" : "Scegli tema",
+        "card2_subtitle" : "Scegli un colore",
+        "card2_button" : "Selettore colore",
+        "card3_title" : "Imposta Lingua",
+        "card3_subtitle" : "Cambia la tua lingua",
+        "card3_button" : "Scegli la lingua",
+        "card4_title" : "Verifica Aggiornamenti",
+        "card4_subtitle" : "Cerca aggiornamenti",
+        "card4_button" : "Apri programma di aggiornamento",
+        "card5_title" : "Imposta Il Tuo Nome",
+        "card5_subtitle" : "Modifica il tuo profilo",
+        "card5_button" : "Imposta profilo"
       },
 
 
@@ -440,12 +494,24 @@ class _DialerState extends State<Dialer>{
         "title_afternoon" : "Guten Nachmittag",
         "title_evening" : "Guten Abend",
         "subtitle" : "Überprüfen Sie einige Empfehlungen",
-        "card1_title" : "Anrufen",
-        "card1_subtitle" : "Freunde anrufen",
-        "card1_button" : "Jetzt anrufen",
-        "card2_title" : "Kontakte",
-        "card2_subtitle" : "Kontakt speichern",
-        "card2_button" : "Hinzufügen"
+        "card0_title" : "Anrufen",
+        "card0_subtitle" : "Freunde anrufen",
+        "card0_button" : "Jetzt anrufen",
+        "card1_title" : "Kontakte",
+        "card1_subtitle" : "Kontakt speichern",
+        "card1_button" : "Hinzufügen",
+        "card2_title": "Design Auswählen",
+        "card2_subtitle": "Wähle eine Farbe",
+        "card2_button": "Farbwähler",
+        "card3_title": "Sprache Einstellen",
+        "card3_subtitle": "Sprache ändern",
+        "card3_button": "Sprache wählen",
+        "card4_title": "Updates Prüfen",
+        "card4_subtitle": "Nach Updates suchen",
+        "card4_button": "Updater öffnen",
+        "card5_title": "Setze Deinen Namen",
+        "card5_subtitle" : "Ändern Sie Ihr Profil",
+        "card5_button": "Profil festlegen"
       },
 
       "Profile" : {
@@ -1159,6 +1225,47 @@ class _DialerState extends State<Dialer>{
     );
   }
 
+  void generateRandomCard() async {
+    int r1 = 0, r2 = 0;
+
+    while (r1 == r2){
+      r1 = random.nextInt(6);
+      r2 = random.nextInt(6);
+    }
+
+    setState(() async {
+      randomNumber = r1;
+      randomNumber2 = r2;
+      print(randomNumber);
+      print(randomNumber2);
+    });
+  }
+
+  void showPalette() async {
+    showDialog(
+        context: context,
+        builder: (BuildContext context){
+          return AlertDialog(
+            backgroundColor: Colors.transparent,
+            content: SingleChildScrollView(
+
+                child: BlockPicker(
+                    pickerColor: colors[0], //default color
+                    onColorChanged: (Color color) { //on color picked
+                      jsonFile = "user.json";
+                      String colorString = color.toString(); // Color(0x12345678)
+                      String valueString = colorString.split('(0x')[1].split(')')[0]; // kind of hacky..
+                      writeJson("color", valueString);
+                      readJson();
+                      Navigator.pop(context);
+
+                    })
+            ),
+          );
+        }
+    );
+  }
+
   @override
   void initState(){
     jsonFile = "languages.json";
@@ -1171,6 +1278,7 @@ class _DialerState extends State<Dialer>{
       isCleanInstall();
       formattedDate = DateFormat('EEE d MMM').format(now);
 
+      generateRandomCard();
 
       setTime = DateFormat('H' ).format(now);
       if (int.parse(setTime) >= 0 && int.parse(setTime) < 6)  setTime = "title_evening";
@@ -1228,29 +1336,8 @@ class _DialerState extends State<Dialer>{
         leading: IconButton(
           icon: Icon(Icons.palette_rounded, color: fonts[mode_counter]),
           tooltip: 'Navigation menu',
-            onPressed: () => {
-            showDialog(
-            context: context,
-            builder: (BuildContext context){
-              return AlertDialog(
-                backgroundColor: Colors.transparent,
-              content: SingleChildScrollView(
-
-              child: BlockPicker(
-                pickerColor: colors[0], //default color
-                onColorChanged: (Color color) { //on color picked
-                  jsonFile = "user.json";
-                  String colorString = color.toString(); // Color(0x12345678)
-                  String valueString = colorString.split('(0x')[1].split(')')[0]; // kind of hacky..
-                  writeJson("color", valueString);
-                  readJson();
-                  Navigator.pop(context);
-
-                })
-              ),
-              );
-            }
-            )
+            onPressed: () async {
+            showPalette();
           }
 
         ),
@@ -1307,7 +1394,7 @@ class _DialerState extends State<Dialer>{
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                         Text(language[currentLanguage]["Home"]["card1_title"],
+                         Text(language[currentLanguage]["Home"]["card" + randomNumber.toString() + "_title"],
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 25,
@@ -1315,7 +1402,7 @@ class _DialerState extends State<Dialer>{
                          SizedBox(
                           height: 5,
                         ),
-                         Text(language[currentLanguage]["Home"]["card1_subtitle"],
+                         Text(language[currentLanguage]["Home"]["card" + randomNumber.toString() + "_subtitle"],
                             style: TextStyle(
                                 letterSpacing: 2,
                                 color: Colors.white,
@@ -1327,10 +1414,35 @@ class _DialerState extends State<Dialer>{
                         ElevatedButton(
                           //on pressed
                           onPressed: () async {
-                            dialPad();
+                            if (randomNumber == 0){
+                              dialPad();
+                            } else if (randomNumber == 1){
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => Contacts(mode_counter, modes, colors, fonts, currentLanguage, language, history)),
+                              );
+                            } else if (randomNumber == 2){
+                              showPalette();
+
+                            } else if (randomNumber == 3){
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => SetLanguage(mode_counter, modes, colors, fonts, currentLanguage, language)),
+                              );
+                            } else if (randomNumber == 4){
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => MaterialDialer(mode_counter, modes, colors, fonts, currentLanguage, language)),
+                              );
+                            } else if (randomNumber == 5){
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => Profile(colors[mode_counter])),
+                              );
+                            }
                           },
                           //text to shoe in to the button
-                          child:  Text(language[currentLanguage]["Home"]["card1_button"],
+                          child:  Text(language[currentLanguage]["Home"]["card" + randomNumber.toString() + "_button"],
                               style: TextStyle(color: Colors.white)),
                           //style section code here
                           style: ButtonStyle(
@@ -1353,11 +1465,11 @@ class _DialerState extends State<Dialer>{
               right: 0,
               top: 0,
               child: Image.asset(
-                "assets/images/call.png",
+                images[randomNumber],
                 fit: BoxFit.fitWidth,
-                height: 300,
+                height: 255,
                 width:  180,
-                scale: 0.5,
+                scale: 0.8,
 
               ),
             )
@@ -1382,7 +1494,7 @@ class _DialerState extends State<Dialer>{
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                         Text(language[currentLanguage]["Home"]["card2_title"],
+                         Text(language[currentLanguage]["Home"]["card" + randomNumber2.toString() + "_title"],
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 25,
@@ -1390,7 +1502,7 @@ class _DialerState extends State<Dialer>{
                          SizedBox(
                           height: 5,
                         ),
-                         Text(language[currentLanguage]["Home"]["card2_subtitle"],
+                         Text(language[currentLanguage]["Home"]["card" + randomNumber2.toString() + "_subtitle"],
                             style: TextStyle(
                                 letterSpacing: 2,
                                 color: Colors.white,
@@ -1402,13 +1514,35 @@ class _DialerState extends State<Dialer>{
                         ElevatedButton(
                           //on pressed
                           onPressed: () async {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => Contacts(mode_counter, modes, colors, fonts, currentLanguage, language, history)),
-                            );
+                            if (randomNumber2 == 0){
+                              dialPad();
+                            } else if (randomNumber2 == 1){
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => Contacts(mode_counter, modes, colors, fonts, currentLanguage, language, history)),
+                              );
+                            } else if (randomNumber2 == 2){
+                              showPalette();
+
+                            } else if (randomNumber2 == 3){
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => SetLanguage(mode_counter, modes, colors, fonts, currentLanguage, language)),
+                              );
+                            } else if (randomNumber2 == 4){
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => MaterialDialer(mode_counter, modes, colors, fonts, currentLanguage, language)),
+                              );
+                            } else if (randomNumber2 == 5){
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => Profile(colors[mode_counter])),
+                              );
+                            }
                           },
                           //text to shoe in to the button
-                          child: Text(language[currentLanguage]["Home"]["card2_button"],
+                          child: Text(language[currentLanguage]["Home"]["card" + randomNumber2.toString() + "_button"],
                               style: TextStyle(color: Colors.white)),
                           //style section code here
                           style: ButtonStyle(
@@ -1431,11 +1565,11 @@ class _DialerState extends State<Dialer>{
               right: 0,
               top: 0,
               child: Image.asset(
-                "assets/images/contact.png",
+                images[randomNumber2],
                 fit: BoxFit.fitWidth,
                 height: 255,
-                width: 200,
-                scale: 2.0,
+                width: 180,
+                scale: 0.8,
 
               ),
             )
