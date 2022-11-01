@@ -162,7 +162,8 @@ class _DialerState extends State<Dialer>{
         "input2" : "Number",
         "button1" : "Call",
         "button2" : "Update",
-        "button3" : "Delete"
+        "button3" : "Delete",
+        "button4" : "Export"
       },
 
       "CreateContact" : {
@@ -275,7 +276,8 @@ class _DialerState extends State<Dialer>{
         "input2" : "Número",
         "button1" : "Llamar",
         "button2" : "Actualizar",
-        "button3" : "Borrar"
+        "button3" : "Borrar",
+        "button4" : "Exportar"
       },
 
       "CreateContact": {
@@ -387,7 +389,8 @@ class _DialerState extends State<Dialer>{
         "input2": "Numéro",
         "button1": "Appeler",
         "button2": "Mettre à jour",
-        "button3": "Supprimer"
+        "button3": "Supprimer",
+        "button4" : "Exporter"
       },
 
       "CreateContact" : {
@@ -499,7 +502,8 @@ class _DialerState extends State<Dialer>{
         "input2" : "Numero",
         "button1" : "Chiama",
         "button2" : "Aggiorna",
-        "button3" : "Elimina"
+        "button3" : "Elimina",
+        "button4" : "Esporta"
       },
 
       "CreateContact" : {
@@ -610,7 +614,8 @@ class _DialerState extends State<Dialer>{
         "input2": "Nummer",
         "button1": "Anrufen",
         "button2": "Aktualisieren",
-        "button3": "Löschen"
+        "button3": "Löschen",
+        "button4" : "Exportieren"
       },
 
       "CreateContact" : {

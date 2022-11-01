@@ -11,7 +11,8 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:open_file/open_file.dart';
 
 class MaterialDialer extends StatefulWidget{
   @override
@@ -52,6 +53,7 @@ class _MaterialDialerState extends State<MaterialDialer>{
   List<String> description = [];
   List<IconData> icons = [Icons.drive_file_rename_outline_rounded, Icons.format_list_numbered,Icons.add_box, Icons.android_rounded, ];
   late String _release;
+  String progress = "";
 
   void checkBuild(){
     PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
@@ -64,6 +66,37 @@ class _MaterialDialerState extends State<MaterialDialer>{
         description = [appName, version, packageName, buildNumber];
       });
     });}
+
+  Future<bool> _checkPermission() async {
+    if (platform == TargetPlatform.android) {
+      final status = await Permission.storage.status;
+      if (status != PermissionStatus.granted) {
+        final result = await Permission.storage.request();
+        if (result == PermissionStatus.granted) {
+          return true;
+        }
+      } else {
+        return true;
+      }
+    } else {
+      return true;
+    }
+    return false;
+  }
+
+
+  Future<void> _prepareSaveDir() async {
+    _localPath = (await _findLocalPath())!;
+    final savedDir = Directory(_localPath);
+    bool hasExisted = await savedDir.exists();
+    if (!hasExisted) {
+      savedDir.create();
+    }
+  }
+
+  Future<String> _findLocalPath() async {
+    return "/sdcard/download/";
+  }
 
   Future<void> deleteFile(File file) async {
     try {
@@ -91,13 +124,128 @@ class _MaterialDialerState extends State<MaterialDialer>{
     } catch (e) {
       print("Couldn't read file");
     }
-
-
   }
 
-  _launchURL(String url) async {
-    final Uri _url = Uri.parse(url);
-    await launchUrl(_url,mode: LaunchMode.externalApplication);
+  void createDownloadScreen() async {
+
+    bool show = false;
+
+    _permissionReady = await _checkPermission();
+
+    if (_permissionReady) {
+      await _prepareSaveDir();
+      try {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(language[current_language]["About"]["toaster"]),
+        ));
+
+        if(_release.contains(version) == false){
+          await Dio().download(
+              "https://github.com/daviiid99/Material_Dialer/releases/download/latest/app-release.apk",
+              _localPath + "/" + "material_dialer_latest.apk",
+              onReceiveProgress: (received, total){
+                setState(() {
+                  progress =  ((received/total) * 100).toStringAsFixed(0) + "%";
+
+                  if(((received/total) * 100) == 100){
+                    show = true;
+                  }
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context){
+                        return AlertDialog(
+                            backgroundColor: colores[mode_counter],
+                            content: SingleChildScrollView(
+                                child: Column(
+                                    children: <Widget>[
+                                      Text(
+                                        language[current_language]["About"]["downloading_title"] +"\n\n",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 20,
+                                        ),),
+
+                                      Text(language[current_language]["About"]["downloading_subtitle"] + "  :  $version",style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 15,
+                                      ),),
+                                      Text(language[current_language]["About"]["downloading_subtitle2"]  + " : $_release ", style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 15,
+                                      ),),
+
+                                      Text( "\n" + language[current_language]["About"]["downloading_progress"]  + " : " +  progress,
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 15,
+                                        ),),
+
+                                      SizedBox(height: 100,),
+
+                                      if (show) ClipRRect(
+                                        borderRadius: BorderRadius.circular(4),
+                                        child: Stack(
+                                          children: <Widget>[
+                                            Positioned.fill(
+                                              child: Container(
+                                                decoration: const BoxDecoration(
+                                                  gradient: LinearGradient(
+                                                    colors: <Color>[
+                                                      Color(0xFFE8F5E9),
+                                                      Color(0xFFA5D6A7),
+                                                      Color(0xFF66BB6A),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            TextButton(
+                                              style: TextButton.styleFrom(
+                                                foregroundColor: Colors.white,
+                                                padding: const EdgeInsets.all(16.0),
+                                                textStyle: const TextStyle(fontSize: 20),
+                                              ),
+                                              onPressed: () {
+                                                File("/sdcard/download/material_dialer_latest.apk").rename("/sdcard/download/temp.apk");
+                                                if (progress.contains("100")){
+                                                  OpenFile.open(
+                                                      _localPath + "/" + "temp.apk");
+                                                }
+                                              },
+                                              child: Text(language[current_language]["About"]["downloading_button"] ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      SizedBox(height: 100,),
+
+                                      Text(language[current_language]["About"]["downloading_warning"] , style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 15,
+                                      ),),
+
+
+                                    ]
+                                )
+                            ));
+                      });
+                });
+              }
+          );
+
+
+
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(language[current_language]["About"]["toaster2"]),
+          ));
+
+        }
+
+      } catch (e) {
+      }
+    }
+
   }
 
 
@@ -179,29 +327,7 @@ class _MaterialDialerState extends State<MaterialDialer>{
                     ),
                   ),
                   onPressed: () async {
-
-                    try {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text(language[current_language]["About"]["toaster"]),
-                      ));
-
-                      if(_release.contains(version) == false){
-                        String latest = _release;
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text(language[current_language]["About"]["toaster3"]),
-                        ));
-
-                        _launchURL("https://play.google.com/store/apps/details?id=com.daviiid99.material_dialer");
-                      }
-                      else {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text(language[current_language]["About"]["toaster2"]),
-                        ));
-
-                      }
-
-                    } catch (e) {
-                    }
+                    createDownloadScreen();
                   },
 
                   icon: Icon(Icons.download, color: Colors.black,),

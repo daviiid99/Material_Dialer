@@ -12,6 +12,8 @@ import 'ManageMap.dart';
 import 'package:restart_app/restart_app.dart';
 import 'package:intl/intl.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:image_downloader/image_downloader.dart';
+
 
 class Contacts extends StatefulWidget{
    @override
@@ -51,6 +53,7 @@ class _ContactState extends State<Contacts>{
   String path = "";
   late List<PlatformFile> files;
   String image = "";
+  var imagePath;
 
   _ContactState(this.mode_counter, this.modes, this.colores, this.fonts, this.current_language, this.language, this.history);
 
@@ -182,7 +185,9 @@ class _ContactState extends State<Contacts>{
   List<String> addPhotosToList (Map<dynamic, dynamic> dic ,List<String> contactos, List<String> telefonos, List<String> photos){
 
     for(String number in dic.keys){
+      if (dic.isNotEmpty) {
         photos.add(dic[number][1]);
+      }
 
     }
     print(telefonos[0]);
@@ -207,6 +212,23 @@ void exportContacts(String path) async{
       myBackupFile = language[current_language]["Contacts"]["export"] + "\n" + backup.path;
 
       });
+  }
+
+  void exportSingleContact(String path, String contact) async {
+
+    // Set file path
+    File myContact = File("$path/$contact.json");
+
+    // Save map into variable
+    final jsonFile = jsonEncode(mapa);
+
+    // Write file
+    myContact.writeAsString(jsonFile);
+
+    setState(() async {
+      myBackupFile = language[current_language]["Contacts"]["export"] + "\n" + myContact.path;
+
+    });
   }
 
   void pickDirectory() async{
@@ -302,12 +324,30 @@ void exportContacts(String path) async{
   
   void readBackup(File myBackup) async{
 
+    Map<dynamic, dynamic> myTempMap = {};
+
     setState(() async {
+
+      // Save file content as string
       _jsonString = await myBackup.readAsString();
-      mapa = jsonDecode(_jsonString);
+
+      // Decode string into a map
+      myTempMap = jsonDecode(_jsonString);
+
+      // Save only new keys
+      for (String key in myTempMap.keys){
+        if(mapa.containsKey(key) == false){
+          mapa[key] = myTempMap[key];
+        }
+      }
+
+      // Overwrite internal map as always
       final filePath = await _localFile;
       _jsonString = jsonEncode(mapa);
       filePath.writeAsString(_jsonString);
+
+      // Update lists with new internal map
+      mapa = jsonDecode(_jsonString);
       contactos = addContactsToList(mapa, contactos, telefonos);
       telefonos = addPhonesToList(mapa, contactos, telefonos);
       photos =  addPhotosToList(mapa, contactos, telefonos, photos);
@@ -617,6 +657,32 @@ void exportContacts(String path) async{
                                     },
                                   ),
 
+                                  SizedBox(height: 10,),
+
+                                  ElevatedButton(
+                                    child: Text(
+                                      language[current_language]["EditContact"]["button4"],
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.white),
+                                    ),
+                                    style: TextButton.styleFrom(
+                                      textStyle: TextStyle(color: Colors.black),
+                                      backgroundColor: Colors.black,
+                                      fixedSize: const Size(340, 40),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(
+                                            24.0),
+                                      ),
+                                    ),
+                                    onPressed: () async {
+                                      setState(() {
+                                        pickDirectory();
+                                        exportSingleContact(myBackupDir, name);
+                                      });
+                                    },
+                                  ),
+
                                   SizedBox(width: 15,),
                                 ]
 
@@ -647,6 +713,12 @@ void exportContacts(String path) async{
     telefonos = addPhonesToList(mapa, contactos, telefonos);
     formattedDate = DateFormat('yyyy_MM_dd' ).format(now);
     historyDate = DateFormat('EEE d MMM' ).format(now);
+
+    setState(() async {
+      var image =  await ImageDownloader.downloadImage("https://raw.githubusercontent.com/daviiid99/Material_Dialer/google_play/assets/images/anonymous.png");
+      imagePath = await ImageDownloader.findPath(image);
+    });
+
     super.initState();
   }
 
@@ -792,16 +864,17 @@ void exportContacts(String path) async{
                                            ),
                                          ),
                                          onPressed: () {
-                                           setState(() {
+                                           setState(() async {
                                              if(phone.text.length > 0) {
-                                               mapa[phone.text] = [contact.text, "assets/images/anonymous.png"];
+                                               List<String> lista = [contact.text, imagePath];
+                                               mapa[phone.text] = lista;
                                                contactos = addContactsToList(
                                                    mapa, contactos, telefonos);
                                                telefonos = addPhonesToList(
                                                    mapa, contactos, telefonos);
                                                jsonFile = "contacts.json";
                                                _writeJson(
-                                                   phone.text, [contact.text, "assets/images/anonymous.png"], "contact");
+                                                   phone.text, [contact.text, "$imagePath"], "contact");
                                                Navigator.pop(context);
                                              ScaffoldMessenger.of(context)
                                                  .showSnackBar(SnackBar(
@@ -847,8 +920,8 @@ void exportContacts(String path) async{
                           if (contact !=null){
                             number = contact.phoneNumbers![0];
                             name = contact.fullName.toString();
-                            setState(() async {
-                              List<String> lista = [name, "/data/user/0/com.daviiid99.material_dialer/app_flutter/$number.jpg"];
+                            setState(()  {
+                              List<String> lista = [name, imagePath];
                               mapa[number] = lista;
                               contactos = addContactsToList(mapa, contactos, telefonos);
                               telefonos = addPhonesToList(mapa, contactos, telefonos);
