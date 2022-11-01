@@ -45,8 +45,6 @@ dependencies:
   package_info_plus: ^3.0.1
   restart_app: ^1.1.0+1
   dio: ^4.0.0
-  permission_handler: ^8.0.0+2
-  open_file: ^2.1.1
   intl: ^0.17.0
   audioplayers: any
   flutter_colorpicker: ^1.0.3
