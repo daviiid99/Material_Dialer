@@ -155,6 +155,16 @@ class _DialerState extends State<Dialer>{
         "import" : "Restored your contacts!"
       },
 
+
+      "EditContact" : {
+        "image" : "Set Picture",
+        "input1" : "Name",
+        "input2" : "Number",
+        "button1" : "Call",
+        "button2" : "Update",
+        "button3" : "Delete"
+      },
+
       "CreateContact" : {
         "title" : "Create Contact",
         "box1" : "Phone",
@@ -257,6 +267,15 @@ class _DialerState extends State<Dialer>{
         "export" : "Exportados tus contactos al directorio",
         "import" : "Restaurados tus contactos!"
 
+      },
+
+      "EditContact" : {
+        "image" : "Cambiar Foto",
+        "input1" : "Nombre",
+        "input2" : "Número",
+        "button1" : "Llamar",
+        "button2" : "Actualizar",
+        "button3" : "Borrar"
       },
 
       "CreateContact": {
@@ -362,6 +381,15 @@ class _DialerState extends State<Dialer>{
         "import" : "Restauré vos contacts!"
       },
 
+      "EditContact" : {
+        "image": "Définir l'image",
+        "input1": "Nom",
+        "input2": "Numéro",
+        "button1": "Appeler",
+        "button2": "Mettre à jour",
+        "button3": "Supprimer"
+      },
+
       "CreateContact" : {
         "title" : "Créer un Contact",
         "box1" : "Téléphone",
@@ -465,6 +493,15 @@ class _DialerState extends State<Dialer>{
         "import" : "Hai ripristinato i tuoi contatti!"
       },
 
+      "EditContact" : {
+        "image" : "Imposta immagine",
+        "input1" : "Nome",
+        "input2" : "Numero",
+        "button1" : "Chiama",
+        "button2" : "Aggiorna",
+        "button3" : "Elimina"
+      },
+
       "CreateContact" : {
         "title" : "Crea Contatto",
         "box1" : "Telefono",
@@ -565,6 +602,15 @@ class _DialerState extends State<Dialer>{
         "empty" : "Nichts hier, nur Blätter",
         "export" : "Ihre aktuellen Kontakte in das Verzeichnis exportiert",
         "import" : "Ihre Kontakte wiederhergestellt!"
+      },
+
+      "EditContact" : {
+        "image": "Bild einstellen",
+        "input1": "Name",
+        "input2": "Nummer",
+        "button1": "Anrufen",
+        "button2": "Aktualisieren",
+        "button3": "Löschen"
       },
 
       "CreateContact" : {

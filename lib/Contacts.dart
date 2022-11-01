@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/cupertino.dart';
@@ -51,17 +50,20 @@ class _ContactState extends State<Contacts>{
   DateTime now = DateTime.now();
   String path = "";
   late List<PlatformFile> files;
+  String image = "";
 
   _ContactState(this.mode_counter, this.modes, this.colores, this.fonts, this.current_language, this.language, this.history);
 
   var filePath = 'assets/contacts.json';
   var contactos = ["Example"];
   var telefonos = ["123"];
+  var photos = ["/sdcard"];
   bool _fileExists = false;
   late File _filePath;
 
   // First initialization of _json (if there is no json in the file)
   Map<dynamic, dynamic> mapa = {};
+  Map<dynamic, dynamic> images = {};
   String jsonFile = "languages.json";
 
   late String _jsonString;
@@ -80,23 +82,33 @@ class _ContactState extends State<Contacts>{
   }
 
   // Write latest key and value to json
-  void _writeJson(String key, dynamic value) async {
+  void _writeJson(String key, dynamic value, String type) async {
     final filePath = await _localFile;
-    Map<String, dynamic> _newJson = {key: value};
+
 
     if (jsonFile.contains("contacts.json")) {
+      Map<String, dynamic> _newJson = {};
+
+      if (type.contains("contact")) {
+        _newJson[key] = value;
+      }
+
       mapa.addAll(_newJson);
+      print(mapa);
       _jsonString = jsonEncode(mapa);
       filePath.writeAsString(_jsonString);
     }
 
     else if (jsonFile.contains("history.json")) {
+      Map<String, dynamic> _newJson = {key : value};
       history.addAll(_newJson);
       _jsonString = jsonEncode(history);
       filePath.writeAsString(_jsonString);
 
     }
+
   }
+
 
   // Read json and update the lists on runtime
   void _readJson() async {
@@ -108,7 +120,8 @@ class _ContactState extends State<Contacts>{
         if (jsonFile.contains("contacts.json")) {
           _jsonString = await _filePath.readAsString();
           mapa = jsonDecode(_jsonString);
-        } else if (jsonFile.contains("history.json")){
+
+        } else if (jsonFile.contains("history.json")) {
           _jsonString = await _filePath.readAsString();
           history = jsonDecode(_jsonString);
         }
@@ -119,6 +132,7 @@ class _ContactState extends State<Contacts>{
     setState(() {
       contactos = addContactsToList(mapa, contactos, telefonos);
       telefonos = addPhonesToList(mapa, contactos, telefonos);
+      photos =  addPhotosToList(mapa, contactos, telefonos, photos);
     });
   }
 
@@ -135,16 +149,17 @@ class _ContactState extends State<Contacts>{
       filePath.writeAsString(_jsonString);
       contactos = [];
       telefonos = [];
+      photos = [];
       _readJson();
     });
   }
 
   // Add contacts entries to lists
-  List<String> addContactsToList (Map<dynamic, dynamic> dic ,List<String> contactos, List<String> telefonos){
+  List<String> addContactsToList (Map<dynamic, dynamic> dic ,List<String> contactos, List<String> telefonos) {
 
-    for(String key in dic.keys){
-        if(telefonos.contains(key) == false){
-          contactos.add(dic[key]);
+    for(String number in dic.keys){
+        if (telefonos.contains(number) == false) {
+          contactos.add(dic[number][0]);
         }
       }
 
@@ -160,8 +175,22 @@ class _ContactState extends State<Contacts>{
           telefonos.add(key);
       }
     }
-
     return telefonos;
+  }
+
+  // Add photos entries to lists
+  List<String> addPhotosToList (Map<dynamic, dynamic> dic ,List<String> contactos, List<String> telefonos, List<String> photos){
+
+    for(String number in dic.keys){
+        photos.add(dic[number][1]);
+
+    }
+    print(telefonos[0]);
+    print(contactos[0]);
+    print(dic[telefonos[0]][1]);
+    print(photos);
+
+    return photos;
   }
 
 void exportContacts(String path) async{
@@ -223,6 +252,53 @@ void exportContacts(String path) async{
       }
     }
   }
+
+  void pickImage(String number, String name) async {
+    bool exists = false;
+
+    // User can choose a file from storage
+    final result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['jpg', 'png', 'gif'],
+      allowMultiple: false,
+    );
+
+
+    // Check if the user closed the file picker
+    if (result != null) {
+      PlatformFile myFile = result.files.first;
+      exists = true;
+
+
+      if (exists) {
+        setState(() async {
+          path = myFile.path!;
+
+          // Check image extensions
+
+          if (path.contains('.png')){
+            await File(path).rename(
+                '/data/user/0/com.daviiid99.material_dialer/app_flutter/$number.png');
+            image = '/data/user/0/com.daviiid99.material_dialer/app_flutter/$number.png';
+
+          }  else if (path.contains('.jpg')){
+            await File(path).rename(
+                '/data/user/0/com.daviiid99.material_dialer/app_flutter/$number.jpg');
+            image = '/data/user/0/com.daviiid99.material_dialer/app_flutter/$number.jpg';
+          } else {
+            await File(path).rename(
+                '/data/user/0/com.daviiid99.material_dialer/app_flutter/$number.gif');
+            image =
+            '/data/user/0/com.daviiid99.material_dialer/app_flutter/$number.gif';
+          }
+
+            jsonFile = "contacts.json";
+          _writeJson(number, [name, image], "contact");
+          mapa[number] = [name, image];
+        });
+      }
+    }
+  }
   
   void readBackup(File myBackup) async{
 
@@ -234,6 +310,7 @@ void exportContacts(String path) async{
       filePath.writeAsString(_jsonString);
       contactos = addContactsToList(mapa, contactos, telefonos);
       telefonos = addPhonesToList(mapa, contactos, telefonos);
+      photos =  addPhotosToList(mapa, contactos, telefonos, photos);
     });
     
   }
@@ -270,6 +347,292 @@ void exportContacts(String path) async{
   late String name, number;
   final FlutterContactPicker contactPicker = new FlutterContactPicker();
 
+  void createContactView(String number, String name, String picture, int index) async {
+
+    showDialog(
+        context: context,
+        builder: (context) {
+          return StatefulBuilder(
+              builder: (context, setState) {
+                return AlertDialog(
+                  backgroundColor: colores[mode_counter],
+                  content: SingleChildScrollView(
+                      child: Column(
+                          children: <Widget>[
+                            CircleAvatar(
+                              minRadius: 50,
+                              maxRadius: 75,
+                              backgroundColor: Colors.transparent,
+                              child : ClipRRect(
+                                borderRadius: BorderRadius.circular(8.0),
+                                child: Image.file(File(
+                                  mapa[telefonos[index]][1],
+                                ),
+                                    fit: BoxFit.fill
+                                ),
+                              ),
+                            ),
+
+                            ElevatedButton(
+                              child: Text(
+                                language[current_language]["EditContact"]["image"],
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.white),
+                              ),
+                              style: TextButton.styleFrom(
+                                textStyle: TextStyle(color: Colors.white),
+                                backgroundColor: Colors.black,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(24.0),
+                                ),
+                              ),
+                              onPressed: () async {
+
+                                setState(() async {
+                                  if (phone.text.isEmpty){
+                                    pickImage(number, name);
+                                  } else {
+                                    pickImage(phone.text, name);
+                                  }
+                                  Navigator.pop(context);
+                                });
+
+                              },
+                            ),
+
+                            SizedBox(height: 20,),
+
+                            Row(
+                                children: [
+                                  Text(language[current_language]["EditContact"]["input1"], style: TextStyle(
+                                      color: Colors.white),),
+                                ]
+                            ),
+
+                            SizedBox(height: 10,),
+
+                            TextFormField(
+                              style: TextStyle(color: Colors.white),
+                              decoration: InputDecoration(
+                                  disabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.blueAccent, width: 2.0),
+                                  ),
+
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.blueAccent, width: 2.0),
+                                  ),
+                                  border: OutlineInputBorder(
+                                  ),
+
+                                  labelText: name,
+                                  labelStyle: TextStyle(
+                                      color: Colors.white
+                                  )
+
+                              ),
+                              controller: contact,
+                            ),
+
+                            SizedBox(height: 10,),
+
+                            Row(
+                                children: [
+                                  Text(language[current_language]["EditContact"]["input2"], style: TextStyle(
+                                      color: Colors.white),),
+                                ]
+                            ),
+
+                            SizedBox(height: 10,),
+
+                            TextFormField(
+                              style: TextStyle(color: Colors.white),
+                              decoration: InputDecoration(
+                                  disabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.blueAccent, width: 2.0),
+                                  ),
+
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.blueAccent, width: 2.0),
+                                  ),
+                                  border: OutlineInputBorder(
+                                  ),
+
+                                  labelText: number,
+                                  labelStyle: TextStyle(
+                                      color: Colors.white
+                                  )
+
+                              ),
+                              controller: phone,
+                            ),
+
+                            SizedBox(height: 30,),
+
+                            Column(
+                                children: <Widget>[
+                                  ElevatedButton(
+                                    child: Text(
+                                      language[current_language]["EditContact"]["button1"],
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.black),
+                                    ),
+                                    style: TextButton.styleFrom(
+                                      textStyle: TextStyle(color: Colors.black),
+                                      backgroundColor: Colors.green,
+                                      fixedSize: const Size(340, 40),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(
+                                            24.0),
+                                      ),
+                                    ),
+                                    onPressed: () async {
+                                      jsonFile = "history.json";
+                                      _readJson();
+                                      _writeJson(number, historyDate, "");
+                                      llamar(telefonos, index);
+                                      Navigator.pop(context);
+
+                                      // Reset form values
+                                      phone.text = "";
+                                      contact.text = "";
+                                    },
+                                  ),
+
+                                  SizedBox(height: 10,),
+
+                                  ElevatedButton(
+                                    child: Text(
+                                      language[current_language]["EditContact"]["button2"],
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.black),
+                                    ),
+                                    style: TextButton.styleFrom(
+                                      textStyle: TextStyle(color: Colors.black),
+                                      backgroundColor: Colors.orange,
+                                      fixedSize: const Size(340, 40),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(
+                                            24.0),
+                                      ),
+                                    ),
+                                    onPressed: () async {
+                                      if (contact.text.contains(name) ) {
+                                        if (phone.text.contains(number)) {
+                                          jsonFile = "contacts.json";
+                                          _readJson();
+                                          _writeJson(number, [name, mapa[number][1]], "contact");
+                                          Navigator.pop(context);
+                                        } else {
+                                          if (phone.text.isEmpty){
+                                            jsonFile = "contacts.json";
+                                            _readJson();
+                                            _writeJson(number, [contact.text, mapa[number][1]], "contact");
+                                            mapa.remove(number);
+                                            removePhone(mapa);
+                                            Navigator.pop(context);
+                                          } else {
+                                            jsonFile = "contacts.json";
+                                          _readJson();
+                                          _writeJson(phone.text, [contact.text, mapa[number][1]], "contact");
+                                          mapa.remove(number);
+                                          removePhone(mapa);
+                                          Navigator.pop(context);
+                                          }
+                                      }
+
+                                      } else {
+                                        if (contact.text.isEmpty &&
+                                            phone.text.isEmpty) {
+                                          jsonFile = "contacts.json";
+                                          _readJson();
+                                          _writeJson(number, [name, mapa[number][1]], "contact");
+                                          Navigator.pop(context);
+                                        } else if (phone.text.isEmpty) {
+                                          jsonFile = "contacts.json";
+                                          _readJson();
+                                          _writeJson(number, [contact.text, mapa[number][1]], "contact");
+                                          mapa.remove(number);
+                                          removePhone(mapa);
+                                          Navigator.pop(context);
+
+                                          } else if (contact.text.isEmpty){
+                                          jsonFile = "contacts.json";
+                                          _readJson();
+                                          _writeJson(phone.text, [name, mapa[number][1]], "contact");
+                                          mapa.remove(number);
+                                          removePhone(mapa);
+                                          Navigator.pop(context);
+                                        } else {
+                                          jsonFile = "contacts.json";
+                                          _readJson();
+                                          _writeJson(phone.text, [contact.text, mapa[number][1]], "contact");
+                                          mapa.remove(number);
+                                          removePhone(mapa);
+                                          Navigator.pop(context);
+
+                                        }
+                                      }
+
+                                      // Reset form values
+                                      phone.text = "";
+                                      contact.text = "";
+                                    },
+                                  ),
+
+                                  SizedBox(height: 10,),
+
+                                  ElevatedButton(
+                                    child: Text(
+                                      language[current_language]["EditContact"]["button3"],
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.black),
+                                    ),
+                                    style: TextButton.styleFrom(
+                                      textStyle: TextStyle(color: Colors.black),
+                                      backgroundColor: Colors.red,
+                                      fixedSize: const Size(340, 40),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(
+                                            24.0),
+                                      ),
+                                    ),
+                                    onPressed: () async {
+                                      mapa.remove(number);
+                                      setState(() {
+                                        removePhone(mapa);
+                                        Navigator.pop(context);
+
+                                        // Reset form values
+                                        phone.text = "";
+                                        contact.text = "";
+                                      });
+                                    },
+                                  ),
+
+                                  SizedBox(width: 15,),
+                                ]
+
+                            )
+
+
+                          ]
+                      )
+                  ),
+
+                );
+              }
+          );
+        });
+  }
+
   @override
   void initState(){
     if(contactos.contains("Example") && telefonos.contains("123")) {
@@ -284,7 +647,6 @@ void exportContacts(String path) async{
     telefonos = addPhonesToList(mapa, contactos, telefonos);
     formattedDate = DateFormat('yyyy_MM_dd' ).format(now);
     historyDate = DateFormat('EEE d MMM' ).format(now);
-
     super.initState();
   }
 
@@ -432,14 +794,14 @@ void exportContacts(String path) async{
                                          onPressed: () {
                                            setState(() {
                                              if(phone.text.length > 0) {
-                                               mapa[phone.text] = contact.text;
+                                               mapa[phone.text] = [contact.text, "assets/images/anonymous.png"];
                                                contactos = addContactsToList(
                                                    mapa, contactos, telefonos);
                                                telefonos = addPhonesToList(
                                                    mapa, contactos, telefonos);
                                                jsonFile = "contacts.json";
                                                _writeJson(
-                                                   phone.text, contact.text);
+                                                   phone.text, [contact.text, "assets/images/anonymous.png"], "contact");
                                                Navigator.pop(context);
                                              ScaffoldMessenger.of(context)
                                                  .showSnackBar(SnackBar(
@@ -486,11 +848,13 @@ void exportContacts(String path) async{
                             number = contact.phoneNumbers![0];
                             name = contact.fullName.toString();
                             setState(() async {
-                              mapa[number] = name;
+                              List<String> lista = [name, "/data/user/0/com.daviiid99.material_dialer/app_flutter/$number.jpg"];
+                              mapa[number] = lista;
                               contactos = addContactsToList(mapa, contactos, telefonos);
                               telefonos = addPhonesToList(mapa, contactos, telefonos);
+                              photos = addPhotosToList(mapa, contactos, telefonos, photos);
                               jsonFile = "contacts.json";
-                              _writeJson(number, name);
+                              _writeJson(number, lista, "contact");
                             });
                           };
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -514,30 +878,26 @@ void exportContacts(String path) async{
               child: ListTile(
             tileColor: colores[mode_counter] ,
             textColor: fonts[mode_counter],
-            leading: IconButton(
-              icon: const Icon(Icons.call, color: Colors.blueAccent,),
-              onPressed: () async{
-                jsonFile = "history.json";
-                _readJson();
-                _writeJson(telefonos[index], historyDate);
-                llamar(telefonos, index);
-              },
+            leading:  CircleAvatar(
+              minRadius: 50,
+              maxRadius: 75,
+              backgroundColor: Colors.transparent,
+              child : ClipRRect(
+              borderRadius: BorderRadius.circular(8.0),
+              child: Image.file(File(
+                   mapa[telefonos[index]][1],
+                 ),
+                  fit: BoxFit.fitHeight
+                ),
+               ),
             ),
                   onTap: () {
+                    createContactView(telefonos[index], contactos[index],  photos[index], index);
 
                   },
             title: Text(contactos[index]),
             subtitle: Text(telefonos[index]),
-            trailing: IconButton(
-              icon : const Icon(Icons.remove_circle, color: Colors.redAccent,),
-              onPressed: (){
-                mapa.remove(telefonos[index]);
-                setState(() {
-                  removePhone(mapa);
-                });
-              },
-
-          )));
+            ));
         },
       ),
 
