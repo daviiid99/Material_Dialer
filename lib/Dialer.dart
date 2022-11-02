@@ -48,8 +48,9 @@ class _DialerState extends State<Dialer>{
   Random random = new Random();
   int randomNumber = 0;
   int randomNumber2 = 0;
+  int randomNumber3 = 0;
   List<String> images = ["assets/images/call.png", "assets/images/contact.png", "assets/images/palette.png", "assets/images/lgs.png",  "assets/images/ota.png",  "assets/images/name.png"];
-
+  List<Color> colores = [Colors.green, Colors.purpleAccent, Colors.blueAccent, Colors.pink, Colors.brown, Colors.amber, Colors.red, Colors.blueGrey, Colors.deepOrange, Colors.teal];
 
   _DialerState(this.mode_counter, this.modes, this.colors, this.fonts, this.number);
 
@@ -216,7 +217,7 @@ class _DialerState extends State<Dialer>{
         "title_morning" : "Buenos días",
         "title_afternoon" : "Buenas tardes",
         "title_evening" : "Buenas noches",
-        "subtitle" : "Aquí tienes algunas recomendaciones",
+        "subtitle" : "Recomendaciones",
         "card0_title" : "Hacer Llamada",
         "card0_subtitle" : "Llama a tus amigos",
         "card0_button" : "Llamar ahora",
@@ -1334,18 +1335,18 @@ class _DialerState extends State<Dialer>{
   }
 
   void generateRandomCard() async {
-    int r1 = 0, r2 = 0;
+    int r1 = 0, r2 = 0, r3 = 0;
 
-    while (r1 == r2){
+    while (r1 == r2 || r1 == r3 ||  r2 == r3){
       r1 = random.nextInt(6);
       r2 = random.nextInt(6);
+      r3 = random.nextInt(6);
     }
 
     setState(() async {
       randomNumber = r1;
       randomNumber2 = r2;
-      print(randomNumber);
-      print(randomNumber2);
+      randomNumber3 = r3;
     });
   }
 
@@ -1481,7 +1482,7 @@ class _DialerState extends State<Dialer>{
                                       10.0),
                                 ),
                               ),
-                              icon: Icon(Icons.settings, color: Colors.white, size: 100,),
+                              icon: Icon(Icons.settings, color: Colors.white, size: 102,),
                               onPressed: () => {
                                 Navigator.push(
                                     context,
@@ -1502,7 +1503,7 @@ class _DialerState extends State<Dialer>{
                                       10.0),
                                 ),
                               ),
-                              icon: Icon(Icons.language_rounded, color: Colors.white, size: 100,),
+                              icon: Icon(Icons.language_rounded, color: Colors.white, size: 102,),
                               onPressed: () => {
                                 Navigator.push(
                                   context,
@@ -1527,7 +1528,7 @@ class _DialerState extends State<Dialer>{
                                     10.0),
                               ),
                                 ),
-                              icon: Icon(Icons.face_rounded, color: Colors.white, size: 100,),
+                              icon: Icon(Icons.face_rounded, color: Colors.white, size: 102,),
                               onPressed: () => {
                                 Navigator.push(
                                   context,
@@ -1547,51 +1548,13 @@ class _DialerState extends State<Dialer>{
                                         10.0),
                                   ),
                                 ),
-                                icon: Icon(Icons.palette_rounded, color: Colors.white, size: 100,),
+                                icon: Icon(Icons.palette_rounded, color: Colors.white, size: 102,),
                                 onPressed: () => {
                                   showPalette()
                                 }, label: Text(""),
                               ),
                             ]
                             ),
-
-                            SizedBox(height: 30,),
-
-                        Row(
-                          children : [
-                            TextButton.icon(
-                              style: TextButton.styleFrom(
-                                textStyle: TextStyle(color: Colors.white),
-                                backgroundColor: Colors.amber,
-                                fixedSize: const Size(120, 120),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(
-                                      10.0),
-                                ),
-                              ),
-                              icon: Icon(Icons.share_rounded, color: Colors.white, size: 100,),
-                              onPressed: () => {
-                              }, label: Text(""),
-                            ),
-
-                            SizedBox(width: 20,),
-
-                            TextButton.icon(
-                              style: TextButton.styleFrom(
-                                textStyle: TextStyle(color: Colors.white),
-                                backgroundColor: Colors.black,
-                                fixedSize: const Size(120, 120),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(
-                                      10.0),
-                                ),
-                              ),
-                              icon: Icon(Icons.delete, color: Colors.white, size: 100,),
-                              onPressed: () => {
-                              }, label: Text(""),
-                            ),
-                            ]
-                        ),
                           ],
 
                         )));
@@ -1631,226 +1594,345 @@ class _DialerState extends State<Dialer>{
     children: <Widget>[
      SizedBox(height: 10,),
       Text(
-         language[currentLanguage]["Home"][setTime] + ", " + "$name" + "\n",
+         language[currentLanguage]["Home"][setTime] ,
       style: TextStyle(
         fontSize: 30,
+        fontWeight: FontWeight.bold,
         color: Colors.white,
       )
       ),
 
       Text(
-        language[currentLanguage]["Home"]["subtitle"] + "\n",
+        "$name" + "\n",
         style: TextStyle(
-          fontSize: 20,
+          fontSize: 30,
+          fontWeight: FontWeight.bold,
           color: Colors.white,
-
-        ),
+        )
       ),
 
-      SizedBox(
-        height: 220,
-        child: Stack(
-          alignment: Alignment.bottomCenter,
+    Text(
+          "\n" + language[currentLanguage]["Home"]["subtitle"] ,
+          style: TextStyle(
+            fontSize: 25,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+        ),
+      ),
+      Expanded(
+      child: SingleChildScrollView(
+        child: Column(
           children: [
-            Container(
-              height: 200,
-              width: double.infinity,
-              padding: const EdgeInsets.all(8.0),
-              child: Card(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(15.0))),
-                color: Colors.blueAccent,
-                child: Padding(
-                  padding: const EdgeInsets.all(12),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                         Text(language[currentLanguage]["Home"]["card" + randomNumber.toString() + "_title"],
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 25,
-                                fontWeight: FontWeight.bold)),
-                         SizedBox(
-                          height: 5,
-                        ),
-                         Text(language[currentLanguage]["Home"]["card" + randomNumber.toString() + "_subtitle"],
-                            style: TextStyle(
-                                letterSpacing: 2,
-                                color: Colors.white,
-                                fontSize: 15,
-                                fontWeight: FontWeight.w300)),
-                         SizedBox(
-                          height: 6,
-                        ),
-                        ElevatedButton(
-                          //on pressed
-                          onPressed: () async {
-                            if (randomNumber == 0){
-                              dialPad();
-                            } else if (randomNumber == 1){
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => Contacts(mode_counter, modes, colors, fonts, currentLanguage, language, history)),
-                              );
-                            } else if (randomNumber == 2){
-                              showPalette();
+            SizedBox(
+              height: 220,
+              child: Stack(
+                alignment: Alignment.bottomCenter,
+                children: [
+                  Container(
+                    height: 200,
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(8.0),
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(15.0))),
+                      color: colores[randomNumber],
+                      child: Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(language[currentLanguage]["Home"]["card" + randomNumber.toString() + "_title"],
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.bold)),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Text(language[currentLanguage]["Home"]["card" + randomNumber.toString() + "_subtitle"],
+                                  style: TextStyle(
+                                      letterSpacing: 2,
+                                      color: Colors.white,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w300)),
+                              SizedBox(
+                                height: 6,
+                              ),
+                              ElevatedButton(
+                                //on pressed
+                                onPressed: () async {
+                                  if (randomNumber == 0){
+                                    dialPad();
+                                  } else if (randomNumber == 1){
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => Contacts(mode_counter, modes, colors, fonts, currentLanguage, language, history)),
+                                    );
+                                  } else if (randomNumber == 2){
+                                    showPalette();
 
-                            } else if (randomNumber == 3){
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => SetLanguage(mode_counter, modes, colors, fonts, currentLanguage, language)),
-                              );
-                            } else if (randomNumber == 4){
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => MaterialDialer(mode_counter, modes, colors, fonts, currentLanguage, language)),
-                              );
-                            } else if (randomNumber == 5){
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => Profile(colors[mode_counter])),
-                              );
-                            }
-                          },
-                          //text to shoe in to the button
-                          child:  Text(language[currentLanguage]["Home"]["card" + randomNumber.toString() + "_button"],
-                              style: TextStyle(color: Colors.white)),
-                          //style section code here
-                          style: ButtonStyle(
-                            elevation: MaterialStateProperty.all<double>(0),
-                            shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(18.0),
-                                )),
-                            backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.black),
-                          ),
-                        ),
-                      ]),
-                ),
+                                  } else if (randomNumber == 3){
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => SetLanguage(mode_counter, modes, colors, fonts, currentLanguage, language)),
+                                    );
+                                  } else if (randomNumber == 4){
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => MaterialDialer(mode_counter, modes, colors, fonts, currentLanguage, language)),
+                                    );
+                                  } else if (randomNumber == 5){
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => Profile(colors[mode_counter])),
+                                    );
+                                  }
+                                },
+                                //text to shoe in to the button
+                                child:  Text(language[currentLanguage]["Home"]["card" + randomNumber.toString() + "_button"],
+                                    style: TextStyle(color: Colors.white)),
+                                //style section code here
+                                style: ButtonStyle(
+                                  elevation: MaterialStateProperty.all<double>(0),
+                                  shape:
+                                  MaterialStateProperty.all<RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(18.0),
+                                      )),
+                                  backgroundColor:
+                                  MaterialStateProperty.all<Color>(Colors.black),
+                                ),
+                              ),
+                            ]),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    left: 170,
+                    right: 0,
+                    top: 0,
+                    child: Image.asset(
+                      images[randomNumber],
+                      fit: BoxFit.fitWidth,
+                      height: 255,
+                      width:  180,
+                      scale: 0.8,
+
+                    ),
+                  )
+                ],
               ),
             ),
-            Positioned(
-              left: 170,
-              right: 0,
-              top: 0,
-              child: Image.asset(
-                images[randomNumber],
-                fit: BoxFit.fitWidth,
-                height: 255,
-                width:  180,
-                scale: 0.8,
 
+            SizedBox(
+              height: 220,
+              child: Stack(
+                alignment: Alignment.bottomCenter,
+                children: [
+                  Container(
+                    height: 200,
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(8.0),
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(15.0))),
+                      color: colores[randomNumber2],
+                      child: Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(language[currentLanguage]["Home"]["card" + randomNumber2.toString() + "_title"],
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.bold)),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Text(language[currentLanguage]["Home"]["card" + randomNumber2.toString() + "_subtitle"],
+                                  style: TextStyle(
+                                      letterSpacing: 2,
+                                      color: Colors.white,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w300)),
+                              SizedBox(
+                                height: 6,
+                              ),
+                              ElevatedButton(
+                                //on pressed
+                                onPressed: () async {
+                                  if (randomNumber2 == 0){
+                                    dialPad();
+                                  } else if (randomNumber2 == 1){
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => Contacts(mode_counter, modes, colors, fonts, currentLanguage, language, history)),
+                                    );
+                                  } else if (randomNumber2 == 2){
+                                    showPalette();
+
+                                  } else if (randomNumber2 == 3){
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => SetLanguage(mode_counter, modes, colors, fonts, currentLanguage, language)),
+                                    );
+                                  } else if (randomNumber2 == 4){
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => MaterialDialer(mode_counter, modes, colors, fonts, currentLanguage, language)),
+                                    );
+                                  } else if (randomNumber2 == 5){
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => Profile(colors[mode_counter])),
+                                    );
+                                  }
+                                },
+                                //text to shoe in to the button
+                                child: Text(language[currentLanguage]["Home"]["card" + randomNumber2.toString() + "_button"],
+                                    style: TextStyle(color: Colors.white)),
+                                //style section code here
+                                style: ButtonStyle(
+                                  elevation: MaterialStateProperty.all<double>(0),
+                                  shape:
+                                  MaterialStateProperty.all<RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(18.0),
+                                      )),
+                                  backgroundColor:
+                                  MaterialStateProperty.all<Color>(Colors.black),
+                                ),
+                              ),
+                            ]),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    left: 170,
+                    right: 0,
+                    top: 0,
+                    child: Image.asset(
+                      images[randomNumber2],
+                      fit: BoxFit.fitWidth,
+                      height: 255,
+                      width: 180,
+                      scale: 0.8,
+
+                    ),
+                  )
+                ],
               ),
-            )
+            ),
+
+            SizedBox(
+              height: 220,
+              child: Stack(
+                alignment: Alignment.bottomCenter,
+                children: [
+                  Container(
+                    height: 200,
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(8.0),
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(15.0))),
+                      color: colores[randomNumber3],
+                      child: Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(language[currentLanguage]["Home"]["card" + randomNumber3.toString() + "_title"],
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.bold)),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Text(language[currentLanguage]["Home"]["card" + randomNumber3.toString() + "_subtitle"],
+                                  style: TextStyle(
+                                      letterSpacing: 2,
+                                      color: Colors.white,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w300)),
+                              SizedBox(
+                                height: 6,
+                              ),
+                              ElevatedButton(
+                                //on pressed
+                                onPressed: () async {
+                                  if (randomNumber3 == 0){
+                                    dialPad();
+                                  } else if (randomNumber3== 1){
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => Contacts(mode_counter, modes, colors, fonts, currentLanguage, language, history)),
+                                    );
+                                  } else if (randomNumber3 == 2){
+                                    showPalette();
+
+                                  } else if (randomNumber3 == 3){
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => SetLanguage(mode_counter, modes, colors, fonts, currentLanguage, language)),
+                                    );
+                                  } else if (randomNumber3 == 4){
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => MaterialDialer(mode_counter, modes, colors, fonts, currentLanguage, language)),
+                                    );
+                                  } else if (randomNumber3 == 5){
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => Profile(colors[mode_counter])),
+                                    );
+                                  }
+                                },
+                                //text to shoe in to the button
+                                child: Text(language[currentLanguage]["Home"]["card" + randomNumber3.toString() + "_button"],
+                                    style: TextStyle(color: Colors.white)),
+                                //style section code here
+                                style: ButtonStyle(
+                                  elevation: MaterialStateProperty.all<double>(0),
+                                  shape:
+                                  MaterialStateProperty.all<RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(18.0),
+                                      )),
+                                  backgroundColor:
+                                  MaterialStateProperty.all<Color>(Colors.black),
+                                ),
+                              ),
+                            ]),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    left: 170,
+                    right: 0,
+                    top: 0,
+                    child: Image.asset(
+                      images[randomNumber3],
+                      fit: BoxFit.fitWidth,
+                      height: 255,
+                      width: 180,
+                      scale: 0.8,
+
+                    ),
+                  )
+                ],
+              ),
+            ),
+
           ],
         ),
       ),
-
-      SizedBox(
-        height: 220,
-        child: Stack(
-          alignment: Alignment.bottomCenter,
-          children: [
-            Container(
-              height: 200,
-              width: double.infinity,
-              padding: const EdgeInsets.all(8.0),
-              child: Card(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(15.0))),
-                color: Colors.purpleAccent,
-                child: Padding(
-                  padding: const EdgeInsets.all(12),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                         Text(language[currentLanguage]["Home"]["card" + randomNumber2.toString() + "_title"],
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 25,
-                                fontWeight: FontWeight.bold)),
-                         SizedBox(
-                          height: 5,
-                        ),
-                         Text(language[currentLanguage]["Home"]["card" + randomNumber2.toString() + "_subtitle"],
-                            style: TextStyle(
-                                letterSpacing: 2,
-                                color: Colors.white,
-                                fontSize: 15,
-                                fontWeight: FontWeight.w300)),
-                         SizedBox(
-                          height: 6,
-                        ),
-                        ElevatedButton(
-                          //on pressed
-                          onPressed: () async {
-                            if (randomNumber2 == 0){
-                              dialPad();
-                            } else if (randomNumber2 == 1){
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => Contacts(mode_counter, modes, colors, fonts, currentLanguage, language, history)),
-                              );
-                            } else if (randomNumber2 == 2){
-                              showPalette();
-
-                            } else if (randomNumber2 == 3){
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => SetLanguage(mode_counter, modes, colors, fonts, currentLanguage, language)),
-                              );
-                            } else if (randomNumber2 == 4){
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => MaterialDialer(mode_counter, modes, colors, fonts, currentLanguage, language)),
-                              );
-                            } else if (randomNumber2 == 5){
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => Profile(colors[mode_counter])),
-                              );
-                            }
-                          },
-                          //text to shoe in to the button
-                          child: Text(language[currentLanguage]["Home"]["card" + randomNumber2.toString() + "_button"],
-                              style: TextStyle(color: Colors.white)),
-                          //style section code here
-                          style: ButtonStyle(
-                            elevation: MaterialStateProperty.all<double>(0),
-                            shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(18.0),
-                                )),
-                            backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.black),
-                          ),
-                        ),
-                      ]),
-                ),
-              ),
-            ),
-            Positioned(
-              left: 170,
-              right: 0,
-              top: 0,
-              child: Image.asset(
-                images[randomNumber2],
-                fit: BoxFit.fitWidth,
-                height: 255,
-                width: 180,
-                scale: 0.8,
-
-              ),
-            )
-          ],
-        ),
       ),
-
     ]
     ),
         bottomNavigationBar: BottomNavigationBar(
