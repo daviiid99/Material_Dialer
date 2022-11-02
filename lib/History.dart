@@ -107,6 +107,8 @@ class _HistoryState extends State<History>{
 
   @override
   void initState(){
+    // Set full screen mode for an inmersive experience
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge, overlays: []);
     _readJson();
     super.initState();
   }
@@ -117,6 +119,7 @@ class _HistoryState extends State<History>{
     return Scaffold(
     backgroundColor: colores[mode_counter],
     appBar: AppBar(
+      elevation: 0.0,
       backgroundColor: colores[mode_counter],
       title: Text(
         language[current_language]["History"]["title"],

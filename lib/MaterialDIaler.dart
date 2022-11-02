@@ -7,7 +7,7 @@ import 'dart:io';
 import 'Settings.dart';
 import 'Contacts.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter/services.dart' show SystemChrome, SystemUiMode, rootBundle;
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:path_provider/path_provider.dart';
@@ -251,6 +251,8 @@ class _MaterialDialerState extends State<MaterialDialer>{
 
   @override
   void initState(){
+    // Set full screen mode for an inmersive experience
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge, overlays: []);
     _read();
     super.initState();
     checkBuild();
@@ -269,6 +271,7 @@ class _MaterialDialerState extends State<MaterialDialer>{
     return Scaffold(
         backgroundColor: colores[mode_counter],
         appBar: AppBar(
+          elevation: 0.0,
           backgroundColor: colores[mode_counter],
           title: Text(language[current_language]["About"]["title"],
             style: TextStyle(color: fonts[mode_counter]),

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:material_calculator/Dialer.dart';
 import 'Contacts.dart';
@@ -130,6 +131,8 @@ class _ProfileState extends State<Profile>{
 
   @override
   void initState(){
+    // Set full screen mode for an inmersive experience
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge, overlays: []);
     checkLanguages();
     super.initState();
   }
@@ -139,6 +142,7 @@ class _ProfileState extends State<Profile>{
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
+        elevation: 0.0,
         leading: Icon(Icons.face_rounded, color: Colors.blueAccent),
         backgroundColor: Colors.black,
         title: Text(language[currentLanguage]["Profile"]["title"]),

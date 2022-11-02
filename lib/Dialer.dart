@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'Contacts.dart';
 import 'dart:convert';
@@ -1380,6 +1381,9 @@ class _DialerState extends State<Dialer>{
 
   @override
   void initState(){
+    // Set full screen mode for an inmersive experience
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge, overlays: []);
+
     jsonFile = "languages.json";
     readJson();
 
@@ -1446,6 +1450,8 @@ class _DialerState extends State<Dialer>{
           return StatefulBuilder(
               builder: (context, setState) {
                 return AlertDialog(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(15.0))),
                     backgroundColor: colors[mode_counter],
                     content: SingleChildScrollView(
                         child: Column(
@@ -1461,95 +1467,131 @@ class _DialerState extends State<Dialer>{
                           )
                             ),
 
-                            ElevatedButton(
+                            SizedBox(height: 30,),
+
+                        Row(
+                          children : [
+                            TextButton.icon(
                               style: TextButton.styleFrom(
                                 textStyle: TextStyle(color: Colors.white),
-                                backgroundColor: Colors.green,
-                                fixedSize: const Size(340, 40),
+                                backgroundColor: Colors.grey,
+                                fixedSize: const Size(120, 120),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(
-                                      24.0),
+                                      10.0),
                                 ),
                               ),
-                              child: Text(language[currentLanguage]["UserMenu"]["button1"]),
+                              icon: Icon(Icons.settings, color: Colors.white, size: 100,),
                               onPressed: () => {
                                 Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => Settings(mode_counter, modes, colors, fonts, currentLanguage, language, index),
-                                ))
-                              },
+                                    context,
+                                    MaterialPageRoute(builder: (context) => Settings(mode_counter, modes, colors, fonts, currentLanguage, language, index),
+                                    ))
+                              }, label: Text(""),
                             ),
 
-                            ElevatedButton(
+                            SizedBox(width: 20,),
+
+                            TextButton.icon(
                               style: TextButton.styleFrom(
                                 textStyle: TextStyle(color: Colors.white),
                                 backgroundColor: Colors.indigoAccent,
-                                fixedSize: const Size(340, 40),
+                                fixedSize: const Size(120, 120),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(
-                                      24.0),
+                                      10.0),
                                 ),
                               ),
-                              child: Text(language[currentLanguage]["UserMenu"]["button2"]),
+                              icon: Icon(Icons.language_rounded, color: Colors.white, size: 100,),
                               onPressed: () => {
-                              Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => SetLanguage(mode_counter, modes, colors, fonts, currentLanguage, language)),
-                              )
-                              },
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => SetLanguage(mode_counter, modes, colors, fonts, currentLanguage, language)),
+                                )
+                              }, label: Text(""),
+                            ),
+                            ]
+                        ),
+
+                            SizedBox(height: 30,),
+
+                            Row(
+                              children : [
+                                TextButton.icon(
+                              style: TextButton.styleFrom(
+                              textStyle: TextStyle(color: Colors.white),
+                              backgroundColor: Colors.purple,
+                              fixedSize: const Size(120, 120),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(
+                                    10.0),
+                              ),
+                                ),
+                              icon: Icon(Icons.face_rounded, color: Colors.white, size: 100,),
+                              onPressed: () => {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => Profile(colors[mode_counter])),
+                                )
+                              }, label: Text(""),
+                            ),
+                              SizedBox(width: 20,),
+
+                              TextButton.icon(
+                                style: TextButton.styleFrom(
+                                  textStyle: TextStyle(color: Colors.white),
+                                  backgroundColor: Colors.pink,
+                                  fixedSize: const Size(120, 120),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        10.0),
+                                  ),
+                                ),
+                                icon: Icon(Icons.palette_rounded, color: Colors.white, size: 100,),
+                                onPressed: () => {
+                                  showPalette()
+                                }, label: Text(""),
+                              ),
+                            ]
                             ),
 
-                            ElevatedButton(
+                            SizedBox(height: 30,),
+
+                        Row(
+                          children : [
+                            TextButton.icon(
                               style: TextButton.styleFrom(
                                 textStyle: TextStyle(color: Colors.white),
-                                backgroundColor: Colors.purple,
-                                fixedSize: const Size(340, 40),
+                                backgroundColor: Colors.amber,
+                                fixedSize: const Size(120, 120),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(
-                                      24.0),
+                                      10.0),
                                 ),
                               ),
-                              child: Text(language[currentLanguage]["UserMenu"]["button3"]),
+                              icon: Icon(Icons.share_rounded, color: Colors.white, size: 100,),
                               onPressed: () => {
-                              Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => Profile(colors[mode_counter])),
-                              )
-                              },
+                              }, label: Text(""),
                             ),
 
-                            ElevatedButton(
-                              style: TextButton.styleFrom(
-                                textStyle: TextStyle(color: Colors.white),
-                                backgroundColor: Colors.pink,
-                                fixedSize: const Size(340, 40),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(
-                                      24.0),
-                                ),
-                              ),
-                              child: Text(language[currentLanguage]["UserMenu"]["button4"]),
-                              onPressed: () => {
-                                setState(() async {
-                                  showPalette();
-                                }),
-                              }
-                            ),
+                            SizedBox(width: 20,),
 
-                            ElevatedButton(
+                            TextButton.icon(
                               style: TextButton.styleFrom(
                                 textStyle: TextStyle(color: Colors.white),
                                 backgroundColor: Colors.black,
-                                fixedSize: const Size(340, 40),
+                                fixedSize: const Size(120, 120),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(
-                                      24.0),
+                                      10.0),
                                 ),
                               ),
-                              child: Text(language[currentLanguage]["UserMenu"]["button5"]),
+                              icon: Icon(Icons.delete, color: Colors.white, size: 100,),
                               onPressed: () => {
-                              },
+                              }, label: Text(""),
                             ),
+                            ]
+                        ),
                           ],
 
                         )));
@@ -1565,7 +1607,7 @@ class _DialerState extends State<Dialer>{
       backgroundColor: colors[mode_counter],
         floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
       appBar: AppBar(
-
+        elevation: 0.0,
         title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
         children : <Widget>[
@@ -1587,7 +1629,7 @@ class _DialerState extends State<Dialer>{
       ),
     body: Column(
     children: <Widget>[
-     SizedBox(height: 5,),
+     SizedBox(height: 10,),
       Text(
          language[currentLanguage]["Home"][setTime] + ", " + "$name" + "\n",
       style: TextStyle(
@@ -1615,6 +1657,8 @@ class _DialerState extends State<Dialer>{
               width: double.infinity,
               padding: const EdgeInsets.all(8.0),
               child: Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(15.0))),
                 color: Colors.blueAccent,
                 child: Padding(
                   padding: const EdgeInsets.all(12),
@@ -1715,6 +1759,8 @@ class _DialerState extends State<Dialer>{
               width: double.infinity,
               padding: const EdgeInsets.all(8.0),
               child: Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(15.0))),
                 color: Colors.purpleAccent,
                 child: Padding(
                   padding: const EdgeInsets.all(12),

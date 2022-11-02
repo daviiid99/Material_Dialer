@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:material_calculator/SetLanguage.dart';
 import 'package:path_provider/path_provider.dart';
@@ -49,6 +50,9 @@ import 'Profile.dart';
 
      @override
      void initState(){
+       // Set full screen mode for an inmersive experience
+       SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge, overlays: []);
+
        options = [language[current_language]["Settings"]["card1_title"], language[current_language]["Settings"]["card4_title"],  language[current_language]["Settings"]["card6_title"], language[current_language]["Settings"]["card5_title"]];
        description = [language[current_language]["Settings"]["card1_subtitle"], language[current_language]["Settings"]["card4_subtitle"], language[current_language]["Settings"]["card6_subtitle"], language[current_language]["Settings"]["card5_subtitle"]];
        super.initState();
@@ -59,6 +63,7 @@ import 'Profile.dart';
      return Scaffold(
          backgroundColor: colores[mode_counter],
        appBar: AppBar(
+         elevation: 0.0,
          leading: Icon(Icons.settings, color: Colors.white,),
          backgroundColor: colores[mode_counter],
          title: Text(language[current_language]["Settings"]["title"],

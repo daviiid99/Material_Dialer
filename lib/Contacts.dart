@@ -393,6 +393,8 @@ void exportContacts(String path) async{
           return StatefulBuilder(
               builder: (context, setState) {
                 return AlertDialog(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(15.0))),
                   backgroundColor: colores[mode_counter],
                   content: SingleChildScrollView(
                       child: Column(
@@ -699,6 +701,9 @@ void exportContacts(String path) async{
 
   @override
   void initState(){
+    // Set full screen mode for an inmersive experience
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge, overlays: []);
+
     if(contactos.contains("Example") && telefonos.contains("123")) {
       contactos.remove("Example") && telefonos.remove("123");
 
@@ -737,6 +742,7 @@ void exportContacts(String path) async{
     return Scaffold(
       backgroundColor: colores[mode_counter],
       appBar: AppBar(
+        elevation: 0.0,
         backgroundColor: colores[mode_counter],
         title: Text(language[current_language]["Contacts"]["title"],
           style: TextStyle(color: fonts[mode_counter]),

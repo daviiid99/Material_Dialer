@@ -62,6 +62,8 @@ class _SetLanguageState extends State<SetLanguage>{
 
   @override
   void initState(){
+    // Set full screen mode for an inmersive experience
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge, overlays: []);
     super.initState();
   }
 
@@ -72,6 +74,7 @@ class _SetLanguageState extends State<SetLanguage>{
     return Scaffold(
       backgroundColor:  colores[mode_counter],
       appBar: AppBar(
+        elevation: 0.0,
         backgroundColor: colores[mode_counter],
         leading: Icon(Icons.language_rounded, color: Colors.blueAccent),
         title: Text (
