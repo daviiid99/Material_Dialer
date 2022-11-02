@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
+import 'package:material_calculator/Dialer.dart';
 import 'Contacts.dart';
 import 'dart:convert';
 import 'dart:io';
@@ -114,6 +115,19 @@ class _ProfileState extends State<Profile>{
     }
   }
 
+  Future<bool> createEmptyFile() async {
+    // This is used for future modifications to detect if it's a clean installation or not
+
+    // Create empty file
+    final empty = File("/data/user/0/com.daviiid99.material_dialer/app_flutter/none.json");
+
+    // Check if exists
+    bool exists = await empty.exists();
+
+    return exists;
+
+  }
+
   @override
   void initState(){
     checkLanguages();
@@ -187,20 +201,22 @@ class _ProfileState extends State<Profile>{
                       borderRadius: BorderRadius.circular(24.0),
                     ),
                   ),
-                  onPressed: () {
+                  onPressed: ()  {
                     setState(() {
                       file = "user.json";
                       writeJson("name", name.text);
 
                     });
+
                     String colorString = color.toString(); // Color(0x12345678)
                     String valueString = colorString.split('(0x')[1].split(')')[0]; // kind of hacky..
                     writeJson("color", valueString);
                     readJson();
+
                     Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => ProfilePhoto(language, currentLanguage)
-                        ));
+                        MaterialPageRoute(builder: (context) => ProfilePhoto(language, currentLanguage)),
+                      );
                     },
                   icon: Icon(Icons.check, color: Colors.white,),
                 ),
@@ -234,6 +250,7 @@ class _ProfilePhotoState extends State<ProfilePhoto>{
   String image = "";
   String jsonFile = "user.json";
   String _jsonFile = "";
+  String exampleImage = 'assets/images/unnamed.png';
 
   // Get app local path for App data
   Future<String> get _localPath async {

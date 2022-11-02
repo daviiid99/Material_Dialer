@@ -77,6 +77,14 @@ class _DialerState extends State<Dialer>{
 
     "English" : {
 
+      "UserMenu" : {
+        "button1" : "General Settings",
+        "button2" : "Set Language",
+        "button3" : "Modify Profile",
+        "button4" : "Choose Custom Theme",
+        "button5" : "Reset App Data"
+      },
+
       "Home" : {
         "title_morning" : "Good morning",
         "title_afternoon" : "Good afternoon",
@@ -97,9 +105,9 @@ class _DialerState extends State<Dialer>{
         "card4_title" : "Check Updates",
         "card4_subtitle" : "Look for updates",
         "card4_button" : "Open updater",
-        "card5_title" : "Set Your Name",
+        "card5_title" : "Reset Profile",
         "card5_subtitle" : "Modify your profile",
-        "card5_button" : "Set profile"
+        "card5_button" : "Reet profile"
       },
 
       "Profile" : {
@@ -118,7 +126,7 @@ class _DialerState extends State<Dialer>{
         "card1_subtitle" : "Open the official GitHub page",
         "card2_title" : "Set UI Language",
         "card2_subtitle" : "Choose your default language",
-        "card3_title" : "Change your name",
+        "card3_title" : "Change your profile",
         "card3_subtitle" : "Reset your profile",
         "card4_title" : "Rate Us",
         "card4_subtitle" : "Rate this App on Google Play Store",
@@ -195,6 +203,14 @@ class _DialerState extends State<Dialer>{
 
     "Español" : {
 
+      "UserMenu" : {
+        "button1" : "Configuración General",
+        "button2" : "Elegir Idioma",
+        "button3" : "Modificar Perfil",
+        "button4" : "Elegir Tema Personalizado",
+        "button5" : "Reestablecer Aplicación"
+      },
+
       "Home" : {
         "title_morning" : "Buenos días",
         "title_afternoon" : "Buenas tardes",
@@ -215,9 +231,9 @@ class _DialerState extends State<Dialer>{
         "card4_title" : "Buscar OTA",
         "card4_subtitle" : "Busca actualizaciones",
         "card4_button" : "Abrir actualizador",
-        "card5_title" : "Elegir Nombre",
+        "card5_title" : "Elegir Perfil",
         "card5_subtitle" : "Modifica tu perfil",
-        "card5_button" : "Establecer perfil"
+        "card5_button" : "Reestablecer perfil"
       },
 
       "Profile" : {
@@ -236,7 +252,7 @@ class _DialerState extends State<Dialer>{
         "card1_subtitle": "Abrir la página oficial de GitHub",
         "card2_title": "Cambiar idioma",
         "card2_subtitle": "Selecciona tu idioma por defecto",
-        "card3_title": "Cambia tu nombre",
+        "card3_title": "Cambia tu perfil",
         "card3_subtitle": "Reestablece tu perfil",
         "card4_title": "Danos una puntuación",
         "card4_subtitle": "Puntua esta aplicación en Google Play Store",
@@ -310,6 +326,14 @@ class _DialerState extends State<Dialer>{
     },
 
     "Français" : {
+
+      "UserMenu": {
+        "button1" : "Paramètres Généraux",
+        "button2" : "Définir Langue",
+        "button3" : "Modifier Profil",
+        "button4" :  "Choisir Thème Personnalisé",
+        "button5" : "Réinitialiser L'application"
+      },
 
       "Home" : {
         "title_morning" : "Bon matin",
@@ -427,6 +451,14 @@ class _DialerState extends State<Dialer>{
 
     "Italiano" : {
 
+      "UserMenu" : {
+        "button1" : "Impostazioni Generali",
+        "button2" : "Imposta Lingua",
+        "button3" : "Modifica Profilo",
+        "button4" : "Scegli Tema Personalizzato",
+        "button5" : "Ripristina Dati App"
+      },
+
       "Home" : {
         "title_morning" : "Buongiorno",
         "title_afternoon" : "Buone tarde",
@@ -542,6 +574,14 @@ class _DialerState extends State<Dialer>{
     },
 
     "Deutsch" : {
+
+      "UserMenu" : {
+        "button1": "Allgemeine Einstellungen",
+        "button2": "Sprache Einstellen",
+        "button3": "Profil Ändern",
+        "button4": "Benutzerdefiniertes Design Auswählen",
+        "button5": "App-Daten Zurücksetzen"
+      },
 
       "Home" : {
         "title_morning" : "Guten Morgen",
@@ -1311,23 +1351,28 @@ class _DialerState extends State<Dialer>{
   void showPalette() async {
     showDialog(
         context: context,
-        builder: (BuildContext context){
-          return AlertDialog(
-            backgroundColor: Colors.transparent,
-            content: SingleChildScrollView(
+        builder: (context) {
+          return StatefulBuilder(
+              builder: (context, setState) {
+                return AlertDialog(
+                  backgroundColor: Colors.transparent,
+                  content: SingleChildScrollView(
 
-                child: BlockPicker(
-                    pickerColor: colors[0], //default color
-                    onColorChanged: (Color color) { //on color picked
-                      jsonFile = "user.json";
-                      String colorString = color.toString(); // Color(0x12345678)
-                      String valueString = colorString.split('(0x')[1].split(')')[0]; // kind of hacky..
-                      writeJson("color", valueString);
-                      readJson();
-                      Navigator.pop(context);
-
-                    })
-            ),
+                      child: BlockPicker(
+                          pickerColor: colors[0], //default color
+                          onColorChanged: (Color color) { //on color picked
+                            jsonFile = "user.json";
+                            String colorString = color
+                                .toString(); // Color(0x12345678)
+                            String valueString = colorString.split('(0x')[1]
+                                .split(')')[0]; // kind of hacky..
+                            writeJson("color", valueString);
+                            readJson();
+                            Navigator.pop(context);
+                          })
+                  ),
+                );
+              }
           );
         }
     );
@@ -1394,21 +1439,132 @@ class _DialerState extends State<Dialer>{
     super.initState();
   }
 
+  void userMenu() async {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return StatefulBuilder(
+              builder: (context, setState) {
+                return AlertDialog(
+                    backgroundColor: colors[mode_counter],
+                    content: SingleChildScrollView(
+                        child: Column(
+                          children: [
+
+                          CircleAvatar(
+                          minRadius: 50,
+                          maxRadius: 75,
+                          backgroundColor: Colors.transparent,
+                          child : ClipRRect(
+                            borderRadius: BorderRadius.circular(8.0),
+                               child: Image.file(File(user["photo"])),
+                          )
+                            ),
+
+                            ElevatedButton(
+                              style: TextButton.styleFrom(
+                                textStyle: TextStyle(color: Colors.white),
+                                backgroundColor: Colors.green,
+                                fixedSize: const Size(340, 40),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      24.0),
+                                ),
+                              ),
+                              child: Text(language[currentLanguage]["UserMenu"]["button1"]),
+                              onPressed: () => {
+                                Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => Settings(mode_counter, modes, colors, fonts, currentLanguage, language, index),
+                                ))
+                              },
+                            ),
+
+                            ElevatedButton(
+                              style: TextButton.styleFrom(
+                                textStyle: TextStyle(color: Colors.white),
+                                backgroundColor: Colors.indigoAccent,
+                                fixedSize: const Size(340, 40),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      24.0),
+                                ),
+                              ),
+                              child: Text(language[currentLanguage]["UserMenu"]["button2"]),
+                              onPressed: () => {
+                              Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => SetLanguage(mode_counter, modes, colors, fonts, currentLanguage, language)),
+                              )
+                              },
+                            ),
+
+                            ElevatedButton(
+                              style: TextButton.styleFrom(
+                                textStyle: TextStyle(color: Colors.white),
+                                backgroundColor: Colors.purple,
+                                fixedSize: const Size(340, 40),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      24.0),
+                                ),
+                              ),
+                              child: Text(language[currentLanguage]["UserMenu"]["button3"]),
+                              onPressed: () => {
+                              Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => Profile(colors[mode_counter])),
+                              )
+                              },
+                            ),
+
+                            ElevatedButton(
+                              style: TextButton.styleFrom(
+                                textStyle: TextStyle(color: Colors.white),
+                                backgroundColor: Colors.pink,
+                                fixedSize: const Size(340, 40),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      24.0),
+                                ),
+                              ),
+                              child: Text(language[currentLanguage]["UserMenu"]["button4"]),
+                              onPressed: () => {
+                                setState(() async {
+                                  showPalette();
+                                }),
+                              }
+                            ),
+
+                            ElevatedButton(
+                              style: TextButton.styleFrom(
+                                textStyle: TextStyle(color: Colors.white),
+                                backgroundColor: Colors.black,
+                                fixedSize: const Size(340, 40),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      24.0),
+                                ),
+                              ),
+                              child: Text(language[currentLanguage]["UserMenu"]["button5"]),
+                              onPressed: () => {
+                              },
+                            ),
+                          ],
+
+                        )));
+              }
+          );
+        }
+    );
+  }
+
   @override
   Widget build(BuildContext context){
     return Scaffold(
       backgroundColor: colors[mode_counter],
         floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.palette_rounded, color: fonts[mode_counter]),
-          tooltip: 'Navigation menu',
-            onPressed: () async {
-            showPalette();
-          }
-
-        ),
-
 
         title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -1417,10 +1573,7 @@ class _DialerState extends State<Dialer>{
             alignment: Alignment.center,
           ),
         InkWell(
-            onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ProfilePhoto(language, currentLanguage)
-                )),
+            onTap: () => userMenu(),
             child: CircleAvatar(
               backgroundColor: Colors.transparent,
               child: SizedBox(
@@ -1431,20 +1584,6 @@ class _DialerState extends State<Dialer>{
         ),
               )))]),
         backgroundColor: colors[mode_counter],
-        actions:  [
-          IconButton(
-              icon: Icon(Icons.settings,color: fonts[mode_counter]),
-            onPressed: () {
-                setState(() {
-                });
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Settings(mode_counter, modes, colors, fonts, currentLanguage, language, index),
-              ));
-            },
-
-          ),
-        ],
       ),
     body: Column(
     children: <Widget>[
