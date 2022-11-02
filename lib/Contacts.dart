@@ -366,8 +366,6 @@ void exportContacts(String path) async{
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: language[current_language]["Contacts"]["import"],
     ));
-
-
   }
 
   Future<void> deleteFile(File file) async {
@@ -962,17 +960,18 @@ void exportContacts(String path) async{
             tileColor: colores[mode_counter] ,
             textColor: fonts[mode_counter],
             leading:  CircleAvatar(
-              minRadius: 50,
-              maxRadius: 75,
               backgroundColor: Colors.transparent,
-              child : ClipRRect(
-              borderRadius: BorderRadius.circular(8.0),
+              child: SizedBox(
+              width: 60,
+              height: 60,
+              child: ClipOval(
               child: Image.file(File(
                    mapa[telefonos[index]][1],
                  ),
                   fit: BoxFit.fitHeight
                 ),
                ),
+            ),
             ),
                   onTap: () {
                     createContactView(telefonos[index], contactos[index],  photos[index], index);

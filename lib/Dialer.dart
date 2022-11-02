@@ -16,6 +16,7 @@ import 'package:intl/intl.dart';
 import 'package:quick_actions/quick_actions.dart';
 import 'MaterialDIaler.dart';
 import 'dart:math';
+import 'Profile.dart';
 
 class Dialer extends StatefulWidget{
 
@@ -105,7 +106,10 @@ class _DialerState extends State<Dialer>{
         "title" : "Creating Your Profile",
         "subtitle" : "Tell Us About You",
         "subtitle2" : "We need your name before continue",
-        "button" : "Save profile"
+        "button" : "Save profile",
+        "button2" : "Choose picture",
+        "subtitle_picture" : "Set Your Profile Picture",
+        "subtitle_picture2" : "Choose a picture before continue"
       },
 
       "Settings" : {
@@ -1392,6 +1396,28 @@ class _DialerState extends State<Dialer>{
           }
 
         ),
+
+
+        title: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+        children : <Widget>[
+          Align(
+            alignment: Alignment.center,
+          ),
+        InkWell(
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ProfilePhoto(language, currentLanguage)
+                )),
+            child: CircleAvatar(
+              backgroundColor: Colors.transparent,
+              child: SizedBox(
+              width: 60,
+              height: 60,
+              child: ClipOval(
+        child: Image.file(File(user["photo"]), fit: BoxFit.cover,),
+        ),
+              )))]),
         backgroundColor: colors[mode_counter],
         actions:  [
           IconButton(

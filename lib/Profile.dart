@@ -12,6 +12,7 @@ import 'History.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'SetLanguage.dart';
 import 'package:restart_app/restart_app.dart';
+import 'package:file_picker/file_picker.dart';
 
 class Profile extends StatefulWidget{
   @override
@@ -192,11 +193,14 @@ class _ProfileState extends State<Profile>{
                       writeJson("name", name.text);
 
                     });
-                    String colorString =color.toString(); // Color(0x12345678)
+                    String colorString = color.toString(); // Color(0x12345678)
                     String valueString = colorString.split('(0x')[1].split(')')[0]; // kind of hacky..
                     writeJson("color", valueString);
                     readJson();
-                    Restart.restartApp();
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ProfilePhoto(language, currentLanguage)
+                        ));
                     },
                   icon: Icon(Icons.check, color: Colors.white,),
                 ),
@@ -208,6 +212,183 @@ class _ProfileState extends State<Profile>{
         ],
       ),
 
+    );
+  }
+}
+
+class ProfilePhoto extends StatefulWidget{
+  @override
+  Map <dynamic, dynamic> language = {};
+  String currentLanguage = "";
+  ProfilePhoto(this.language, this.currentLanguage);
+  _ProfilePhotoState createState() => _ProfilePhotoState(language, currentLanguage);
+}
+
+class _ProfilePhotoState extends State<ProfilePhoto>{
+  @override
+  Map <dynamic, dynamic> language = {};
+  Map <dynamic, dynamic> user = {};
+  String currentLanguage = "";
+  _ProfilePhotoState(this.language, this.currentLanguage);
+  String path = "";
+  String image = "";
+  String jsonFile = "user.json";
+  String _jsonFile = "";
+
+  // Get app local path for App data
+  Future<String> get _localPath async {
+    final directory = await getApplicationDocumentsDirectory();
+    return directory.path;
+  }
+
+  // Get file object with full path
+  Future<File> get _localFile async {
+    final path = await _localPath;
+    return File('$path/$jsonFile');
+  }
+
+  void _readJson() async {
+    final filePath = await _localFile;
+
+    // Read current map
+    _jsonFile = await filePath.readAsString();
+
+    // Assign map string into map object
+    user = jsonDecode(_jsonFile);
+
+    //
+  }
+
+  void _writeJson(String key, dynamic value) async{
+    final filePath = await _localFile;
+
+    // Create temp map
+    Map<String, dynamic> myPhoto = {};
+
+    // Save to new map
+    myPhoto[key] = value;
+
+    // Overrite old map
+    user.addAll(myPhoto);
+
+    // Save old map
+    _jsonFile = jsonEncode(user);
+
+    // Overwrite map
+    filePath.writeAsString(_jsonFile);
+    print(_jsonFile);
+
+
+    //
+  }
+
+  void pickImage() async {
+    bool exists = false;
+
+    // User can choose a file from storage
+    final result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['jpg', 'png', 'gif'],
+      allowMultiple: false,
+    );
+
+
+    // Check if the user closed the file picker
+    if (result != null) {
+      PlatformFile myFile = result.files.first;
+      exists = true;
+
+
+      if (exists) {
+        setState(() async {
+          path = myFile.path!;
+
+          // Check image extensions
+
+          if (path.contains('.png')){
+            await File(path).rename(
+                '/data/user/0/com.daviiid99.material_dialer/app_flutter/profile.png');
+            image = '/data/user/0/com.daviiid99.material_dialer/app_flutter/profile.png';
+
+          }  else if (path.contains('.jpg')){
+            await File(path).rename(
+                '/data/user/0/com.daviiid99.material_dialer/app_flutter/profile.jpg');
+            image = '/data/user/0/com.daviiid99.material_dialer/app_flutter/profile.jpg';
+          } else {
+            await File(path).rename(
+                '/data/user/0/com.daviiid99.material_dialer/app_flutter/profile.gif');
+            image =
+            '/data/user/0/com.daviiid99.material_dialer/app_flutter/profile.gif';
+          }
+
+          _writeJson("photo", image);
+          user["photo"] = image;
+          Restart.restartApp();
+
+        });
+      }
+    }
+  }
+
+  void initState(){
+    _readJson();
+    super.initState();
+  }
+
+  Widget build(BuildContext context){
+
+    return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        title: Text(
+            language[currentLanguage]["Profile"]["title"],
+            style: TextStyle(
+                color: Colors.white),
+        ),
+        
+      ),
+
+      body: Column(
+        children: [
+          SizedBox(height: 5,),
+          Text(
+            language[currentLanguage]["Profile"]["subtitle_picture"] + "\n",
+            style: TextStyle(
+              color:  Colors.white,
+              fontSize: 25
+            ),
+          ),
+
+          Text(
+            language[currentLanguage]["Profile"]["subtitle_picture2"] + "\n",
+            style: TextStyle(
+                color:  Colors.white,
+                fontSize: 15
+            ),
+          ),
+
+          Image.asset(
+              "assets/images/unnamed.png",
+
+          ),
+
+          SizedBox(height: 25,),
+
+
+        ElevatedButton(
+          child: Text(
+            language[currentLanguage]["Profile"]["button2"]
+          ),
+
+          onPressed: (){
+            pickImage();
+          }
+
+        )
+
+        ],
+      ),
     );
   }
 }
