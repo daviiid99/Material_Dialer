@@ -18,6 +18,8 @@ import 'package:quick_actions/quick_actions.dart';
 import 'MaterialDIaler.dart';
 import 'dart:math';
 import 'Profile.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 
 class Dialer extends StatefulWidget{
 
@@ -49,7 +51,7 @@ class _DialerState extends State<Dialer>{
   int randomNumber = 0;
   int randomNumber2 = 0;
   int randomNumber3 = 0;
-  List<String> images = ["assets/images/call.png", "assets/images/contact.png", "assets/images/palette.png", "assets/images/lgs.png",  "assets/images/ota.png",  "assets/images/name.png"];
+  List<String> images = ["assets/images/call.png", "assets/images/contact.png", "assets/images/palette.png", "assets/images/lgs.png",  "assets/images/ota.png",  "assets/images/name.png", "assets/images/security.png", "assets/images/github.png", "assets/images/stars.png"];
   List<Color> colores = [Colors.green, Colors.purpleAccent, Colors.blueAccent, Colors.pink, Colors.brown, Colors.amber, Colors.red, Colors.blueGrey, Colors.deepOrange, Colors.teal];
 
   _DialerState(this.mode_counter, this.modes, this.colors, this.fonts, this.number);
@@ -235,7 +237,17 @@ class _DialerState extends State<Dialer>{
         "card4_button" : "Abrir actualizador",
         "card5_title" : "Elegir Perfil",
         "card5_subtitle" : "Modifica tu perfil",
-        "card5_button" : "Reestablecer perfil"
+        "card5_button" : "Reestablecer perfil",
+        "card6_title" : "Poliza Privacidad",
+        "card6_subtitle" : "Consulta la última poliza",
+        "card6_button" : "Ver Poliza",
+        "card7_title" : "Código Fuente",
+        "card7_subtitle" : "Ver código en GitHub",
+        "card7_button" : "Ver fuente",
+        "card8_title" : "Puntúanos",
+        "card8_subtitle" : "Puntúa la aplicación",
+        "card8_button" : "Puntuar app"
+
       },
 
       "Profile" : {
@@ -972,6 +984,11 @@ class _DialerState extends State<Dialer>{
     await FlutterPhoneDirectCaller.callNumber("$telefono");
   }
 
+  _launchURL(String url) async {
+    final Uri _url = Uri.parse(url);
+    await launchUrl(_url,mode: LaunchMode.externalApplication);
+  }
+
   void dialPad() async {
     showDialog(
         context: context,
@@ -1338,9 +1355,9 @@ class _DialerState extends State<Dialer>{
     int r1 = 0, r2 = 0, r3 = 0;
 
     while (r1 == r2 || r1 == r3 ||  r2 == r3){
-      r1 = random.nextInt(6);
-      r2 = random.nextInt(6);
-      r3 = random.nextInt(6);
+      r1 = random.nextInt(9);
+      r2 = random.nextInt(9);
+      r3 = random.nextInt(9);
     }
 
     setState(() async {
@@ -1363,14 +1380,21 @@ class _DialerState extends State<Dialer>{
                       child: BlockPicker(
                           pickerColor: colors[0], //default color
                           onColorChanged: (Color color) { //on color picked
-                            jsonFile = "user.json";
-                            String colorString = color
-                                .toString(); // Color(0x12345678)
-                            String valueString = colorString.split('(0x')[1]
-                                .split(')')[0]; // kind of hacky..
-                            writeJson("color", valueString);
-                            readJson();
-                            Navigator.pop(context);
+                            setState(() async {
+                              jsonFile = "user.json";
+                              String colorString = color
+                                  .toString(); // Color(0x12345678)
+                              String valueString = colorString.split('(0x')[1]
+                                  .split(')')[0]; // kind of hacky..
+                              colors[mode_counter] = color;
+                              writeJson("color", valueString);
+                              restoreValues();
+                              int i = 2;
+                              while (i > 0) {
+                                i -=1;
+                                Navigator.pop(context);
+                              }
+                            });
                           })
                   ),
                 );
@@ -1444,7 +1468,7 @@ class _DialerState extends State<Dialer>{
     super.initState();
   }
 
-  void userMenu() async {
+  void userMenu()  {
     showDialog(
         context: context,
         builder: (context) {
@@ -1549,8 +1573,8 @@ class _DialerState extends State<Dialer>{
                                   ),
                                 ),
                                 icon: Icon(Icons.palette_rounded, color: Colors.white, size: 102,),
-                                onPressed: () => {
-                                  showPalette()
+                                onPressed: () async {
+                                   showPalette();
                                 }, label: Text(""),
                               ),
                             ]
@@ -1687,6 +1711,12 @@ class _DialerState extends State<Dialer>{
                                       context,
                                       MaterialPageRoute(builder: (context) => Profile(colors[mode_counter])),
                                     );
+                                  } else if (randomNumber == 6){
+                                    _launchURL("https://daviiid99.github.io/Material_Dialer/privacy.html");
+                                  } else if (randomNumber == 7){
+                                    _launchURL("https://github.com/daviiid99/Material_Dialer");
+                                  } else if (randomNumber == 8){
+                                    _launchURL("https://play.google.com/store/apps/details?id=com.daviiid99.material_dialer");
                                   }
                                 },
                                 //text to shoe in to the button
@@ -1790,6 +1820,13 @@ class _DialerState extends State<Dialer>{
                                       MaterialPageRoute(builder: (context) => Profile(colors[mode_counter])),
                                     );
                                   }
+                                  else if (randomNumber == 6){
+                                    _launchURL("https://daviiid99.github.io/Material_Dialer/privacy.html");
+                                  } else if (randomNumber == 7){
+                                    _launchURL("https://github.com/daviiid99/Material_Dialer");
+                                  } else if (randomNumber == 8){
+                                    _launchURL("https://play.google.com/store/apps/details?id=com.daviiid99.material_dialer");
+                                  }
                                 },
                                 //text to shoe in to the button
                                 child: Text(language[currentLanguage]["Home"]["card" + randomNumber2.toString() + "_button"],
@@ -1891,6 +1928,13 @@ class _DialerState extends State<Dialer>{
                                       context,
                                       MaterialPageRoute(builder: (context) => Profile(colors[mode_counter])),
                                     );
+                                  }
+                                  else if (randomNumber == 6){
+                                    _launchURL("https://daviiid99.github.io/Material_Dialer/privacy.html");
+                                  } else if (randomNumber == 7){
+                                    _launchURL("https://github.com/daviiid99/Material_Dialer");
+                                  } else if (randomNumber == 8){
+                                    _launchURL("https://play.google.com/store/apps/details?id=com.daviiid99.material_dialer");
                                   }
                                 },
                                 //text to shoe in to the button
