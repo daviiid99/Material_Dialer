@@ -35,6 +35,7 @@ dependencies :
 <img src="screens/screen_4.png"/>
 <img src="screens/screen_5.png"/>
 <img src="screens/screen_6.png"/>
+<img src="screens/screen_7.png"/>
 
  # Download
  Click <a href ="https://github.com/daviiid99/Material_Dialer/releases/download/latest/app-release.apk">here</a> to grab the latest build

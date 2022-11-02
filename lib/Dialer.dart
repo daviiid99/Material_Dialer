@@ -111,7 +111,16 @@ class _DialerState extends State<Dialer>{
         "card4_button" : "Open updater",
         "card5_title" : "Reset Profile",
         "card5_subtitle" : "Modify your profile",
-        "card5_button" : "Reet profile"
+        "card5_button" : "Reet profile",
+        "card6_title" : "Privacy Policy",
+        "card6_subtitle" : "Check latest policy",
+        "card6_button" : "View policy",
+        "card7_title" : "Source Code",
+        "card7_subtitle" : "Check source on GitHub",
+        "card7_button" : "Check source",
+        "card8_title" : "Rate Us",
+        "card8_subtitle" : "Rate this app",
+        "card8_button" : "Rate app"
       },
 
       "Profile" : {
@@ -371,7 +380,16 @@ class _DialerState extends State<Dialer>{
         "card4_button": "Ouvrir OTA",
         "card5_title": "Définissez Votre Nom",
         "card5_subtitle": "Modifiez votre profil",
-        "card5_button" : "Définir le profil"
+        "card5_button" : "Définir le profil",
+        "card6_title": "Politique Confidentialité",
+        "card6_subtitle": "Vérifier la dernière politique",
+        "card6_button": "Afficher politique",
+        "card7_title": "Code Source",
+        "card7_subtitle": "Vérifiez source sur GitHub",
+        "card7_button": "Vérifier source",
+        "card8_title": "Évaluez-nous",
+        "card8_subtitle": "Notez cette application",
+        "card8_button": "Évaluer l'application"
       },
 
       "Profile" : {
@@ -495,7 +513,16 @@ class _DialerState extends State<Dialer>{
         "card4_button" : "Apri programma di aggiornamento",
         "card5_title" : "Imposta Il Tuo Nome",
         "card5_subtitle" : "Modifica il tuo profilo",
-        "card5_button" : "Imposta profilo"
+        "card5_button" : "Imposta profilo",
+        "card6_title" : "Informativa Privacy",
+        "card6_subtitle" : "Controlla l'ultima politica",
+        "card6_button" : "Visualizza politica",
+        "card7_title" : "Codice Sorgente",
+        "card7_subtitle" : "Controlla GitHub",
+        "card7_button" : "Controlla sorgente",
+        "card8_title" : "Votaci",
+        "card8_subtitle" : "Valuta questa app",
+        "card8_button" : "Valuta app"
       },
 
 
@@ -619,7 +646,16 @@ class _DialerState extends State<Dialer>{
         "card4_button": "Updater öffnen",
         "card5_title": "Setze Deinen Namen",
         "card5_subtitle" : "Ändern Sie Ihr Profil",
-        "card5_button": "Profil festlegen"
+        "card5_button": "Profil festlegen",
+        "card6_title": "Datenschutzrichtlinie",
+        "card6_subtitle": "Neueste Richtlinie prüfen",
+        "card6_button": "Richtlinie anzeigen",
+        "card7_title": "Quellcode",
+        "card7_subtitle": "Quelle GitHub Prüfen",
+        "card7_button": "Quelle prüfen",
+        "card8_title": "Bewerten Sie uns",
+        "card8_subtitle": "Diese App bewerten",
+        "card8_button": "App bewerten"
       },
 
       "Profile" : {
