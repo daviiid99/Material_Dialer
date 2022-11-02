@@ -224,7 +224,10 @@ class _DialerState extends State<Dialer>{
         "title" : "Creando Tu Perfil",
         "subtitle" : "Cuéntanos Sobre Ti",
         "subtitle2" : "Necesitamos tu nombre antes de continuar",
-        "button" : "Guardar perfil"
+        "button" : "Guardar perfil",
+        "button2" : "Elegir imagen",
+        "subtitle_picture" : "Establece Foto De Perfil",
+        "subtitle_picture2" : "Elige una foto antes de continuar"
       },
 
       "Settings": {
@@ -337,7 +340,10 @@ class _DialerState extends State<Dialer>{
         "title" : "Création Votre Profil",
         "subtitle" : "Parlez Nous De Vous",
         "subtitle2" : "Nous avons besoin de votre nom avant de continuer",
-        "button" : "Enregistrer Profil"
+        "button" : "Enregistrer Profil",
+        "button2": "Choisir image",
+        "subtitle_picture": "Définissez Votre Image",
+        "subtitle_picture2" : "Choisissez une image avant de continuer"
       },
 
 
@@ -451,7 +457,10 @@ class _DialerState extends State<Dialer>{
         "title" : "Creazione Tuo Profilo",
         "subtitle" : "Raccontaci Di Te",
         "subtitle2" : "Abbiamo bisogno del tuo nome prima di continuare",
-        "button" : "Salva Profilo"
+        "button" : "Salva Profilo",
+        "button2" : "Scegli immagine",
+        "subtitle_picture": "Imposta Immagine Profilo",
+        "subtitle_picture2" : "Scegli un'immagine prima di continuare"
       },
 
       "Settings" : {
@@ -563,7 +572,10 @@ class _DialerState extends State<Dialer>{
         "title" : "Erstellung Ihres Profils",
         "subtitle" : "Erzähl Uns Von Dir",
         "subtitle2" : "Wir brauchen Ihren Namen, bevor Sie fortfahren",
-        "button" : "Profil speichern"
+        "button" : "Profil speichern",
+        "button2": "Bild auswählen",
+        "subtitle_picture": "Stellen Bild Profilbild",
+        "subtitle_picture2": "Wählen Sie ein Bild aus, bevor Sie fortfahren"
       },
 
       "Settings" : {
