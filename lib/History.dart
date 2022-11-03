@@ -221,71 +221,24 @@ class _HistoryState extends State<History>{
     return Scaffold(
     backgroundColor: colores[mode_counter],
     appBar: AppBar(
+      automaticallyImplyLeading: false,
       elevation: 0.0,
       backgroundColor: colores[mode_counter],
-      title: Text(
-        language[current_language]["History"]["title"],
-        style: TextStyle(color: fonts[mode_counter]),
-      ),
       iconTheme: IconThemeData(
         color: fonts[mode_counter], //change your color here
       ),
-
-      actions: [
-        PopupMenuButton(
-          color: colores[mode_counter],
-          itemBuilder: (context){
-            return [
-              PopupMenuItem(
-                value: 0,
-                child: Text(language[current_language]["History"]["menu1"], style: TextStyle(color: Colors.white)),
-              ),
-              PopupMenuItem(
-                value: 1,
-                child: Text(language[current_language]["History"]["menu2"], style: TextStyle(color: Colors.white),),
-              ),
-              PopupMenuItem(
-                value: 2,
-                child: Text(language[current_language]["History"]["menu3"], style: TextStyle(color: Colors.white)),
-              ),
-
-            ];
-          },
-          onSelected : (value) async {
-
-            if ( value == 0){
-              importHistory();
-            }
-            else if (value == 1){
-              exportHistory();
-
-            } else if (value == 2){
-
-              setState(() async {
-                cleanHistory();
-
-              });
-
-            }
-    }
-        )
-      ],
     ),
 
       body: Column(
         children: <Widget>[
-          Text("\n"),
           Image.asset('assets/images/history.png'),
-          Text("\n\n"),
           Text(
               language[current_language]["History"]["subtitle"],
-          style: TextStyle(color: fonts[mode_counter], fontSize: 35),
+          style: TextStyle(color: fonts[mode_counter], fontSize: 30, fontWeight: FontWeight.bold),
 
           ),
-          if(numeros.length == 0) Text("\n"),
-          if(numeros.length == 0) Image.asset("assets/images/empty.png") ,
-          if(numeros.length == 0) Text(language[current_language]["Contacts"]["empty"],
-              style: TextStyle(color: fonts[mode_counter], fontSize: 20)) ,
+          if(numeros.length == 0) Image.asset("assets/images/empty.png", width: 800, height: 300,) ,
+
         Expanded(
           child : ListView.builder(
             itemCount: numeros.length,
@@ -323,6 +276,49 @@ class _HistoryState extends State<History>{
           )
         ],
         ),
+      bottomNavigationBar: BottomNavigationBar(
+        iconSize: 35,
+        showSelectedLabels: true,
+        showUnselectedLabels: true,
+        backgroundColor: colores[mode_counter],
+        unselectedItemColor: fonts[mode_counter],
+        selectedItemColor: fonts[mode_counter],
+
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+              label: '',
+              icon: IconButton(
+                alignment: Alignment.bottomLeft,
+                icon: Icon(Icons.import_contacts_rounded),
+                onPressed: (){
+                  importHistory();
+                },
+              )
+          ),
+
+          BottomNavigationBarItem(
+              label: '',
+              icon: IconButton(
+                alignment: Alignment.bottomCenter,
+                icon: Icon(Icons.ios_share_rounded),
+                onPressed: (){
+                  exportHistory();
+                },
+              )
+          ),
+
+          BottomNavigationBarItem(
+              label: '',
+              icon: IconButton(
+                alignment: Alignment.bottomRight,
+                icon: Icon(Icons.delete_rounded),
+                onPressed: (){
+                  cleanHistory();
+                },
+              )
+          )
+        ],
+      ),
       );
   }
 }

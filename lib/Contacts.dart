@@ -745,68 +745,16 @@ void exportContacts(String path) async{
     return Scaffold(
       backgroundColor: colores[mode_counter],
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         elevation: 0.0,
         backgroundColor: colores[mode_counter],
-        title: Text(language[current_language]["Contacts"]["title"],
-          style: TextStyle(color: fonts[mode_counter]),
-
-        ),
-        actions: [
-          PopupMenuButton(
-            color: colores[mode_counter],
-            itemBuilder: (context){
-              return[
-                PopupMenuItem<int>(
-                  value: 0,
-                  child: Text(
-                   language[current_language]["Contacts"]["menu_button"],
-                    style: TextStyle(color:  Colors.white),
-
-                  ),
-                ),
-
-                PopupMenuItem(
-                  value: 1,
-                  child: Text(
-              language[current_language]["Contacts"]["menu_button_2"],
-                      style: TextStyle(color:  Colors.white)),
-                ),
-              ];
-
-            },
-
-            onSelected: (value) async {
-              if(value == 0){
-                pickFile();
-
-              }
-
-              else if ( value == 1){
-                pickDirectory(); // User can pick a dir
-                if (myBackupDir == null){
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: Text("User cancelled the operation :("),
-                ));
-                } else{
-                exportContacts(myBackupDir);
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: Text("$myBackupFile"),
-                ));
-
-                }
-
-              }
-            }
-          )
-        ],
-        iconTheme: IconThemeData(
-          color: fonts[mode_counter], //change your color here
-        ),
     ),
     body: Column(
       children: <Widget>[
-      Text("\n"),
       Image.asset('assets/images/contacts.png'),
+        Text(language[current_language]["Contacts"]["title"],
+          style: TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold),
+        ),
         FittedBox(
             child: Container(
                 width: MediaQuery
@@ -827,11 +775,17 @@ void exportContacts(String path) async{
                           language[current_language]["Contacts"]["button1"],
                           style: TextStyle(
                               fontSize: 16,
-                              color: Colors.black),
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold),
                         ),
                         style: TextButton.styleFrom(
-                          textStyle: TextStyle(color: Colors.black),
-                          backgroundColor: Colors.green,
+                          side: BorderSide(
+                            width: 1.0,
+                            color: Colors.black,
+                            style: BorderStyle.solid,
+                          ),
+                          textStyle: TextStyle(color: Colors.white),
+                          backgroundColor: Colors.transparent,
                           shape:RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(24.0),
                           ),
@@ -841,6 +795,8 @@ void exportContacts(String path) async{
                            context: context,
                            builder: (BuildContext context){
                              return AlertDialog(
+                               shape: RoundedRectangleBorder(
+                                   borderRadius: BorderRadius.all(Radius.circular(15.0))),
                                backgroundColor: Colors.lightGreen,
                                content: SingleChildScrollView(
                                  child: Column(
@@ -916,18 +872,25 @@ void exportContacts(String path) async{
 
                          );
                         },
-                        icon: Icon(Icons.create_rounded, color: Colors.black,),
+                        icon: Icon(Icons.create_rounded, color: Colors.white
+                          ,),
                       ), SizedBox(width: 10,),
                       TextButton.icon(
                         label: Text(
                           language[current_language]["Contacts"]["button2"],
                           style: TextStyle(
                               fontSize: 16,
-                              color: Colors.black),
+                              color: Colors.white,
+                             fontWeight: FontWeight.bold ),
                         ),
                         style: TextButton.styleFrom(
-                          textStyle: TextStyle(color: Colors.black),
-                          backgroundColor: Colors.orange,
+                          side: BorderSide(
+                            width: 1.0,
+                            color: Colors.black,
+                            style: BorderStyle.solid,
+                          ),
+                          textStyle: TextStyle(color: Colors.white),
+                          backgroundColor: Colors.transparent,
                           shape:RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(24.0),
                           ),
@@ -951,14 +914,12 @@ void exportContacts(String path) async{
                             content: Text(language[current_language]["Contacts"]["toaster"] + "\n" + name + "(" + number+ ")"),
                           ));
                         },
-                        icon: Icon(Icons.add_rounded, color: Colors.black,),
+                        icon: Icon(Icons.add_rounded, color: Colors.white,),
                       ),
                     ]))
         ),
 
         ),if(contactos.length == 0) Image.asset("assets/images/empty.png") ,
-        if(contactos.length == 0) Text(language[current_language]["Contacts"]["empty"],
-            style: TextStyle(color: fonts[mode_counter], fontSize: 20)) ,
 
       Expanded(
     child : ListView.builder(
@@ -992,6 +953,51 @@ void exportContacts(String path) async{
         },
       ),
 
-    )]));
+    )]
+    ),
+        bottomNavigationBar: BottomNavigationBar(
+          iconSize: 35,
+          showSelectedLabels: true,
+          showUnselectedLabels: true,
+          backgroundColor: colores[mode_counter],
+          unselectedItemColor: fonts[mode_counter],
+          selectedItemColor: fonts[mode_counter],
+
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              label: '',
+              icon: IconButton(
+                alignment: Alignment.bottomLeft,
+                icon: Icon(Icons.import_contacts_rounded),
+                onPressed: (){
+                  setState(() async {
+                    pickFile();
+                  });
+                },
+              )
+            ),
+            BottomNavigationBarItem(
+              label: '',
+              icon: IconButton(
+                alignment: Alignment.bottomRight,
+                icon: Icon(Icons.ios_share_rounded),
+                onPressed: (){
+                  pickDirectory(); // User can pick a dir
+                  if (myBackupDir == null){
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text("User cancelled the operation :("),
+                    ));
+                  } else{
+                    exportContacts(myBackupDir);
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text("$myBackupFile"),
+                    ));
+                  }
+                },
+              )
+            )
+          ],
+    ),
+    );
   }
 }
