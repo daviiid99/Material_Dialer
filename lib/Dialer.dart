@@ -1516,7 +1516,7 @@ class _DialerState extends State<Dialer>{
         else if(shortcutType == "settingsaction"){
           Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => Settings(mode_counter, modes, colors, fonts, currentLanguage, language, index),
+              MaterialPageRoute(builder: (context) => Settings(mode_counter, modes, colors, fonts, currentLanguage, language, index, user),
               ));
         }
 
@@ -1576,7 +1576,7 @@ class _DialerState extends State<Dialer>{
                               onPressed: () => {
                                 Navigator.push(
                                     context,
-                                    MaterialPageRoute(builder: (context) => Settings(mode_counter, modes, colors, fonts, currentLanguage, language, index),
+                                    MaterialPageRoute(builder: (context) => Settings(mode_counter, modes, colors, fonts, currentLanguage, language, index, user),
                                     ))
                               }, label: Text(""),
                             ),
