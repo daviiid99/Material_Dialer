@@ -1,5 +1,6 @@
 import 'dart:ffi';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'Dialer.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:file_picker/file_picker.dart';
 
 
 class History extends StatefulWidget{
@@ -36,6 +38,10 @@ class _HistoryState extends State<History>{
   String _jsonString = "";
   List<String> numeros = [];
   List <String> fechas = [];
+  String myBackupDir = "sdcard/download";
+  DateTime now = DateTime.now();
+  String date = "";
+  String path = "";
   _HistoryState(this.mode_counter, this.modes, this.colores, this.fonts, this.current_language, this.language);
 
   // Get app local path for App data
@@ -105,10 +111,106 @@ class _HistoryState extends State<History>{
     await FlutterPhoneDirectCaller.callNumber(number);
   }
 
+  cleanHistory() {
+
+    setState(() async {
+      // Write empty map
+      final filePath = await _localFile;
+
+      // Write empty string
+      Map<dynamic, dynamic> mapa = {};
+      _jsonString = jsonEncode(mapa);
+      filePath.writeAsString(_jsonString);
+
+      // Reload JSON file
+      fechas = [];
+      numeros = [];
+      _readJson();
+    });
+
+  }
+
+  exportHistory() async {
+
+    // Save current file to string
+    _jsonString = jsonEncode(history);
+
+    // Choose dir
+    await setDir();
+
+    // Write file
+    File("$myBackupDir/backup_$date.json").writeAsString(_jsonString);
+
+    //Notify user of the export
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text("Exported file\n$myBackupDir/backup_$date.json"),
+    ));
+
+  }
+
+  setDir() async {
+    // Choose dir
+    String? dir = await FilePicker.platform.getDirectoryPath();
+
+    // Check if the user selected a dir and assign it
+    if (dir != null){
+      myBackupDir = dir;
+    }
+  }
+
+  importHistory() async {
+
+    // Choose the file
+    final file = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['json'],
+      allowMultiple: false
+    );
+
+    // Save the file into an internal storage location
+    if (file != null){
+      PlatformFile myfile = file.files.first;
+
+      // Get temp file path
+      String path = myfile.path!;
+
+      // Save to internal
+      await File(path).rename("/data/user/0/com.daviiid99.material_dialer/app_flutter/myhistory.json");
+
+      // Save file path into a global variable
+      this.path = "/data/user/0/com.daviiid99.material_dialer/app_flutter/myhistory.json";
+
+      // Import files
+      Map<dynamic, dynamic> myOldHistory = {}; // Temp map
+
+      _jsonString = await File(this.path).readAsString(); // Read input file as string and save it
+
+      myOldHistory = jsonDecode(_jsonString); // Decode the map file into a map object
+
+      // Add keys and values into current map
+      for (String key in myOldHistory.keys){
+        if (numeros.contains(key) == false){
+          history[key] = myOldHistory[key];
+        }
+
+      }
+      // Override map
+      _jsonString = jsonEncode(history); // Save map to string
+      final filePath = await _localFile; // Get map path
+      filePath.writeAsString(_jsonString); // Write map
+
+      // Reload JSON file
+      _readJson();
+
+    }
+  }
+
   @override
   void initState(){
     // Set full screen mode for an inmersive experience
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge, overlays: []);
+
+    date = DateFormat('yyyy_MM_dd' ).format(now);
     _readJson();
     super.initState();
   }
@@ -128,6 +230,46 @@ class _HistoryState extends State<History>{
       iconTheme: IconThemeData(
         color: fonts[mode_counter], //change your color here
       ),
+
+      actions: [
+        PopupMenuButton(
+          color: colores[mode_counter],
+          itemBuilder: (context){
+            return [
+              PopupMenuItem(
+                value: 0,
+                child: Text(language[current_language]["History"]["menu1"], style: TextStyle(color: Colors.white)),
+              ),
+              PopupMenuItem(
+                value: 1,
+                child: Text(language[current_language]["History"]["menu2"], style: TextStyle(color: Colors.white),),
+              ),
+              PopupMenuItem(
+                value: 2,
+                child: Text(language[current_language]["History"]["menu3"], style: TextStyle(color: Colors.white)),
+              ),
+
+            ];
+          },
+          onSelected : (value) async {
+
+            if ( value == 0){
+              importHistory();
+            }
+            else if (value == 1){
+              exportHistory();
+
+            } else if (value == 2){
+
+              setState(() async {
+                cleanHistory();
+
+              });
+
+            }
+    }
+        )
+      ],
     ),
 
       body: Column(

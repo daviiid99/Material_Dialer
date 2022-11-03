@@ -720,11 +720,14 @@ void exportContacts(String path) async{
     setState(() async {
 
       if (await File('sdcard/download/profile.png').exists() == false){
-        var image =  await ImageDownloader.downloadImage("https://raw.githubusercontent.com/daviiid99/Material_Dialer/google_play/assets/images/anonymous.png");
-        imagePath = await ImageDownloader.findPath(image!);
-        await File(imagePath).rename('sdcard/download/profile.png');
-        imagePath = 'sdcard/download/profile.png';
-
+        try{
+          var image =  await ImageDownloader.downloadImage("https://raw.githubusercontent.com/daviiid99/Material_Dialer/google_play/assets/images/anonymous.png");
+          imagePath = await ImageDownloader.findPath(image!);
+          await File(imagePath).rename('sdcard/download/profile.png');
+          imagePath = 'sdcard/download/profile.png';
+        } catch (e){
+          imagePath = 'sdcard/download/profile.png';
+        }
       } else {
         imagePath = 'sdcard/download/profile.png';
       }

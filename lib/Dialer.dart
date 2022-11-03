@@ -208,7 +208,10 @@ class _DialerState extends State<Dialer>{
 
       "History" : {
         "title" : "Calls History",
-        "subtitle" : "Last Calls"
+        "subtitle" : "Last Calls",
+        "menu1" : "Import History",
+        "menu2" : "Export History",
+        "menu3" : "Erase History"
       }
 
     },
@@ -343,7 +346,10 @@ class _DialerState extends State<Dialer>{
 
       "History" : {
         "title" : "Registro de  Llamadas",
-        "subtitle" : "Últimas Llamadas"
+        "subtitle" : "Últimas Llamadas",
+        "menu1" : "Importar Historial",
+        "menu2" : "Exportar Historial",
+        "menu3" : "Borrar Historial"
       }
 
     },
@@ -476,7 +482,10 @@ class _DialerState extends State<Dialer>{
 
       "History" : {
         "title" : "Historique des téléphone",
-        "subtitle" : "Dernier Appels Téléphoniques"
+        "subtitle" : "Dernier Appels Téléphoniques",
+        "menu1": "Historique Importations",
+        "menu2": "Exporter L'historique",
+        "menu3": "Effacer L'historique"
       }
 
     },
@@ -609,7 +618,10 @@ class _DialerState extends State<Dialer>{
 
       "History" : {
         "title" : "Cronologia chiamate",
-        "subtitle" : "Ultime Chiamate"
+        "subtitle" : "Ultime Chiamate",
+        "menu1" : "Cronologia Importazione",
+        "menu2" : "Esporta Cronologia",
+        "menu3" : "Cancella Cronologia"
       }
 
     },
@@ -742,7 +754,10 @@ class _DialerState extends State<Dialer>{
 
       "History" : {
         "title" : "Anrufverlauf",
-        "subtitle" : "Letzte Anrufe"
+        "subtitle" : "Letzte Anrufe",
+        "menu1": "Verlauf Importieren",
+        "menu2": "Verlauf Exportieren",
+        "menu3": "Verlauf Löschen"
       }
 
     }
