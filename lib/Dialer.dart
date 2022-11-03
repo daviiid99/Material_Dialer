@@ -1856,11 +1856,11 @@ class _DialerState extends State<Dialer>{
                                       MaterialPageRoute(builder: (context) => Profile(colors[mode_counter])),
                                     );
                                   }
-                                  else if (randomNumber == 6){
+                                  else if (randomNumber2 == 6){
                                     _launchURL("https://daviiid99.github.io/Material_Dialer/privacy.html");
-                                  } else if (randomNumber == 7){
+                                  } else if (randomNumber2 == 7){
                                     _launchURL("https://github.com/daviiid99/Material_Dialer");
-                                  } else if (randomNumber == 8){
+                                  } else if (randomNumber2 == 8){
                                     _launchURL("https://play.google.com/store/apps/details?id=com.daviiid99.material_dialer");
                                   }
                                 },
@@ -1965,11 +1965,11 @@ class _DialerState extends State<Dialer>{
                                       MaterialPageRoute(builder: (context) => Profile(colors[mode_counter])),
                                     );
                                   }
-                                  else if (randomNumber == 6){
+                                  else if (randomNumber3 == 6){
                                     _launchURL("https://daviiid99.github.io/Material_Dialer/privacy.html");
-                                  } else if (randomNumber == 7){
+                                  } else if (randomNumber3 == 7){
                                     _launchURL("https://github.com/daviiid99/Material_Dialer");
-                                  } else if (randomNumber == 8){
+                                  } else if (randomNumber3 == 8){
                                     _launchURL("https://play.google.com/store/apps/details?id=com.daviiid99.material_dialer");
                                   }
                                 },
