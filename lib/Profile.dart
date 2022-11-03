@@ -140,11 +140,11 @@ class _ProfileState extends State<Profile>{
   @override
   Widget build(BuildContext context){
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: color,
       appBar: AppBar(
         elevation: 0.0,
         leading: Icon(Icons.face_rounded, color: Colors.blueAccent),
-        backgroundColor: Colors.black,
+        backgroundColor: color,
         title: Text(language[currentLanguage]["Profile"]["title"]),
       ),
       body: Column(
@@ -170,7 +170,6 @@ class _ProfileState extends State<Profile>{
             child: Container(
               child: Column(
                 children: [
-                  Text("Enter your name "),
                 TextFormField(
                   style: TextStyle(color: Colors.white),
                   decoration: InputDecoration(
@@ -183,7 +182,7 @@ class _ProfileState extends State<Profile>{
                       ),
                     border: OutlineInputBorder(
                     ),
-                    labelText: "Name"), cursorColor: Colors.white,
+                    labelText: ""), cursorColor: Colors.white,
                 controller: name,
                 keyboardType: TextInputType.name,
 
@@ -196,7 +195,7 @@ class _ProfileState extends State<Profile>{
                     language[currentLanguage]["Profile"]["button"],
                     style: TextStyle(
                         fontSize: 16,
-                        color: Colors.black),
+                        color: Colors.white),
                   ),
                   style: TextButton.styleFrom(
                     textStyle: TextStyle(color: Colors.white),
@@ -205,23 +204,33 @@ class _ProfileState extends State<Profile>{
                       borderRadius: BorderRadius.circular(24.0),
                     ),
                   ),
-                  onPressed: ()  {
-                    setState(() {
-                      file = "user.json";
-                      writeJson("name", name.text);
+                  onPressed: () {
+                    if (name.text.length > 0) {
 
-                    });
+                      setState((){
+                        // Save new name
+                        file = "user.json";
+                        writeJson("name", name.text);
+                      });
 
-                    String colorString = color.toString(); // Color(0x12345678)
-                    String valueString = colorString.split('(0x')[1].split(')')[0]; // kind of hacky..
-                    writeJson("color", valueString);
-                    readJson();
+                      // Set a default color
+                      String colorString = color
+                          .toString(); // Color(0x12345678)
+                      String valueString = colorString.split('(0x')[1].split(
+                          ')')[0]; // kind of hacky..
+                      writeJson("color", valueString);
+                      readJson();
 
-                    Navigator.push(
+                      File('/data/user/0/com.daviiid99.material_dialer/app_flutter/image.json').delete();
+
+                      // Go to next step
+                      Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => ProfilePhoto(language, currentLanguage)),
+                        MaterialPageRoute(builder: (context) =>
+                            ProfilePhoto(language, currentLanguage, color)),
                       );
-                    },
+                    }
+                  },
                   icon: Icon(Icons.check, color: Colors.white,),
                 ),
                 ],
@@ -240,8 +249,9 @@ class ProfilePhoto extends StatefulWidget{
   @override
   Map <dynamic, dynamic> language = {};
   String currentLanguage = "";
-  ProfilePhoto(this.language, this.currentLanguage);
-  _ProfilePhotoState createState() => _ProfilePhotoState(language, currentLanguage);
+  Color color;
+  ProfilePhoto(this.language, this.currentLanguage, this.color);
+  _ProfilePhotoState createState() => _ProfilePhotoState(language, currentLanguage, color);
 }
 
 class _ProfilePhotoState extends State<ProfilePhoto>{
@@ -249,7 +259,8 @@ class _ProfilePhotoState extends State<ProfilePhoto>{
   Map <dynamic, dynamic> language = {};
   Map <dynamic, dynamic> user = {};
   String currentLanguage = "";
-  _ProfilePhotoState(this.language, this.currentLanguage);
+  Color color;
+  _ProfilePhotoState(this.language, this.currentLanguage, this.color);
   String path = "";
   String image = "";
   String jsonFile = "user.json";
@@ -305,25 +316,24 @@ class _ProfilePhotoState extends State<ProfilePhoto>{
 
   void pickImage() async {
     bool exists = false;
-
     // User can choose a file from storage
-    final result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: ['jpg', 'png', 'gif'],
-      allowMultiple: false,
-    );
 
+    // Image can't be null or everything could be destroyed
+      final result = await FilePicker.platform.pickFiles(
+          type: FileType.custom,
+          allowedExtensions: ['jpg', 'png', 'gif'],
+          allowMultiple: false);
+
+      if (result != null) {
+        PlatformFile myFile = result.files.first;
+        exists = true;
+        path = myFile.path!;
+      }
 
     // Check if the user closed the file picker
-    if (result != null) {
-      PlatformFile myFile = result.files.first;
-      exists = true;
-
 
       if (exists) {
         setState(() async {
-          path = myFile.path!;
-
           // Check image extensions
 
           if (path.contains('.png')){
@@ -344,12 +354,12 @@ class _ProfilePhotoState extends State<ProfilePhoto>{
 
           _writeJson("photo", image);
           user["photo"] = image;
+          File('/data/user/0/com.daviiid99.material_dialer/app_flutter/image.json').writeAsString("w");
           Restart.restartApp();
 
         });
       }
     }
-  }
 
   void initState(){
     _readJson();
@@ -359,9 +369,9 @@ class _ProfilePhotoState extends State<ProfilePhoto>{
   Widget build(BuildContext context){
 
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: color,
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: color,
         title: Text(
             language[currentLanguage]["Profile"]["title"],
             style: TextStyle(

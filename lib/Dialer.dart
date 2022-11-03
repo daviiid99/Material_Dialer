@@ -947,6 +947,21 @@ class _DialerState extends State<Dialer>{
     File('/data/user/0/com.daviiid99.material_dialer/app_flutter/empty.json').writeAsString("w");
   }
 
+  void isProfilePicture(bool exists2) async{
+    final imageExist = File('/data/user/0/com.daviiid99.material_dialer/app_flutter/image.json');
+    bool exist = await imageExist.exists();
+
+    if (exist == false){
+      Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => ProfilePhoto(language, currentLanguage, colores[mode_counter]),
+          ));
+
+    } else {
+      isStartColor(exists2);
+    }
+  }
+
 
 
   void isNewProfile() async{
@@ -963,7 +978,7 @@ class _DialerState extends State<Dialer>{
           ));
 
     } else {
-      isStartColor(exists);
+      isProfilePicture(exists);
     }
 
   }
