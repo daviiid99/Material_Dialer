@@ -286,7 +286,7 @@ class _HistoryState extends State<History>{
 
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-              label: '',
+              label: language[current_language]["History"]["navbutton1"],
               icon: IconButton(
                 alignment: Alignment.bottomLeft,
                 icon: Icon(Icons.import_contacts_rounded),
@@ -297,7 +297,7 @@ class _HistoryState extends State<History>{
           ),
 
           BottomNavigationBarItem(
-              label: '',
+              label: language[current_language]["History"]["navbutton2"],
               icon: IconButton(
                 alignment: Alignment.bottomCenter,
                 icon: Icon(Icons.ios_share_rounded),
@@ -308,7 +308,7 @@ class _HistoryState extends State<History>{
           ),
 
           BottomNavigationBarItem(
-              label: '',
+              label: language[current_language]["History"]["navbutton3"],
               icon: IconButton(
                 alignment: Alignment.bottomRight,
                 icon: Icon(Icons.delete_rounded),

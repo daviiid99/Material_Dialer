@@ -166,18 +166,24 @@ class _ContactState extends State<Contacts>{
         }
       }
 
+    contactos.sort(); // Sort list, you know, alphabetical order
+
     return contactos;
   }
 
 
   // Add phones entries to lists
   List<String> addPhonesToList (Map<dynamic, dynamic> dic ,List<String> contactos, List<String> telefonos){
-
-    for(String key in dic.keys){
-        if(telefonos.contains(key) == false){
-          telefonos.add(key);
+    for (int i =0; i <contactos.length; i++){
+      for (String number in dic.keys){
+        if (dic[number][0] == contactos[i]) {
+          if ( telefonos.contains(number) == false){
+            telefonos.add(number);
+          }
+        }
       }
     }
+
     return telefonos;
   }
 
@@ -188,60 +194,57 @@ class _ContactState extends State<Contacts>{
       if (dic.isNotEmpty) {
         photos.add(dic[number][1]);
       }
-
     }
-    print(telefonos[0]);
-    print(contactos[0]);
-    print(dic[telefonos[0]][1]);
-    print(photos);
-
     return photos;
   }
 
-void exportContacts(String path) async{
-    // Set path
-    File backup = File("$path/material_dialer_backup_$formattedDate.json");
+void exportContacts() async{
 
     // Write file string
-    final jsonFile = jsonEncode(mapa);
+     final jsonFile = jsonEncode(mapa);
 
-    // Save the file into directory
-    backup.writeAsString(jsonFile);
+    // Await user path
+    await pickDirectory();
+
+     // Set path
+     // Save the file into directory
+
+     File("$myBackupDir/material_dialer_backup_$formattedDate.json").writeAsString(jsonFile);
+
 
     setState(() async {
-      myBackupFile = language[current_language]["Contacts"]["export"] + "\n" + backup.path;
+      myBackupFile = language[current_language]["Contacts"]["export"] + "\n" + File("$myBackupDir/$contact.json").path;
 
       });
   }
 
-  void exportSingleContact(String path, String contact) async {
+  void exportSingleContact(String contact, String number, String photo) async {
 
-    // Set file path
-    File myContact = File("$path/$contact.json");
+    Map<dynamic, dynamic> myContact = {number : [contact, photo]};
 
     // Save map into variable
-    final jsonFile = jsonEncode(mapa);
+    final jsonFile = jsonEncode(myContact);
+
+    // Await user path
+    await pickDirectory();
+
+    // Set file path
+    // Write file
+    File("$myBackupDir/$contact.json").writeAsString(jsonFile);
 
     // Write file
-    myContact.writeAsString(jsonFile);
-
     setState(() async {
-      myBackupFile = language[current_language]["Contacts"]["export"] + "\n" + myContact.path;
+      myBackupFile = language[current_language]["Contacts"]["export"] + "\n" + File("$myBackupDir/$contact.json").path;
 
     });
   }
 
-  void pickDirectory() async{
+   pickDirectory() async{
     // Set user path for downloading the file later
     String? myDirectory = await FilePicker.platform.getDirectoryPath();
 
     // Check if the user closed the file picker
-    if (myDirectory == null){
-      setState(() {
-        myBackupDir = "empty";
-
-      });
-    } else {
+    if (myDirectory != null){
       myBackupDir = myDirectory;
     }
   }
@@ -253,27 +256,28 @@ void exportContacts(String path) async{
      final result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
         allowedExtensions: ['json'],
-        allowMultiple: false,
+        allowMultiple: true,
       );
 
 
-    // Check if the user closed the file picker
+    // Store all files into a list of files
     if (result != null) {
-      PlatformFile myFile = result.files.first;
       exists = true;
-
+      List<File> files = result!.paths.map((path) => File(path!)).toList();
 
       if (exists) {
         setState(() async {
-          path = myFile.path!;
-          await File(path).rename(
-              '/data/user/0/com.daviiid99.material_dialer/app_flutter/backup.json');
-          path = await _localPath;
-          readFile();
+          for (File myFile in files) {
+            path = myFile.path!;
+            await File(path).rename(
+                '/data/user/0/com.daviiid99.material_dialer/app_flutter/backup.json');
+            path = await _localPath;
+            readFile();
+          }
         });
-      }
+        }
     }
-  }
+    }
 
   void pickImage(String number, String name) async {
     bool exists = false;
@@ -326,8 +330,6 @@ void exportContacts(String path) async{
 
     Map<dynamic, dynamic> myTempMap = {};
 
-    setState(() async {
-
       // Save file content as string
       _jsonString = await myBackup.readAsString();
 
@@ -348,11 +350,13 @@ void exportContacts(String path) async{
 
       // Update lists with new internal map
       mapa = jsonDecode(_jsonString);
-      contactos = addContactsToList(mapa, contactos, telefonos);
-      telefonos = addPhonesToList(mapa, contactos, telefonos);
-      photos =  addPhotosToList(mapa, contactos, telefonos, photos);
-    });
-    
+      setState(() {
+        contactos = [];
+        telefonos = [];
+        photos = [];
+      });
+      _readJson();
+
   }
 
   void readFile() async {
@@ -677,8 +681,7 @@ void exportContacts(String path) async{
                                     ),
                                     onPressed: () async {
                                       setState(() {
-                                        pickDirectory();
-                                        exportSingleContact(myBackupDir, name);
+                                        exportSingleContact(name, number, picture);
                                       });
                                     },
                                   ),
@@ -839,15 +842,17 @@ void exportContacts(String path) async{
                                          onPressed: () {
                                            setState(() async {
                                              if(phone.text.length > 0) {
-                                               List<String> lista = [contact.text, imagePath];
-                                               mapa[phone.text] = lista;
-                                               contactos = addContactsToList(
-                                                   mapa, contactos, telefonos);
-                                               telefonos = addPhonesToList(
-                                                   mapa, contactos, telefonos);
+
+                                               setState(() {
+                                                 contactos = [];
+                                                 telefonos = [];
+                                                 photos = [];
+                                               });
+
                                                jsonFile = "contacts.json";
                                                _writeJson(
                                                    phone.text, [contact.text, "$imagePath"], "contact");
+                                               _readJson();
                                                Navigator.pop(context);
                                              ScaffoldMessenger.of(context)
                                                  .showSnackBar(SnackBar(
@@ -900,15 +905,16 @@ void exportContacts(String path) async{
                           if (contact !=null){
                             number = contact.phoneNumbers![0];
                             name = contact.fullName.toString();
-                            setState(()  {
-                              List<String> lista = [name, imagePath];
-                              mapa[number] = lista;
-                              contactos = addContactsToList(mapa, contactos, telefonos);
-                              telefonos = addPhonesToList(mapa, contactos, telefonos);
-                              photos = addPhotosToList(mapa, contactos, telefonos, photos);
+
+                              setState(() {
+                                contactos = [];
+                                telefonos = [];
+                                photos = [];
+                              });
+
                               jsonFile = "contacts.json";
-                              _writeJson(number, lista, "contact");
-                            });
+                              _writeJson(number, [name, imagePath], "contact");
+                              _readJson();
                           };
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                             content: Text(language[current_language]["Contacts"]["toaster"] + "\n" + name + "(" + number+ ")"),
@@ -965,7 +971,7 @@ void exportContacts(String path) async{
 
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              label: '',
+              label: language[current_language]["Contacts"]["navbutton1"],
               icon: IconButton(
                 alignment: Alignment.bottomLeft,
                 icon: Icon(Icons.import_contacts_rounded),
@@ -977,18 +983,17 @@ void exportContacts(String path) async{
               )
             ),
             BottomNavigationBarItem(
-              label: '',
+              label: language[current_language]["Contacts"]["navbutton2"],
               icon: IconButton(
                 alignment: Alignment.bottomRight,
                 icon: Icon(Icons.ios_share_rounded),
                 onPressed: (){
-                  pickDirectory(); // User can pick a dir
                   if (myBackupDir == null){
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: Text("User cancelled the operation :("),
                     ));
                   } else{
-                    exportContacts(myBackupDir);
+                    exportContacts();
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: Text("$myBackupFile"),
                     ));

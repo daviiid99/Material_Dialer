@@ -177,7 +177,9 @@ class _DialerState extends State<Dialer>{
         "menu_button_2" : "Export Contacts",
         "empty" : "Nothing here, just leafs",
         "export" : "Exported your current contacts to the path",
-        "import" : "Restored your contacts!"
+        "import" : "Restored your contacts!",
+        "navbutton1" : "Import",
+        "navbutton2" : "Export"
       },
 
 
@@ -211,7 +213,10 @@ class _DialerState extends State<Dialer>{
         "subtitle" : "Last Calls",
         "menu1" : "Import History",
         "menu2" : "Export History",
-        "menu3" : "Erase History"
+        "menu3" : "Erase History",
+        "navbutton1" : "Import",
+        "navbutton2" : "Export",
+        "navbutton3" : "Erase"
       }
 
     },
@@ -315,7 +320,9 @@ class _DialerState extends State<Dialer>{
         "menu_button_2" : "Exportar Contactos",
         "empty" : "No hay nada, solo hojas",
         "export" : "Exportados tus contactos al directorio",
-        "import" : "Restaurados tus contactos!"
+        "import" : "Restaurados tus contactos!",
+        "navbutton1" : "Importar",
+        "navbutton2" : "Exportar"
 
       },
 
@@ -349,7 +356,10 @@ class _DialerState extends State<Dialer>{
         "subtitle" : "Últimas Llamadas",
         "menu1" : "Importar Historial",
         "menu2" : "Exportar Historial",
-        "menu3" : "Borrar Historial"
+        "menu3" : "Borrar Historial",
+        "navbutton1" : "Importar",
+        "navbutton2" : "Exportar",
+        "navbutton3" : "Limpiar"
       }
 
     },
@@ -452,7 +462,9 @@ class _DialerState extends State<Dialer>{
         "menu_button_2" : "Exporter des contacts",
         "empty" : "Rien ici, juste des feuilles",
         "export" : "Exporté vos contacts actuels vers le répertoire",
-        "import" : "Restauré vos contacts!"
+        "import" : "Restauré vos contacts!",
+        "navbutton1" : "Importer",
+        "navbutton2" : "Exporter"
       },
 
       "EditContact" : {
@@ -485,7 +497,10 @@ class _DialerState extends State<Dialer>{
         "subtitle" : "Dernier Appels Téléphoniques",
         "menu1": "Historique Importations",
         "menu2": "Exporter L'historique",
-        "menu3": "Effacer L'historique"
+        "menu3": "Effacer L'historique",
+        "navbutton1" : "Importer",
+        "navbutton2" : "Exporter",
+        "navbutton3" : "Effacer"
       }
 
     },
@@ -588,7 +603,9 @@ class _DialerState extends State<Dialer>{
         "menu_button_2" : "Esporta contatti",
         "empty" : "Niente qui, se ne va",
         "export" : "Hai esportato i tuoi contatti attuali nella directory",
-        "import" : "Hai ripristinato i tuoi contatti!"
+        "import" : "Hai ripristinato i tuoi contatti!",
+        "navbutton1" : "Importa",
+        "navbutton2" : "Esporta"
       },
 
       "EditContact" : {
@@ -621,7 +638,10 @@ class _DialerState extends State<Dialer>{
         "subtitle" : "Ultime Chiamate",
         "menu1" : "Cronologia Importazione",
         "menu2" : "Esporta Cronologia",
-        "menu3" : "Cancella Cronologia"
+        "menu3" : "Cancella Cronologia",
+        "navbutton1" : "Importa",
+        "navbutton2" : "Esporta",
+        "navbutton3" : "Cancella"
       }
 
     },
@@ -723,7 +743,9 @@ class _DialerState extends State<Dialer>{
         "menu_button_2" : "Kontakte exportieren",
         "empty" : "Nichts hier, nur Blätter",
         "export" : "Ihre aktuellen Kontakte in das Verzeichnis exportiert",
-        "import" : "Ihre Kontakte wiederhergestellt!"
+        "import" : "Ihre Kontakte wiederhergestellt!",
+        "navbutton1": "Importieren",
+        "navbutton2": "Exportieren"
       },
 
       "EditContact" : {
@@ -757,7 +779,10 @@ class _DialerState extends State<Dialer>{
         "subtitle" : "Letzte Anrufe",
         "menu1": "Verlauf Importieren",
         "menu2": "Verlauf Exportieren",
-        "menu3": "Verlauf Löschen"
+        "menu3": "Verlauf Löschen",
+        "navbutton1": "Importieren",
+        "navbutton2": "Exportieren",
+        "navbutton3": "Löschen"
       }
 
     }
