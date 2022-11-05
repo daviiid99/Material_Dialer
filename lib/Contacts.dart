@@ -101,7 +101,6 @@ class _ContactState extends State<Contacts>{
       }
 
       mapa.addAll(_newJson);
-      print(mapa);
       _jsonString = jsonEncode(mapa);
       filePath.writeAsString(_jsonString);
     }
