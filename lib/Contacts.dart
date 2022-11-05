@@ -465,7 +465,7 @@ void exportContacts() async{
       }
 
       // Overwrite internal map as always
-      final filePath = await _localFile;
+      final filePath = File("/data/user/0/com.daviiid99.material_dialer/app_flutter/contacts.json");
       _jsonString = jsonEncode(mapa);
       filePath.writeAsString(_jsonString);
 
