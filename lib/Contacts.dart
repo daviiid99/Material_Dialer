@@ -13,6 +13,8 @@ import 'package:restart_app/restart_app.dart';
 import 'package:intl/intl.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:image_downloader/image_downloader.dart';
+import 'package:flutter_archive/flutter_archive.dart';
+import 'package:image/image.dart' as ImageProcess;
 
 
 class Contacts extends StatefulWidget{
@@ -61,6 +63,7 @@ class _ContactState extends State<Contacts>{
   var contactos = ["Example"];
   var telefonos = ["123"];
   var photos = ["/sdcard"];
+  List<String> myBackupFiles = [];
   bool _fileExists = false;
   late File _filePath;
 
@@ -218,25 +221,120 @@ void exportContacts() async{
       });
   }
 
-  void exportSingleContact(String contact, String number, String photo) async {
+  exportMultipleContacts() async {
+    // Await user path
+    await pickDirectory();
 
-    Map<dynamic, dynamic> myContact = {number : [contact, photo]};
+    for (String key in mapa.keys) {
+      setState(() {
+        exportSingleContact(mapa[key][0], key, mapa[key][1]);
+      });
+
+    }
+  }
+
+   exportSingleContact(String contact, String number, String photo) async {
+
+    Map<dynamic, dynamic> myContact = {number : [contact, mapa[number][1]]};
+    bool exists = false;
 
     // Save map into variable
     final jsonFile = jsonEncode(myContact);
 
-    // Await user path
-    await pickDirectory();
-
     // Set file path
     // Write file
-    File("$myBackupDir/$contact.json").writeAsString(jsonFile);
+     File("$myBackupDir/$contact.json").writeAsString(jsonFile); // json
+
+    // Image extension
+    String extension = "";
+
+    if (mapa[number][1].contains("png")){
+      extension = ".png";
+    } else if (mapa[number][1].contains(".jpg")){
+      extension = ".jpg";
+    } else if (mapa[number][1].contains(".gif")){
+      extension = ".gif";
+    }
+
+    // Convert image to base64
+    File image = File(mapa[number][1]);
+    decodeBase64Image(image, extension, number, "external");
+
+
+    exists = zipThemAll("$contact.json", "$number$extension");
 
     // Write file
     setState(() async {
       myBackupFile = language[current_language]["Contacts"]["export"] + "\n" + File("$myBackupDir/$contact.json").path;
-
     });
+  }
+
+  decodeBase64Image(File image, String extension, String number, String path) async {
+
+    final bytes = File(image.path).readAsBytesSync();
+    String base64Image = base64Encode(bytes);
+    Uint8List decode64Image = base64Decode(base64Image);
+
+    if (path.contains("external")){
+      final myImage = await File("$myBackupDir/$number$extension").writeAsBytes(decode64Image);
+    } else {
+      final myImage = await File("/data/user/0/com.daviiid99.material_dialer/app_flutter/$number$extension").writeAsBytes(decode64Image);
+    }
+
+  }
+
+  zipThemAll(String pathJson, String pathImage) async {
+    // We'll zip all files together
+
+    final dir = Directory(myBackupDir); // Set destinaiton path
+    bool exists = false;
+
+    final files = [
+      File(myBackupDir + "/$pathJson" ),
+      File(myBackupDir + "/$pathImage")
+    ]; // Set path for json and image files
+
+    final name = pathJson.replaceAll(".json", "");
+
+    final zipFile = File(myBackupDir + "/$name" + "_"+ "$formattedDate.zip"); // Set final zip file name
+
+    try {
+      ZipFile.createFromFiles(
+          sourceDir: dir, files: files, zipFile: zipFile);
+          exists = true;
+    } catch (e){
+      print(e);
+    }
+
+    return exists;
+
+
+  }
+
+  unZipAll(String pathZip){
+    final zipPath = File(pathZip); // Zip path
+    final outputPath = Directory("/storage/emulated/0/Documents");
+    List<String> files = [];
+
+    try{
+      ZipFile.extractToDirectory(
+          zipFile: zipPath, destinationDir: outputPath,
+        onExtracting: (zipEntry, progress){
+              myBackupFiles.add(zipEntry.name);
+              if (zipEntry.name.contains(".json")){
+                setState(() async{
+                  path = await _localPath;
+                  readFile("/storage/emulated/0/Documents/" + zipEntry.name);
+                });
+              }
+            return ZipFileOperation.includeItem;
+        }
+      );
+    } catch(e){
+      print(e);
+    }
+
+    print(myBackupFiles);
   }
 
    pickDirectory() async{
@@ -251,11 +349,12 @@ void exportContacts() async{
 
   void pickFile() async {
     bool exists = false;
+    String jsonPath = "";
 
     // User can choose a file from storage
      final result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
-        allowedExtensions: ['json'],
+        allowedExtensions: ['zip'],
         allowMultiple: true,
       );
 
@@ -269,10 +368,19 @@ void exportContacts() async{
         setState(() async {
           for (File myFile in files) {
             path = myFile.path!;
-            await File(path).rename(
-                '/data/user/0/com.daviiid99.material_dialer/app_flutter/backup.json');
-            path = await _localPath;
-            readFile();
+            unZipAll(path);
+            for (String myFile in myBackupFiles){
+               if (myFile.contains("..jpg")){
+                  myFile.replaceAll("..jpg", "");
+                  decodeBase64Image(File(myFile + ".jpg"), ".jpg", myFile,  "internal");
+                } else if (myFile.contains("..png")){
+                  myFile.replaceAll("..png", ".png");
+                  decodeBase64Image(File(myFile + ".png"), ".png", myFile, "internal");
+                } else if (myFile.contains("..gif")){
+                  myFile.replaceAll("..gif", ".gif");
+                  decodeBase64Image(File(myFile + ".gif"), ".gif", myFile, "internal");
+                }
+              }
           }
         });
         }
@@ -318,7 +426,7 @@ void exportContacts() async{
             '/data/user/0/com.daviiid99.material_dialer/app_flutter/$number.gif';
           }
 
-            jsonFile = "contacts.json";
+           jsonFile = "contacts.json";
           _writeJson(number, [name, image], "contact");
           mapa[number] = [name, image];
         });
@@ -359,10 +467,10 @@ void exportContacts() async{
 
   }
 
-  void readFile() async {
+  void readFile(String pathJson) async {
 
     // Create a new File using backup path
-    File myBackup = File('/data/user/0/com.daviiid99.material_dialer/app_flutter/backup.json');
+    File myBackup = File(pathJson);
 
     // Read backup content
     readBackup(myBackup);
@@ -680,7 +788,8 @@ void exportContacts() async{
                                       ),
                                     ),
                                     onPressed: () async {
-                                      setState(() {
+                                      setState(() async {
+                                        await pickDirectory();
                                         exportSingleContact(name, number, picture);
                                       });
                                     },
@@ -717,7 +826,7 @@ void exportContacts() async{
     name = "";
     contactos = addContactsToList(mapa, contactos, telefonos);
     telefonos = addPhonesToList(mapa, contactos, telefonos);
-    formattedDate = DateFormat('yyyy_MM_dd' ).format(now);
+    formattedDate = DateFormat('yyyy_MM_dd').format(now);
     historyDate = DateFormat('EEE d MMM' ).format(now);
 
     setState(() async {
@@ -993,12 +1102,13 @@ void exportContacts() async{
                       content: Text("User cancelled the operation :("),
                     ));
                   } else{
-                    exportContacts();
+                    exportMultipleContacts();
+                    }
+
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: Text("$myBackupFile"),
                     ));
                   }
-                },
               )
             )
           ],
