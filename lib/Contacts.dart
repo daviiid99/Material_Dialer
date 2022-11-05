@@ -240,7 +240,6 @@ void exportContacts() async{
    exportSingleContact(String contact, String number, String photo) async {
 
     Map<dynamic, dynamic> myContact = {number : [contact, mapa[number][1]]};
-    bool exists = false;
 
     // Save map into variable
     final jsonFile = jsonEncode(myContact);
@@ -250,7 +249,7 @@ void exportContacts() async{
 
     File("/data/user/0/com.daviiid99.material_dialer/app_flutter/$contact.json").writeAsString(jsonFile);
 
-    if (mapa[number][1].contains("png")){
+    if (mapa[number][1].contains(".png")){
       extension = ".png";
     } else if (mapa[number][1].contains(".jpg")){
       extension = ".jpg";
@@ -263,7 +262,7 @@ void exportContacts() async{
     decodeBase64Image(image, extension, number, "external");
 
 
-    exists = zipThemAll("$contact.json", "$number$extension");
+    zipThemAll("$contact.json", "$number$extension");
 
     // Write file
     setState(() async {
@@ -277,15 +276,15 @@ void exportContacts() async{
     String base64Image = base64Encode(bytes);
     Uint8List decode64Image = base64Decode(base64Image);
 
-    if (path.contains("external")){
-      final myImage = await File("/data/user/0/com.daviiid99.material_dialer/app_flutter/$number$extension").writeAsBytes(decode64Image);
-    } else {
-      final myImage = await File("/data/user/0/com.daviiid99.material_dialer/app_flutter/$number$extension").writeAsBytes(decode64Image);
-    }
+    final myImage = await File("/data/user/0/com.daviiid99.material_dialer/app_flutter/$number$extension").writeAsBytes(decode64Image);
 
   }
 
   decodeBase64Zip(File zip, String name ) async {
+
+    setState(() async {
+      formattedDate = DateFormat('yyyy_MM_dd_hh_mm_ss').format(now);
+    });
     final bytes = zip.readAsBytesSync();
     String base64Zip = base64Encode(bytes);
     Uint8List decode64BitZip = base64Decode(base64Zip);
@@ -299,7 +298,6 @@ void exportContacts() async{
     // We'll zip all files together
 
     final dir = Directory("/data/user/0/com.daviiid99.material_dialer/app_flutter"); // Set destinaiton path
-    bool exists = false;
 
     final files = [
       File("/data/user/0/com.daviiid99.material_dialer/app_flutter" + "/$pathJson" ),
@@ -310,26 +308,23 @@ void exportContacts() async{
 
     final zipFile = File("/data/user/0/com.daviiid99.material_dialer/app_flutter" + "/$name" + "_"+ "$formattedDate.zip"); // Set final zip file name
 
+    if (await File(zipFile.path).exists()){
+      await zipFile.delete();
+    }
+
     try {
       await ZipFile.createFromFiles(
           sourceDir: dir, files: files, zipFile: zipFile);
-          exists = true;
     } catch (e){
       print(e);
     }
 
     await decodeBase64Zip(zipFile, name); // Create output zip file
-    File("/data/user/0/com.daviiid99.material_dialer/app_flutter/$name.json").delete();
-
-    // Delete temp files
-    return exists;
-
-
   }
 
   unZipAll(String pathZip) async {
     final zipPath = File(pathZip); // Zip path
-    final outputPath = Directory("/data/user/0/com.daviiid99.material_dialer/app_flutter/");
+    final outputPath = Directory("/data/user/0/com.daviiid99.material_dialer/app_flutter");
     List<String> files = [];
 
     try{
@@ -901,7 +896,7 @@ void exportContacts() async{
     name = "";
     contactos = addContactsToList(mapa, contactos, telefonos);
     telefonos = addPhonesToList(mapa, contactos, telefonos);
-    formattedDate = DateFormat('yyyy_MM_dd').format(now);
+    formattedDate = DateFormat('yyyy_MM_dd_hh_mm').format(now);
     historyDate = DateFormat('EEE d MMM' ).format(now);
 
     setState(() async {
