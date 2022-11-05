@@ -64,6 +64,7 @@ class _ContactState extends State<Contacts>{
   var telefonos = ["123"];
   var photos = ["/sdcard"];
   List<String> myBackupFiles = [];
+  String internalPath = "/data/user/0/com.daviiid99.material_dialer/app_flutter/";
   bool _fileExists = false;
   late File _filePath;
 
@@ -150,6 +151,7 @@ class _ContactState extends State<Contacts>{
 
   removePhone(Map<dynamic,dynamic> mapa) {
     setState(() async {
+      jsonFile = "contacts.json";
       final filePath = await _localFile;
       _jsonString = jsonEncode(mapa);
       filePath.writeAsString(_jsonString);
@@ -316,8 +318,10 @@ void exportContacts() async{
       print(e);
     }
 
-    decodeBase64Zip(zipFile, name);
+    await decodeBase64Zip(zipFile, name); // Create output zip file
+    File("/data/user/0/com.daviiid99.material_dialer/app_flutter/$name.json").delete();
 
+    // Delete temp files
     return exists;
 
 
@@ -485,8 +489,10 @@ void exportContacts() async{
         contactos = [];
         telefonos = [];
         photos = [];
+        jsonFile = "contacts.json";
+        _readJson();
       });
-      _readJson();
+
 
   }
 
@@ -715,6 +721,21 @@ void exportContacts() async{
                                           } else {
                                             jsonFile = "contacts.json";
                                           _readJson();
+                                          if ( mapa[number][1].contains("png"))  {
+                                            await File("$internalPath/$number" + ".png").rename("$internalPath/" + phone.text + ".png");
+                                            mapa[number][1] = "$internalPath/" + phone.text + ".png";
+                                          }
+
+                                          if ( mapa[number][1].contains("jpg"))  {
+                                            await File("$internalPath/$number" + ".jpg").rename("$internalPath/" + phone.text + ".jpg");
+                                            mapa[number][1] = "$internalPath/" + phone.text + ".jpg";
+                                          }
+
+                                          if ( mapa[number][1].contains("gif"))  {
+                                            await File("$internalPath/$number" + ".gif").rename("$internalPath/" + phone.text + ".gif");
+                                            mapa[number][1] = "$internalPath/" + phone.text + ".gif";
+                                          }
+
                                           _writeJson(phone.text, [contact.text, mapa[number][1]], "contact");
                                           mapa.remove(number);
                                           removePhone(mapa);
@@ -740,13 +761,43 @@ void exportContacts() async{
                                           } else if (contact.text.isEmpty){
                                           jsonFile = "contacts.json";
                                           _readJson();
+
+                                          if ( mapa[number][1].contains("png"))  {
+                                            await File("$internalPath/$number" + ".png").rename("$internalPath/" + phone.text + ".png");
+                                            mapa[number][1] = "$internalPath/" + phone.text + ".png";
+                                          }
+
+                                          if ( mapa[number][1].contains("jpg"))  {
+                                            await File("$internalPath/$number" + ".jpg").rename("$internalPath/" + phone.text + ".jpg");
+                                            mapa[number][1] = "$internalPath/" + phone.text + ".jpg";
+                                          }
+
+                                          if ( mapa[number][1].contains("gif"))  {
+                                            await File("$internalPath/$number" + ".gif").rename("$internalPath/" + phone.text + ".gif");
+                                            mapa[number][1] = "$internalPath/" + phone.text + ".gif";
+                                          }
                                           _writeJson(phone.text, [name, mapa[number][1]], "contact");
                                           mapa.remove(number);
                                           removePhone(mapa);
                                           Navigator.pop(context);
+
                                         } else {
                                           jsonFile = "contacts.json";
                                           _readJson();
+                                          if ( mapa[number][1].contains("png"))  {
+                                            await File("$internalPath/$number" + ".png").rename("$internalPath/" + phone.text + ".png");
+                                            mapa[number][1] = "$internalPath/" + phone.text + ".png";
+                                          }
+
+                                          if ( mapa[number][1].contains("jpg"))  {
+                                            await File("$internalPath/$number" + ".jpg").rename("$internalPath/" + phone.text + ".jpg");
+                                            mapa[number][1] = "$internalPath/" + phone.text + ".jpg";
+                                          }
+
+                                          if ( mapa[number][1].contains("gif"))  {
+                                            await File("$internalPath/$number" + ".gif").rename("$internalPath/" + phone.text + ".gif");
+                                            mapa[number][1] = "$internalPath/" + phone.text + ".gif";
+                                          }
                                           _writeJson(phone.text, [contact.text, mapa[number][1]], "contact");
                                           mapa.remove(number);
                                           removePhone(mapa);
