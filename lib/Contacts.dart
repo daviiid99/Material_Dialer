@@ -243,12 +243,10 @@ void exportContacts() async{
     // Save map into variable
     final jsonFile = jsonEncode(myContact);
 
-    // Set file path
-    // Write file
-     File("$myBackupDir/$contact.json").writeAsString(jsonFile); // json
-
     // Image extension
     String extension = "";
+
+    File("/data/user/0/com.daviiid99.material_dialer/app_flutter/$contact.json").writeAsString(jsonFile);
 
     if (mapa[number][1].contains("png")){
       extension = ".png";
@@ -278,35 +276,47 @@ void exportContacts() async{
     Uint8List decode64Image = base64Decode(base64Image);
 
     if (path.contains("external")){
-      final myImage = await File("$myBackupDir/$number$extension").writeAsBytes(decode64Image);
+      final myImage = await File("/data/user/0/com.daviiid99.material_dialer/app_flutter/$number$extension").writeAsBytes(decode64Image);
     } else {
       final myImage = await File("/data/user/0/com.daviiid99.material_dialer/app_flutter/$number$extension").writeAsBytes(decode64Image);
     }
 
   }
 
+  decodeBase64Zip(File zip, String name ) async {
+    final bytes = zip.readAsBytesSync();
+    String base64Zip = base64Encode(bytes);
+    Uint8List decode64BitZip = base64Decode(base64Zip);
+
+    final zipFile = await File(myBackupDir + "/$name" + "_$formattedDate.zip").writeAsBytes(decode64BitZip);
+
+  }
+
+
   zipThemAll(String pathJson, String pathImage) async {
     // We'll zip all files together
 
-    final dir = Directory(myBackupDir); // Set destinaiton path
+    final dir = Directory("/data/user/0/com.daviiid99.material_dialer/app_flutter"); // Set destinaiton path
     bool exists = false;
 
     final files = [
-      File(myBackupDir + "/$pathJson" ),
-      File(myBackupDir + "/$pathImage")
+      File("/data/user/0/com.daviiid99.material_dialer/app_flutter" + "/$pathJson" ),
+      File("/data/user/0/com.daviiid99.material_dialer/app_flutter" + "/$pathImage")
     ]; // Set path for json and image files
 
     final name = pathJson.replaceAll(".json", "");
 
-    final zipFile = File(myBackupDir + "/$name" + "_"+ "$formattedDate.zip"); // Set final zip file name
+    final zipFile = File("/data/user/0/com.daviiid99.material_dialer/app_flutter" + "/$name" + "_"+ "$formattedDate.zip"); // Set final zip file name
 
     try {
-      ZipFile.createFromFiles(
+      await ZipFile.createFromFiles(
           sourceDir: dir, files: files, zipFile: zipFile);
           exists = true;
     } catch (e){
       print(e);
     }
+
+    decodeBase64Zip(zipFile, name);
 
     return exists;
 
