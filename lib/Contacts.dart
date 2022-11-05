@@ -222,8 +222,10 @@ void exportContacts() async{
   }
 
   exportMultipleContacts() async {
+
     // Await user path
     await pickDirectory();
+
 
     for (String key in mapa.keys) {
       setState(() {
@@ -311,21 +313,22 @@ void exportContacts() async{
 
   }
 
-  unZipAll(String pathZip){
+  unZipAll(String pathZip) async {
     final zipPath = File(pathZip); // Zip path
-    final outputPath = Directory("/storage/emulated/0/Documents");
+    final outputPath = Directory("/data/user/0/com.daviiid99.material_dialer/app_flutter/");
     List<String> files = [];
 
     try{
-      ZipFile.extractToDirectory(
+      await ZipFile.extractToDirectory(
           zipFile: zipPath, destinationDir: outputPath,
         onExtracting: (zipEntry, progress){
-              myBackupFiles.add(zipEntry.name);
+          myBackupFiles.add(zipEntry.name);
               if (zipEntry.name.contains(".json")){
-                setState(() async{
-                  path = await _localPath;
-                  readFile("/storage/emulated/0/Documents/" + zipEntry.name);
+                setState(() async {
+                  jsonFile = zipEntry.name;
+                  await File("/data/user/0/com.daviiid99.material_dialer/app_flutter/" + jsonFile).exists();
                 });
+
               }
             return ZipFileOperation.includeItem;
         }
@@ -334,7 +337,13 @@ void exportContacts() async{
       print(e);
     }
 
-    print(myBackupFiles);
+    try {
+      readFile("/data/user/0/com.daviiid99.material_dialer/app_flutter/" + jsonFile);
+    } catch (e){
+
+
+    }
+
   }
 
    pickDirectory() async{
@@ -347,9 +356,10 @@ void exportContacts() async{
     }
   }
 
-  void pickFile() async {
+   pickFile() async {
     bool exists = false;
     String jsonPath = "";
+    List<String> myFiles = [];
 
     // User can choose a file from storage
      final result = await FilePicker.platform.pickFiles(
@@ -357,7 +367,6 @@ void exportContacts() async{
         allowedExtensions: ['zip'],
         allowMultiple: true,
       );
-
 
     // Store all files into a list of files
     if (result != null) {
@@ -368,15 +377,17 @@ void exportContacts() async{
         setState(() async {
           for (File myFile in files) {
             path = myFile.path!;
-            unZipAll(path);
+            File(path).rename("/data/user/0/com.daviiid99.material_dialer/app_flutter/backup.zip");
+            await unZipAll("/data/user/0/com.daviiid99.material_dialer/app_flutter/backup.zip");
+
             for (String myFile in myBackupFiles){
                if (myFile.contains("..jpg")){
                   myFile.replaceAll("..jpg", "");
                   decodeBase64Image(File(myFile + ".jpg"), ".jpg", myFile,  "internal");
-                } else if (myFile.contains("..png")){
+               } if (myFile.contains("..png")){
                   myFile.replaceAll("..png", ".png");
                   decodeBase64Image(File(myFile + ".png"), ".png", myFile, "internal");
-                } else if (myFile.contains("..gif")){
+                } if (myFile.contains("..gif")){
                   myFile.replaceAll("..gif", ".gif");
                   decodeBase64Image(File(myFile + ".gif"), ".gif", myFile, "internal");
                 }
@@ -385,6 +396,8 @@ void exportContacts() async{
         });
         }
     }
+
+    return 0;
     }
 
   void pickImage(String number, String name) async {
@@ -789,6 +802,7 @@ void exportContacts() async{
                                     ),
                                     onPressed: () async {
                                       setState(() async {
+                                        // Await user path
                                         await pickDirectory();
                                         exportSingleContact(name, number, picture);
                                       });
@@ -1086,7 +1100,7 @@ void exportContacts() async{
                 icon: Icon(Icons.import_contacts_rounded),
                 onPressed: (){
                   setState(() async {
-                    pickFile();
+                     await pickFile();
                   });
                 },
               )
@@ -1104,6 +1118,7 @@ void exportContacts() async{
                   } else{
                     exportMultipleContacts();
                     }
+
 
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: Text("$myBackupFile"),
