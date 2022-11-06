@@ -1310,38 +1310,66 @@ void exportContacts() async{
         ),if(contactos.length == 0) Image.asset("assets/images/empty.png") ,
 
       Expanded(
+      child: RefreshIndicator(
     child : ListView.builder(
         itemCount: contactos.length,
         itemBuilder: (context, index){
-          return Card(
-              child: ListTile(
-            tileColor: colores[mode_counter] ,
+    return StatefulBuilder(
+    builder: (context, setState)
+    {
+      return Card(
+          child: ListTile(
+            tileColor: colores[mode_counter],
             textColor: fonts[mode_counter],
-            leading:  CircleAvatar(
+            leading: CircleAvatar(
               backgroundColor: Colors.transparent,
               child: SizedBox(
-              width: 60,
-              height: 60,
-              child: ClipOval(
-              child: Image.file(File(
-                   mapa[telefonos[index]][1],
-                 ),
-                  fit: BoxFit.fitHeight
+                width: 60,
+                height: 60,
+                child: ClipOval(
+                  child: Image.file(File(
+                    mapa[telefonos[index]][1],
+                  ),
+                      fit: BoxFit.fitHeight
+                  ),
                 ),
-               ),
+              ),
             ),
-            ),
-                  onTap: () {
-                    createContactView(telefonos[index], contactos[index],  photos[index], index);
-
-                  },
-            title: Text(contactos[index], style: TextStyle( fontWeight: FontWeight.bold),),
+            onTap: () {
+              createContactView(
+                  telefonos[index], contactos[index], photos[index], index);
+            },
+            title: Text(contactos[index], style: TextStyle(
+                fontWeight: FontWeight.bold),),
             subtitle: Text(telefonos[index]),
-            ));
+          ));
+    });
         },
       ),
+    onRefresh: () {// Read contacts agaim
+    return Future.delayed(
+    Duration(seconds: 1),
+    () {
+    setState(() async {
+      // Refresh cache photo
+      imageCache.clear();
+      imageCache.clearLiveImages();
+      UniqueKey();
 
-    )]
+      mapa = {};
+      jsonFile = "contacts.json";
+      _readJson();
+      contactos = addContactsToList(mapa, contactos, telefonos);
+      telefonos = addPhonesToList(mapa, contactos, telefonos);
+      photos =  addPhotosToList(mapa, contactos, telefonos, photos);
+
+    });
+    }
+    );
+    }
+    )
+      )
+      ]
     ),
         bottomNavigationBar: BottomNavigationBar(
           iconSize: 35,

@@ -1740,6 +1740,15 @@ class _DialerState extends State<Dialer>{
         ),
       ),
       Expanded(
+          child: RefreshIndicator(
+      onRefresh: () {
+        return Future.delayed(
+        Duration(seconds: 1),
+        () {
+        setState(() {
+          generateRandomCard();
+        });
+      });},
       child: SingleChildScrollView(
         child: Column(
           children: [
@@ -2073,7 +2082,7 @@ class _DialerState extends State<Dialer>{
         ),
       ),
       ),
-    ]
+      )]
     ),
         bottomNavigationBar: BottomNavigationBar(
           iconSize: 35,
