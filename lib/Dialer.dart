@@ -185,6 +185,7 @@ class _DialerState extends State<Dialer>{
 
       "EditContact" : {
         "image" : "Set Picture",
+        "refresh_image" : "Refresh Photo",
         "input1" : "Name",
         "input2" : "Number",
         "button1" : "Call",
@@ -328,6 +329,7 @@ class _DialerState extends State<Dialer>{
 
       "EditContact" : {
         "image" : "Cambiar Foto",
+        "refresh_image" : "Refrescar Foto",
         "input1" : "Nombre",
         "input2" : "Número",
         "button1" : "Llamar",
@@ -469,6 +471,7 @@ class _DialerState extends State<Dialer>{
 
       "EditContact" : {
         "image": "Définir l'image",
+        "refresh_image" : "Actualiser Photo",
         "input1": "Nom",
         "input2": "Numéro",
         "button1": "Appeler",
@@ -610,6 +613,7 @@ class _DialerState extends State<Dialer>{
 
       "EditContact" : {
         "image" : "Imposta immagine",
+        "refresh_image" : "Aggiorna Foto",
         "input1" : "Nome",
         "input2" : "Numero",
         "button1" : "Chiama",
@@ -750,6 +754,7 @@ class _DialerState extends State<Dialer>{
 
       "EditContact" : {
         "image": "Bild einstellen",
+        "refresh_image" : "Foto Aktualisieren",
         "input1": "Name",
         "input2": "Nummer",
         "button1": "Anrufen",

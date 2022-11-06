@@ -54,7 +54,7 @@ class _ContactState extends State<Contacts>{
   DateTime now = DateTime.now();
   String path = "";
   late List<PlatformFile> files;
-  String image = "";
+  String image = "sdcard/download/profile.png";
   var imagePath;
 
   _ContactState(this.mode_counter, this.modes, this.colores, this.fonts, this.current_language, this.language, this.history);
@@ -408,6 +408,52 @@ void exportContacts() async{
     return 0;
     }
 
+   imageSelector(String number, String name) async {
+     bool exists = false;
+     String myImage = "";
+
+     // User can choose a file from storage
+     final result = await FilePicker.platform.pickFiles(
+       type: FileType.custom,
+       allowedExtensions: ['jpg', 'png', 'gif'],
+       allowMultiple: false,
+     );
+
+
+     // Check if the user closed the file picker
+     if (result != null) {
+       PlatformFile myFile = await result.files.first;
+       exists = true;
+
+
+       if (exists) {
+         path = await myFile.path!;
+
+         setState(() async {
+           // Check image extensions
+
+           if (path.contains('.png')) {
+             await File(path).rename(
+                 '/data/user/0/com.daviiid99.material_dialer/app_flutter/$number.png');
+             image =
+             '/data/user/0/com.daviiid99.material_dialer/app_flutter/$number.png';
+           } else if (path.contains('.jpg')) {
+             await File(path).rename(
+                 '/data/user/0/com.daviiid99.material_dialer/app_flutter/$number.jpg');
+             image =
+             '/data/user/0/com.daviiid99.material_dialer/app_flutter/$number.jpg';
+           } else {
+             await File(path).rename(
+                 '/data/user/0/com.daviiid99.material_dialer/app_flutter/$number.gif');
+             image =
+             '/data/user/0/com.daviiid99.material_dialer/app_flutter/$number.gif';
+           }
+         });
+       }
+     }
+     return image;
+   }
+
   void pickImage(String number, String name) async {
     bool exists = false;
 
@@ -543,7 +589,8 @@ void exportContacts() async{
                                 child: Image.file(File(
                                   mapa[telefonos[index]][1],
                                 ),
-                                    fit: BoxFit.fill
+                                    fit: BoxFit.fill,
+                                    key: UniqueKey()
                                 ),
                               ),
                             ),
@@ -570,18 +617,42 @@ void exportContacts() async{
                                   } else {
                                     pickImage(phone.text, name);
                                   }
-                                  Navigator.pop(context);
                                 });
 
                               },
                             ),
+
+                            FittedBox(
+                                child: ElevatedButton(
+                                  child: Text(
+                                      language[current_language]["EditContact"]["refresh_image"]),
+                                  onPressed: ()  {
+                                    setState(() async {
+                                      imageCache.clear();
+                                      imageCache.clearLiveImages();
+                                      UniqueKey();
+                                    });
+                                  },
+                                  style: TextButton.styleFrom(
+                                    textStyle: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16,),
+                                    backgroundColor: Colors
+                                        .lightBlue,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius
+                                          .circular(24.0),
+                                    ),
+
+                                  ),
+                                )),
 
                             SizedBox(height: 20,),
 
                             Row(
                                 children: [
                                   Text(language[current_language]["EditContact"]["input1"], style: TextStyle(
-                                      color: Colors.white),),
+                                      color: Colors.white,  fontWeight: FontWeight.bold),),
                                 ]
                             ),
 
@@ -592,12 +663,12 @@ void exportContacts() async{
                               decoration: InputDecoration(
                                   disabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: Colors.blueAccent, width: 2.0),
+                                        color: Colors.white, width: 2.0),
                                   ),
 
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: Colors.blueAccent, width: 2.0),
+                                        color: Colors.white, width: 2.0),
                                   ),
                                   border: OutlineInputBorder(
                                   ),
@@ -616,7 +687,7 @@ void exportContacts() async{
                             Row(
                                 children: [
                                   Text(language[current_language]["EditContact"]["input2"], style: TextStyle(
-                                      color: Colors.white),),
+                                      color: Colors.white,  fontWeight: FontWeight.bold),),
                                 ]
                             ),
 
@@ -627,12 +698,12 @@ void exportContacts() async{
                               decoration: InputDecoration(
                                   disabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: Colors.blueAccent, width: 2.0),
+                                        color: Colors.white, width: 2.0),
                                   ),
 
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: Colors.blueAccent, width: 2.0),
+                                        color: Colors.white, width: 2.0),
                                   ),
                                   border: OutlineInputBorder(
                                   ),
@@ -655,10 +726,10 @@ void exportContacts() async{
                                       language[current_language]["EditContact"]["button1"],
                                       style: TextStyle(
                                           fontSize: 16,
-                                          color: Colors.black),
+                                          color: Colors.white),
                                     ),
                                     style: TextButton.styleFrom(
-                                      textStyle: TextStyle(color: Colors.black),
+                                      textStyle: TextStyle(color: Colors.white,  fontWeight: FontWeight.bold),
                                       backgroundColor: Colors.green,
                                       fixedSize: const Size(340, 40),
                                       shape: RoundedRectangleBorder(
@@ -686,10 +757,10 @@ void exportContacts() async{
                                       language[current_language]["EditContact"]["button2"],
                                       style: TextStyle(
                                           fontSize: 16,
-                                          color: Colors.black),
+                                          color: Colors.white),
                                     ),
                                     style: TextButton.styleFrom(
-                                      textStyle: TextStyle(color: Colors.black),
+                                      textStyle: TextStyle(color: Colors.white,  fontWeight: FontWeight.bold),
                                       backgroundColor: Colors.orange,
                                       fixedSize: const Size(340, 40),
                                       shape: RoundedRectangleBorder(
@@ -813,10 +884,10 @@ void exportContacts() async{
                                       language[current_language]["EditContact"]["button3"],
                                       style: TextStyle(
                                           fontSize: 16,
-                                          color: Colors.black),
+                                          color: Colors.white),
                                     ),
                                     style: TextButton.styleFrom(
-                                      textStyle: TextStyle(color: Colors.black),
+                                      textStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                                       backgroundColor: Colors.red,
                                       fixedSize: const Size(340, 40),
                                       shape: RoundedRectangleBorder(
@@ -847,7 +918,7 @@ void exportContacts() async{
                                           color: Colors.white),
                                     ),
                                     style: TextButton.styleFrom(
-                                      textStyle: TextStyle(color: Colors.black),
+                                      textStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                                       backgroundColor: Colors.black,
                                       fixedSize: const Size(340, 40),
                                       shape: RoundedRectangleBorder(
@@ -971,85 +1042,219 @@ void exportContacts() async{
                           ),
                         ),
                         onPressed: () {
-                         showDialog(
-                           context: context,
-                           builder: (BuildContext context){
-                             return AlertDialog(
-                               shape: RoundedRectangleBorder(
-                                   borderRadius: BorderRadius.all(Radius.circular(15.0))),
-                               backgroundColor: Colors.lightGreen,
-                               content: SingleChildScrollView(
-                                 child: Column(
-                                     children: <Widget>[
-                                       Text("\n"),
-                                       TextFormField(
-                                         controller: phone,
-                                         keyboardType: TextInputType.phone,
-                                         decoration:  InputDecoration(
-                                           border: OutlineInputBorder(),
-                                           labelText: language[current_language]["CreateContact"]["box1"],
-                                         ),
-                                       ),
-                                       Text("\n"),
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return StatefulBuilder(
+                                builder: (context, setState) {
+                                  return AlertDialog(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(15.0))),
+                                      backgroundColor: colores[mode_counter],
+                                      content: SingleChildScrollView(
+                                        child: Column(
+                                            children: <Widget>[
+                                              Text("\n"),
 
-                                       TextFormField(
-                                         controller: contact,
-                                         decoration: InputDecoration(
-                                           border: OutlineInputBorder(),
-                                           labelText: language[current_language]["CreateContact"]["box2"],
-                                         ),
-                                       ),
+                                              CircleAvatar(
+                                                minRadius: 50,
+                                                maxRadius: 75,
+                                                backgroundColor: Colors
+                                                    .transparent,
+                                                child: ClipRRect(
+                                                  borderRadius: BorderRadius
+                                                      .circular(8.0),
+                                                  child: Image.file(
+                                                      File(image),
+                                                      fit: BoxFit.fill,
+                                                    key: UniqueKey(),
+                                                  ),
+                                                ),
+                                              ),
+                                              FittedBox(
+                                                  child: ElevatedButton(
+                                                    child: Text(
+                                                        language[current_language]["EditContact"]["image"]),
+                                                    onPressed: ()  {
+                                                      setState(() {
+                                                        image = imageSelector(
+                                                            phone.text,
+                                                            contact.text);
+                                                      });
 
-                                       Text("\n\n\n"),
+                                                    },
+                                                    style: TextButton.styleFrom(
+                                                      textStyle: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 16,),
+                                                      backgroundColor: Colors
+                                                          .black,
+                                                      shape: RoundedRectangleBorder(
+                                                        borderRadius: BorderRadius
+                                                            .circular(24.0),
+                                                      ),
 
-                                       TextButton.icon(
-                                         label:  Text(
-                                           language[current_language]["CreateContact"]["button"],
-                                           style: TextStyle(
-                                               fontSize: 16,
-                                               color: Colors.black),
-                                         ),
-                                         style: TextButton.styleFrom(
-                                           textStyle: TextStyle(color: Colors.black),
-                                           backgroundColor: Colors.green,
-                                           shape:RoundedRectangleBorder(
-                                             borderRadius: BorderRadius.circular(24.0),
-                                           ),
-                                         ),
-                                         onPressed: () {
-                                           setState(() async {
-                                             if(phone.text.length > 0) {
+                                                    ),
+                                                  )),
 
-                                               setState(() {
-                                                 contactos = [];
-                                                 telefonos = [];
-                                                 photos = [];
-                                               });
+                                              FittedBox(
+                                                  child: ElevatedButton(
+                                                    child: Text(
+                                                        language[current_language]["EditContact"]["refresh_image"]),
+                                                    onPressed: ()  {
+                                                      setState(() async {
+                                                        imageCache.clear();
+                                                        imageCache.clearLiveImages();
+                                                        UniqueKey();
+                                                      });
+                                                    },
+                                                    style: TextButton.styleFrom(
+                                                      textStyle: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 16,),
+                                                      backgroundColor: Colors
+                                                          .lightBlue,
+                                                      shape: RoundedRectangleBorder(
+                                                        borderRadius: BorderRadius
+                                                            .circular(24.0),
+                                                      ),
 
-                                               jsonFile = "contacts.json";
-                                               _writeJson(
-                                                   phone.text, [contact.text, "$imagePath"], "contact");
-                                               _readJson();
-                                               Navigator.pop(context);
-                                             ScaffoldMessenger.of(context)
-                                                 .showSnackBar(SnackBar(
-                                               content: Text(
-                                                   language[current_language]["CreateContact"]["toaster"] +
-                                                       "\n" + contact.text +
-                                                       "(" + phone.text + ")"),
-                                             ));
-                                               contact.text = "";
-                                               phone.text = "";
-                                             }
-                                           });
+                                                    ),
+                                                  )),
 
-                                         },
-                                         icon: Icon(Icons.save_rounded, color: Colors.black,),
-                                       )
-                                     ]
-                                 ),
-                               )
-                             );
+                                              Text("\n"),
+
+                                              TextFormField(
+                                                controller: phone,
+                                                style: TextStyle(
+                                                    color: Colors.white),
+                                                keyboardType: TextInputType
+                                                    .phone,
+                                                decoration: InputDecoration(
+                                                    disabledBorder: OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                          color: Colors.white,
+                                                          width: 2.0),
+                                                    ),
+
+                                                    enabledBorder: OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                          color: Colors.white,
+                                                          width: 2.0),
+                                                    ),
+                                                    border: OutlineInputBorder(
+                                                    ),
+                                                    labelText: language[current_language]["CreateContact"]["box1"],
+                                                    labelStyle: TextStyle(
+                                                        color: Colors.white)
+                                                ),
+                                              ),
+                                              Text("\n"),
+
+                                              TextFormField(
+                                                controller: contact,
+                                                style: TextStyle(
+                                                    color: Colors.white),
+                                                decoration: InputDecoration(
+                                                    disabledBorder: OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                          color: Colors.white,
+                                                          width: 2.0),
+                                                    ),
+
+                                                    enabledBorder: OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                          color: Colors.white,
+                                                          width: 2.0),
+                                                    ),
+                                                    border: OutlineInputBorder(
+                                                    ),
+                                                    labelText: language[current_language]["CreateContact"]["box2"],
+                                                    labelStyle: TextStyle(
+                                                        color: Colors.white)
+                                                ),
+                                              ),
+
+                                              Text("\n"),
+
+                                              ElevatedButton(
+                                                child: Text(
+                                                  language[current_language]["CreateContact"]["button"],
+                                                ),
+                                                style: TextButton.styleFrom(
+                                                  textStyle: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 16,),
+                                                  backgroundColor: colores[mode_counter],
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius
+                                                        .circular(24.0),
+                                                  ),
+                                                ),
+                                                onPressed: () {
+                                                  setState(() async {
+                                                    if (phone.text.length > 0) {
+                                                      setState(() {
+                                                        contactos = [];
+                                                        telefonos = [];
+                                                        photos = [];
+                                                      });
+
+                                                      jsonFile =
+                                                      "contacts.json";
+                                                      if (image.length > 0) {
+                                                        if (image.contains("/data/user/0/com.daviiid99.material_dialer/app_flutter/.jpg") || image.contains(" /data/user/0/com.daviiid99.material_dialer/app_flutter/.png")|| image.contains("/data/user/0/com.daviiid99.material_dialer/app_flutter/.gif")){
+                                                          if (image.contains(".jpg")){
+                                                             File(image).rename("/data/user/0/com.daviiid99.material_dialer/app_flutter/" + phone.text + ".jpg");
+                                                             image = "/data/user/0/com.daviiid99.material_dialer/app_flutter/" + phone.text + ".jpg";
+                                                          } else if (image.contains(".png")){
+                                                             File(image).rename("/data/user/0/com.daviiid99.material_dialer/app_flutter/" + phone.text + ".png") ;
+                                                            image = "/data/user/0/com.daviiid99.material_dialer/app_flutter/" + phone.text + ".png";
+                                                          } else if (image.contains(".gif")){
+                                                             File(image).rename("/data/user/0/com.daviiid99.material_dialer/app_flutter/" + phone.text + ".gif");
+                                                            image = "/data/user/0/com.daviiid99.material_dialer/app_flutter/" + phone.text + ".gif";
+                                                            }
+                                                            _writeJson(
+                                                            phone.text, [contact
+                                                                .text, image],
+                                                            "contact");
+
+                                                          image = "sdcard/download/profile.png";
+
+                                                          } else {
+                                                        _writeJson(
+                                                            phone.text, [
+                                                          contact.text,
+                                                          "$imagePath"
+                                                        ], "contact");
+                                                      }
+                                                      _readJson();
+                                                      Navigator.pop(context);
+                                                      ScaffoldMessenger.of(
+                                                          context)
+                                                          .showSnackBar(
+                                                          SnackBar(
+                                                            content: Text(
+                                                                language[current_language]["CreateContact"]["toaster"] +
+                                                                    "\n" +
+                                                                    contact
+                                                                        .text +
+                                                                    "(" +
+                                                                    phone.text +
+                                                                    ")"),
+                                                          ));
+                                                      contact.text = "";
+                                                      phone.text = "";
+                                                    }}});
+                                                },
+                                              )
+                                            ]
+                                        ),
+                                      )
+                                  );
+                                }
+                              );
                            }
 
                          );
@@ -1130,7 +1335,7 @@ void exportContacts() async{
                     createContactView(telefonos[index], contactos[index],  photos[index], index);
 
                   },
-            title: Text(contactos[index]),
+            title: Text(contactos[index], style: TextStyle( fontWeight: FontWeight.bold),),
             subtitle: Text(telefonos[index]),
             ));
         },
