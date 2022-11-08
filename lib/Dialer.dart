@@ -1815,6 +1815,8 @@ class _DialerState extends State<Dialer>{
           this.name = nm;
         });
 
+      } else if (jsonFile.contains("history.json")){
+        history = jsonDecode(_jsonString);
       }
     });
 
@@ -2350,14 +2352,15 @@ class _DialerState extends State<Dialer>{
                                       ),
                                     ),
                                     onPressed: () async {
-                                    jsonFile = "history.json";
-                                    readJson();
-                                    writeJson(number, formattedDate);
-                                    llamar(number);
-
-                                    setState((){
+                                      llamar(number);
+                                      writeJson(number, formattedDate);
                                       number = "";
                                       fontsize = 45;
+
+                                    setState((){
+                                      jsonFile = "history.json";
+                                      readJson();
+
                                     });
 
                                      },
